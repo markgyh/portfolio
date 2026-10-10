@@ -8,7 +8,7 @@ export default function About() {
   return (
     <section id="about" aria-labelledby="about-heading" className="border-t border-line py-24 lg:py-32">
       <div className={CONTAINER}>
-        <SectionHeading id="about-heading">About me</SectionHeading>
+        <SectionHeading id="about-heading">About Me</SectionHeading>
 
         <div className="grid gap-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-24">
           <div className="max-w-[62ch] space-y-6">
