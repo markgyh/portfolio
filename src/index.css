@@ -1,0 +1,137 @@
+@import 'tailwindcss';
+/* Archivo, bundled locally (weight 100-900, width 62-125%). No external requests. */
+@import '@fontsource-variable/archivo/wdth.css';
+
+@theme {
+  --color-canvas: #12181d;
+  --color-surface: #1a2228;
+  --color-surface-2: #212b32;
+  --color-line: #2b363f;
+  --color-line-strong: #5a6b77;
+  --color-ink: #dce2e6;
+  --color-muted: #9aa8b2;
+  --color-faint: #7e8c97;
+  --color-brass: #d4ae62;
+  --color-brass-strong: #e6c47f;
+  --color-steel: #7fb4cc;
+
+  --font-sans: 'Archivo Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --animate-rise: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-draw: draw 0.9s cubic-bezier(0.65, 0, 0.35, 1) both;
+  --animate-fade: fade 0.6s ease both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(1.25rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes draw {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+/* Archivo's width axis: nameplate-style expanded headings */
+@utility font-wide {
+  font-stretch: 125%;
+}
+@utility font-semiwide {
+  font-stretch: 112%;
+}
+
+/* Faint drafting grid used behind the hero */
+@utility drafting-grid {
+  background-image:
+    linear-gradient(to right, rgb(127 180 204 / 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(127 180 204 / 0.07) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    /* Keep the scrollbar's space reserved so the page doesn't jump when the project dialog locks scrolling */
+    scrollbar-gutter: stable;
+    background-color: var(--color-canvas);
+    color-scheme: dark;
+    scrollbar-color: var(--color-line-strong) transparent;
+    scrollbar-width: thin;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-brass);
+    color: var(--color-canvas);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brass);
+    outline-offset: 3px;
+  }
+
+  /* Native <dialog> used for project details */
+  dialog::backdrop {
+    background: rgb(10 14 17 / 0.8);
+    backdrop-filter: blur(6px);
+  }
+  dialog[open] {
+    animation: dialog-in 0.22s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  dialog[open]::backdrop {
+    animation: fade 0.22s ease;
+  }
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
