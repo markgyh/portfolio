@@ -21,21 +21,21 @@ export const ACCENTS = {
 // ─── Site & profile ──────────────────────────────────────────────────────────
 
 export const SITE = {
-  firstName: 'Firstname', // TODO
-  lastName: 'Lastname', // TODO
-  role: 'Mechanical design & robotics engineer',
+  firstName: 'Mark', // TODO
+  lastName: 'Giam', // TODO
+  role: 'Mechanical Design & Robotics Engineer',
 
   // Used for the browser tab, Google results and link previews.
   description:
-    'Mechanical design and robotics engineer. CAD, technical drawings, fabrication and field-tested hardware for autonomous systems.',
+    'Mechanical design and robotics engineer. CAD, technical drawings, fabrication, prototyping and field-tested hardware for autonomous systems.',
 
   // Full public URL of the site. Used for link previews. TODO: set your username.
   url: 'https://yourusername.github.io/portfolio/',
 
-  email: 'email@gmail.com', // TODO
+  email: 'markgiam02@gmail.com', // TODO
   location: 'Singapore',
   timezone: 'UTC+8',
-  workScope: 'Open to roles in Singapore and remote worldwide',
+  workScope: 'Open to roles worldwide',
 
   availability: {
     open: true, // set to false to hide the availability card
@@ -64,8 +64,8 @@ export const SITE = {
 }
 
 export const SOCIALS: { label: string; handle: string; url: string }[] = [
-  { label: 'GitHub', handle: '@placeholdername', url: 'https://github.com/placeholdername' }, // TODO
-  { label: 'LinkedIn', handle: 'placeholdername', url: 'https://linkedin.com/in/placeholdername' }, // TODO
+  { label: 'GitHub', handle: '@markgyh', url: 'https://github.com/markgyh' }, // TODO
+  { label: 'LinkedIn', handle: 'markgyh', url: 'https://linkedin.com/in/markgyh' }, // TODO
 ]
 
 export const NAV_ITEMS = [
