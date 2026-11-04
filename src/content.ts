@@ -21,8 +21,8 @@ export const ACCENTS = {
 // ─── Site & profile ──────────────────────────────────────────────────────────
 
 export const SITE = {
-  firstName: 'Mark', // TODO
-  lastName: 'Giam', // TODO
+  firstName: 'FirstName', // TODO
+  lastName: 'LastName', // TODO
   role: 'Mechanical Design & Robotics Engineer',
 
   // Used for the browser tab, Google results and link previews.
@@ -32,7 +32,7 @@ export const SITE = {
   // Full public URL of the site. Used for link previews. TODO: set your username.
   url: 'https://yourusername.github.io/portfolio/',
 
-  email: 'markgiam02@gmail.com', // TODO
+  email: 'youremail@gmail.com', // TODO
   location: 'Singapore',
   timezone: 'UTC+8',
   workScope: 'Open to roles worldwide',
@@ -64,8 +64,8 @@ export const SITE = {
 }
 
 export const SOCIALS: { label: string; handle: string; url: string }[] = [
-  { label: 'GitHub', handle: '@markgyh', url: 'https://github.com/markgyh' }, // TODO
-  { label: 'LinkedIn', handle: 'markgyh', url: 'https://linkedin.com/in/markgyh' }, // TODO
+  { label: 'GitHub', handle: '@github', url: 'https://github.com/' }, // TODO
+  { label: 'LinkedIn', handle: 'linkedin', url: 'https://linkedin.com/in/' }, // TODO
 ]
 
 export const NAV_ITEMS = [
