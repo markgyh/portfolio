@@ -9,13 +9,13 @@
      so "images/hero.jpg" means public/images/hero.jpg.
    ============================================================================= */
 
-// Accent colours used for each project card. Chosen to sit on the dark theme
-// and stay readable with dark text on top (used for buttons in the dialog).
+// Accent colours used for each project card. Chosen to sit on the blueprint
+// blue and stay readable with dark text on top (used for buttons in the dialog).
 export const ACCENTS = {
-  brass: '#D4AE62',
-  steel: '#7FB4CC',
-  copper: '#D99167',
-  sage: '#A3C494',
+  copper: '#E08A4F',
+  cyan: '#9DD4F5',
+  white: '#F4F8FC',
+  amber: '#F0B86E',
 } as const
 
 // ─── Site & profile ──────────────────────────────────────────────────────────
@@ -60,7 +60,7 @@ export const SITE = {
 
   // Contact form. Get a free access key at https://web3forms.com and paste it
   // here. Until it is set, the form opens the visitor's email app instead.
-  web3formsAccessKey: '', // TODO
+  web3formsAccessKey: '28431cb0-7922-4fe9-832d-3a1d5f0e82e7',
 }
 
 export const SOCIALS: { label: string; handle: string; url: string }[] = [
@@ -68,29 +68,24 @@ export const SOCIALS: { label: string; handle: string; url: string }[] = [
   { label: 'LinkedIn', handle: 'linkedin', url: 'https://linkedin.com/in/' }, // TODO
 ]
 
-export const NAV_ITEMS = [
-  { label: 'About', id: 'about' },
-  { label: 'Experience', id: 'experience' },
-  { label: 'Projects', id: 'projects' },
-  { label: 'Contact', id: 'contact' },
-] as const
-
 // ─── About ───────────────────────────────────────────────────────────────────
 
 export const ABOUT: string[] = [
-  "I'm a mechanical design and robotics engineer with a passion for creating with my hands. I care about the intersection of engineering rigour and design craft, and I want to build things that are functional, beautiful and resilient.",
+  "Hi, I'm a Mechanical Design and Robotics engineer with a passion for creating with my hands. I care about the intersection of engineering rigour and design craft, and I want to build things that are functional, aesthetic and resilient.",
   // TODO: the first draft had unrelated filler here (Vercel, Linear, Shopify). Replace with your own summary.
-  'Most recently I retrofitted a manual sweeper for autonomous operation at Kärcher Robotics, and built sea and aerial drones at The Kinetic Option. My work runs from CAD and tolerancing through fabrication to field testing.',
+  'Most recently I retrofitted a manual sweeper for autonomous operation at Kärcher Robotics, and built sea and aerial drones at The Kinetic Option. My experience ranges from CAD and tolerancing through to prototyping, fabrication and field testing.',
   'Outside of work, I like to acquire knowledge. I enjoy watching geopolitical videos and learning new languages. I am also into calisthenics, travelling and cooking. I firmly believe insects and arachnids are underrated and deserve more attention.',
 ]
 
 export const SKILL_GROUPS: { label: string; items: string[] }[] = [
-  { label: 'Software', items: ['SolidWorks', 'Fusion360', 'ANSYS Mechanical', 'Adobe Illustrator', 'Python'] },
+  { label: 'Software', 
+    items: ['SolidWorks', 'Fusion360', 'ANSYS Mechanical', 'ANSYS Fluent', 'Adobe Illustrator', 'Python', 'ROS2'] },
   {
-    label: 'Fabrication',
-    items: ['FDM 3D printing', 'Laser & waterjet cutting', 'Sheet metal', 'Handheld power tools', 'Electronics & soldering'],
+    label: 'Hardware',
+    items: ['FDM 3D Printing', 'Laser & Waterjet cutting', 'Sheet Metal Fabrication', 'Handheld Power Tools', 'Electronics & Soldering'],
   },
-  { label: 'Standards', items: ['ISO 2768', 'DFMA', 'Technical drawings'] },
+  { label: 'Others', 
+    items: ['ISO 2768', 'DFMA', 'Technical Drawings'] },
 ]
 
 // ─── Experience (newest first) ───────────────────────────────────────────────
@@ -149,22 +144,48 @@ export const EXPERIENCES: Experience[] = [
 
 // ─── Projects (newest first) ─────────────────────────────────────────────────
 
+/**
+ * One part of a project write-up. `image` is optional: it sits on the right and
+ * the text wraps around it (shown at most a third of the window's width and height).
+ */
+export interface ProjectSection {
+  text: string[] // one string per paragraph
+  points?: string[] // optional bullet list after the text
+  image?: { src: string; alt: string }
+}
+
 export interface Project {
   title: string
   subtitle: string
   date: string
   summary: string // shown on the card
-  details: string // shown in the dialog
-  outcomes: string[] // "Key outcomes" in the dialog
   stack: string[]
   accent: string
-  image: string // card image (16:9 or wider looks best)
-  gallery: string[] // images shown in the dialog
+  image: string // card photo (16:9 looks best)
+  cover: string // photo at the top of the project window; '' uses the card photo
+  // The project window always shows these five sections, in this order
+  executiveSummary: ProjectSection
+  challenge: ProjectSection
+  considerations: ProjectSection
+  solution: ProjectSection
+  impact: ProjectSection
   link: string // full write-up, video, CAD viewer etc. '' hides the button
   repo: string // '' hides the button
 }
 
-// TODO: the dialog details and outcomes below came from the first draft and
+const photo = (id: string) => `https://images.unsplash.com/${id}?w=1200&h=675&fit=crop&auto=format`
+
+// Placeholder wording for sections you haven't written yet. Replace each one.
+const TODO = {
+  executiveSummary: 'Placeholder: two or three sentences on what the project was, who it was for and your role in it.',
+  challenge: 'Placeholder: the problem you were given and the constraints you had to work within.',
+  considerations:
+    'Placeholder: the options you compared, the trade-offs you weighed (cost, weight, strength, how it would be made) and why you chose the route you did.',
+  solution: 'Placeholder: what you built, how it works and the design details that matter.',
+  impact: 'Placeholder: the measurable result, and what you learned or would do differently next time.',
+}
+
+// TODO: the sections below were split from the first draft's project text and
 // include figures (IP ratings, cost %, weights, latency) that may not be yours.
 // Check every number before publishing.
 export const PROJECTS: Project[] = [
@@ -174,22 +195,31 @@ export const PROJECTS: Project[] = [
     date: 'Aug 2026',
     summary:
       'Redesigned the side and top mounted sensor suites to reduce cost and remove obstructions to a 360° FOV LiDAR while adding features.',
-    details:
-      'A complete redesign of the side and top-mounted sensor suites on an autonomous ground vehicle. The goal was to reduce system cost while removing structural obstructions to the 360° field-of-view LiDAR. The new mounts are more compact, better sealed against weather, and add modular attachment points for future sensors. All parts were designed in SolidWorks, made by FDM 3D printing, and backed by sheet metal brackets at high-stress attachment points.',
-    outcomes: [
-      'Removed LiDAR obstruction from 15° to 0° across the sensor arc',
-      'Reduced bill-of-materials cost by approximately 30%',
-      'Added weatherproof cable routing channels throughout the assembly',
-      'Modular attachment standard enables hot-swappable sensor heads',
-      'All drawings completed to ISO 2768 medium tolerance class',
-    ],
     stack: ['SolidWorks', 'Technical drawings', 'FDM 3D printing', 'Sheet metal fabrication'],
-    accent: ACCENTS.brass,
+    accent: ACCENTS.copper,
     image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=700&fit=crop&auto=format', // TODO: 'images/projects/sensor-suite.jpg'
-    gallery: [
-      'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&h=675&fit=crop&auto=format',
-      'https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=1200&h=675&fit=crop&auto=format',
-    ],
+    cover: photo('photo-1485827404703-89b55fcc595e'),
+    executiveSummary: { text: ['A complete redesign of the side and top-mounted sensor suites on an autonomous ground vehicle.'] },
+    challenge: {
+      text: ['The goal was to reduce system cost while removing structural obstructions to the 360° field-of-view LiDAR.'],
+    },
+    considerations: { text: [TODO.considerations] },
+    solution: {
+      text: [
+        'The new mounts are more compact, better sealed against weather, and add modular attachment points for future sensors. All parts were designed in SolidWorks, made by FDM 3D printing, and backed by sheet metal brackets at high-stress attachment points.',
+      ],
+      image: { src: photo('photo-1581092795360-fd1ca04f0952'), alt: 'Sensor suite mounts' }, // TODO: your own photo
+    },
+    impact: {
+      text: [],
+      points: [
+        'Removed LiDAR obstruction from 15° to 0° across the sensor arc',
+        'Reduced bill-of-materials cost by approximately 30%',
+        'Added weatherproof cable routing channels throughout the assembly',
+        'Modular attachment standard enables hot-swappable sensor heads',
+        'All drawings completed to ISO 2768 medium tolerance class',
+      ],
+    },
     link: '',
     repo: '',
   },
@@ -198,22 +228,33 @@ export const PROJECTS: Project[] = [
     subtitle: 'Touchscreen interface for accessible autonomous operations',
     date: 'Jun 2026',
     summary: 'Reverse-engineered complex surface geometry to design a weatherproof, ergonomic outer enclosure.',
-    details:
-      'An enclosure for the touchscreen used to control an autonomous vehicle outdoors. Starting from reverse-engineered geometry of the existing display hardware, the enclosure adds IP54 weatherproofing, an anti-glare surface and an ergonomic tilt mechanism. It went through 3 major iterations addressing heat dissipation, cable sealing and operator reach before final approval.',
-    outcomes: [
-      'IP54 weatherproof rating achieved with dual-seal gasket system',
-      'Anti-glare textured surface for outdoor sunlight legibility',
-      'Operator-adjustable tilt from 15° to 40° with 5° detents',
-      'Passive thermal venting rated for 2-hour continuous outdoor use',
-      '3 design iterations validated via in-field operator trials',
-    ],
     stack: ['SolidWorks', 'Technical drawings', 'FDM 3D printing', 'Sheet metal fabrication'],
-    accent: ACCENTS.steel,
+    accent: ACCENTS.cyan,
     image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?w=1200&h=700&fit=crop&auto=format',
-    gallery: [
-      'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&h=675&fit=crop&auto=format',
-      'https://images.unsplash.com/photo-1597852074816-d933c7d2b988?w=1200&h=675&fit=crop&auto=format',
-    ],
+    cover: photo('photo-1581091226825-a6a2a5aee158'),
+    executiveSummary: { text: ['An enclosure for the touchscreen used to control an autonomous vehicle outdoors.'] },
+    challenge: { text: [TODO.challenge] },
+    considerations: {
+      text: [
+        'It went through 3 major iterations addressing heat dissipation, cable sealing and operator reach before final approval.',
+      ],
+    },
+    solution: {
+      text: [
+        'Starting from reverse-engineered geometry of the existing display hardware, the enclosure adds IP54 weatherproofing, an anti-glare surface and an ergonomic tilt mechanism.',
+      ],
+      image: { src: photo('photo-1597852074816-d933c7d2b988'), alt: 'Interface panel enclosure' }, // TODO: your own photo
+    },
+    impact: {
+      text: [],
+      points: [
+        'IP54 weatherproof rating achieved with dual-seal gasket system',
+        'Anti-glare textured surface for outdoor sunlight legibility',
+        'Operator-adjustable tilt from 15° to 40° with 5° detents',
+        'Passive thermal venting rated for 2-hour continuous outdoor use',
+        '3 design iterations validated via in-field operator trials',
+      ],
+    },
     link: '',
     repo: '',
   },
@@ -223,22 +264,31 @@ export const PROJECTS: Project[] = [
     date: 'Apr 2026',
     summary:
       'Custom high-speed FPV drone designed from the ground up, including airframe, stack and camera mount, built for agility and structural durability.',
-    details:
-      'A custom high-speed FPV drone designed and built from scratch in Fusion360. The airframe geometry was tuned through structural analysis for the best arm stiffness-to-weight ratio. Waterjet-cut HDPE side plates add lateral rigidity while keeping mass low. The 30×30 stack mount accepts standard ESC and flight controller hardware, and a purpose-built camera mount adjusts from 0° to 45° without tools.',
-    outcomes: [
-      'Optimised 5-inch racing geometry with FEA-validated arm thickness',
-      'Waterjet-cut HDPE side plates for lateral rigidity',
-      'Standard 30×30 competition component stack',
-      'Tool-free camera angle adjustment from 0° to 45°',
-      'All-up weight (AUW) of approximately 380 g',
-    ],
     stack: ['Fusion360', 'FDM 3D printing', 'Waterjet cutting', 'Drone electronics'],
-    accent: ACCENTS.copper,
+    accent: ACCENTS.white,
     image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&h=700&fit=crop&auto=format',
-    gallery: [
-      'https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=1200&h=675&fit=crop&auto=format',
-      'https://images.unsplash.com/photo-1565043666747-69f6646db940?w=1200&h=675&fit=crop&auto=format',
-    ],
+    cover: photo('photo-1473968512647-3e447244af8f'),
+    executiveSummary: { text: ['A custom high-speed FPV drone designed and built from scratch in Fusion360.'] },
+    challenge: { text: [TODO.challenge] },
+    considerations: {
+      text: ['The airframe geometry was tuned through structural analysis for the best arm stiffness-to-weight ratio.'],
+    },
+    solution: {
+      text: [
+        'Waterjet-cut HDPE side plates add lateral rigidity while keeping mass low. The 30×30 stack mount accepts standard ESC and flight controller hardware, and a purpose-built camera mount adjusts from 0° to 45° without tools.',
+      ],
+      image: { src: photo('photo-1565043666747-69f6646db940'), alt: 'Drone airframe' }, // TODO: your own photo
+    },
+    impact: {
+      text: [],
+      points: [
+        'Optimised 5-inch racing geometry with FEA-validated arm thickness',
+        'Waterjet-cut HDPE side plates for lateral rigidity',
+        'Standard 30×30 competition component stack',
+        'Tool-free camera angle adjustment from 0° to 45°',
+        'All-up weight (AUW) of approximately 380 g',
+      ],
+    },
     link: '',
     repo: '',
   },
@@ -248,23 +298,107 @@ export const PROJECTS: Project[] = [
     date: 'Mar 2026',
     summary:
       'Fail-safe wireless emergency stop for an autonomous surface vehicle, using a dedicated radio link independent of the primary comms stack.',
-    details:
-      'A wireless emergency kill switch for an autonomous surface vehicle, built to meet maritime safety requirements. It cuts power to all drive systems remotely through a dedicated 433 MHz radio link that is separate from the main communications channel, so it keeps working if the main comms fail or are jammed. The enclosure is waterproof and positively buoyant for overboard recovery.',
-    outcomes: [
-      'Dedicated 433 MHz emergency radio link, independent of main comms',
-      'Fail-safe design: automatically cuts drive power on signal loss',
-      'IP67 waterproof enclosure rated for full submersion',
-      'Positively buoyant housing for overboard recovery',
-      'End-to-end response latency under 50 ms',
-    ],
     stack: ['Fusion360', 'FDM 3D printing', 'Drone electronics'],
-    accent: ACCENTS.sage,
+    accent: ACCENTS.amber,
     image: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&h=700&fit=crop&auto=format',
-    gallery: [
-      'https://images.unsplash.com/photo-1504384764586-bb4cdc1707b0?w=1200&h=675&fit=crop&auto=format',
-      'https://images.unsplash.com/photo-1620778182530-703effa65f61?w=1200&h=675&fit=crop&auto=format',
-    ],
+    cover: photo('photo-1504384764586-bb4cdc1707b0'),
+    executiveSummary: {
+      text: ['A wireless emergency kill switch for an autonomous surface vehicle, built to meet maritime safety requirements.'],
+    },
+    challenge: { text: ['The stop had to keep working even if the main communications failed or were jammed.'] },
+    considerations: { text: [TODO.considerations] },
+    solution: {
+      text: [
+        'It cuts power to all drive systems remotely through a dedicated 433 MHz radio link that is separate from the main communications channel. The enclosure is waterproof and positively buoyant for overboard recovery.',
+      ],
+      image: { src: photo('photo-1620778182530-703effa65f61'), alt: 'Kill switch enclosure' }, // TODO: your own photo
+    },
+    impact: {
+      text: [],
+      points: [
+        'Dedicated 433 MHz emergency radio link, independent of main comms',
+        'Fail-safe design: automatically cuts drive power on signal loss',
+        'IP67 waterproof enclosure rated for full submersion',
+        'Positively buoyant housing for overboard recovery',
+        'End-to-end response latency under 50 ms',
+      ],
+    },
     link: '',
     repo: '',
   },
+  // TODO: five placeholder projects. Replace each with a real one, or delete it.
+  ...[5, 6, 7, 8, 9].map(
+    (n, i): Project => ({
+      title: `Placeholder project ${n}`,
+      subtitle: 'One line on what the project is',
+      date: 'Month Year',
+      summary: 'Placeholder: one or two sentences for the card, saying what you made and why it mattered.',
+      stack: ['Tool', 'Process'],
+      accent: [ACCENTS.copper, ACCENTS.cyan, ACCENTS.white, ACCENTS.amber, ACCENTS.copper][i],
+      image: photo(
+        [
+          'photo-1581092160562-40aa08e78837',
+          'photo-1581092918056-0c4c3acd3789',
+          'photo-1537462715879-360eeb61a0ad',
+          'photo-1563770660941-20978e870e26',
+          'photo-1581094794329-c8112a89af12',
+        ][i],
+      ),
+      cover: '',
+      executiveSummary: { text: [TODO.executiveSummary] },
+      challenge: { text: [TODO.challenge] },
+      considerations: { text: [TODO.considerations] },
+      solution: { text: [TODO.solution] },
+      impact: { text: [TODO.impact] },
+      link: '',
+      repo: '',
+    }),
+  ),
+]
+
+// ─── Testimonials ────────────────────────────────────────────────────────────
+
+export interface Testimonial {
+  quote: string[] // one string per paragraph
+  name: string
+  role: string // e.g. 'Senior Engineer, Kärcher Robotics'
+}
+
+// TODO: these are placeholders. Replace them with real quotes from supervisors or
+// colleagues (and ask their permission first). Leave the list empty, [], to hide
+// the section and its nav link (the same goes for EXPERIENCES and PROJECTS).
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    quote: [
+      'Placeholder quote. Describe what it was like to work together, for example how the parts were designed, documented and handed over to manufacturing.',
+      'A second paragraph is optional. Keep each quote to around 40 to 80 words so the cards stay a similar height.',
+    ],
+    name: 'Supervisor Name',
+    role: 'Job title, Company',
+  },
+  {
+    quote: [
+      'Placeholder quote. A colleague or manager describing a project you delivered, the problem you solved and the result.',
+    ],
+    name: 'Colleague Name',
+    role: 'Job title, Company',
+  },
+  {
+    quote: [
+      'Placeholder quote. Someone from a teaching or lab role describing how you ran workshops or supported other students.',
+    ],
+    name: 'Reference Name',
+    role: 'Job title, Organisation',
+  },
+]
+
+// ─── Navigation ──────────────────────────────────────────────────────────────
+
+// Links for sections with nothing in them are hidden automatically.
+export const NAV_ITEMS: { label: string; id: string }[] = [
+  { label: 'About', id: 'about' },
+  { label: 'Experience', id: 'experience' },
+  { label: 'Projects', id: 'projects' },
+  { label: 'Testimonials', id: 'testimonials' },
+  { label: 'Contact', id: 'contact' },
 ]

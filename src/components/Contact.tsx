@@ -1,15 +1,17 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react'
-import { SITE, SOCIALS } from '../content'
+import { SITE, SOCIALS } from '../data'
 import { CONTAINER, FULL_NAME } from '../lib/utils'
 import { ArrowUpRight, Check, Copy } from './Icons'
-import { BUTTON_PRIMARY, SectionHeading, TEXT_LINK } from './ui'
+import { BUTTON_PRIMARY, PRESS, SectionHeading, TEXT_LINK } from './ui'
 
 type Status = 'idle' | 'sending' | 'sent' | 'mailto' | 'error'
 const EMPTY = { name: '', email: '', subject: '', message: '' }
 
 const INPUT =
-  'w-full rounded-xl border border-line-strong bg-surface px-4 py-3.5 text-ink transition-colors placeholder:text-faint hover:border-muted focus:border-brass focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass'
+  'w-full rounded-sm border border-line-strong bg-surface px-4 py-3.5 text-ink transition-colors placeholder:text-faint hover:border-muted focus:border-copper focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-copper'
 const LABEL = 'mb-2 block text-sm font-medium text-ink'
+// Small heading for each group of contact details
+const DETAIL = 'text-sm font-medium text-cyan'
 
 function CopyEmail() {
   const [copied, setCopied] = useState(false)
@@ -26,7 +28,7 @@ function CopyEmail() {
     <button
       type="button"
       onClick={copy}
-      className="flex h-10 items-center gap-1.5 rounded-full border border-line-strong px-3.5 text-sm font-medium text-muted transition-colors hover:border-brass hover:text-brass"
+      className={`flex h-10 shrink-0 items-center gap-1.5 rounded-full border border-line-strong px-3.5 text-sm font-medium text-muted hover:border-copper hover:text-copper ${PRESS}`}
     >
       {copied ? <Check size={16} /> : <Copy size={16} />}
       <span aria-live="polite">{copied ? 'Copied' : 'Copy'}</span>
@@ -83,7 +85,7 @@ export default function Contact() {
       <div className={CONTAINER}>
         <SectionHeading id="contact-heading">Contact</SectionHeading>
 
-        <div className="grid gap-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-24">
+        <div className="grid grid-cols-1 gap-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-24">
           {/* Form */}
           <div>
             <p className="mb-10 max-w-[56ch] text-xl leading-relaxed text-ink">
@@ -92,13 +94,13 @@ export default function Contact() {
             </p>
 
             {status === 'sent' ? (
-              <div role="status" className="rounded-2xl border border-line bg-surface p-8">
-                <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-brass text-canvas">
-                  <Check size={24} />
+              <div role="status" className="success-in rounded-sm border border-line bg-surface p-8">
+                <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-copper text-canvas">
+                  <Check size={24} className="check" />
                 </span>
-                <p className="font-semiwide text-2xl font-bold">Message sent</p>
+                <p className="font-display text-2xl font-bold">Message sent</p>
                 <p className="mt-2 text-muted">
-                  Thanks{form.name ? `, ${form.name.split(' ')[0]}` : ''}. I'll reply to {form.email} within 48 hours.
+                  Thanks{form.name.trim() ? `, ${form.name.trim().split(/\s+/)[0]}` : ''}. I'll reply to {form.email} within 48 hours.
                 </p>
                 <button type="button" onClick={reset} className={`${TEXT_LINK} mt-6`}>
                   Send another message
@@ -180,7 +182,7 @@ export default function Contact() {
 
                   <div aria-live="polite" className="text-sm">
                     {status === 'error' && (
-                      <p className="text-[#f2a38a]">
+                      <p className="note-in text-[#ffb59e]">
                         Your message didn't send. Check your connection and try again, or email{' '}
                         <a href={`mailto:${SITE.email}`} className="underline underline-offset-4">
                           {SITE.email}
@@ -189,7 +191,7 @@ export default function Contact() {
                       </p>
                     )}
                     {status === 'mailto' && (
-                      <p className="text-muted">
+                      <p className="note-in text-muted">
                         Your email app should open with this message. If it doesn't, email{' '}
                         <a href={`mailto:${SITE.email}`} className="text-ink underline underline-offset-4">
                           {SITE.email}
@@ -206,11 +208,11 @@ export default function Contact() {
           {/* Direct details */}
           <div className="space-y-10 lg:pt-2">
             <div>
-              <h3 className="mb-3 text-sm font-medium text-steel">Email</h3>
+              <h3 className={`mb-3 ${DETAIL}`}>Email</h3>
               <div className="flex flex-wrap items-center gap-3">
                 <a
                   href={`mailto:${SITE.email}`}
-                  className="break-all font-semiwide text-xl font-semibold text-ink underline decoration-line-strong underline-offset-[6px] transition-colors hover:text-brass hover:decoration-brass sm:text-2xl"
+                  className="break-all font-display text-xl font-semibold text-ink underline decoration-line-strong underline-offset-[6px] transition-colors hover:text-copper hover:decoration-copper sm:text-2xl"
                 >
                   {SITE.email}
                 </a>
@@ -219,7 +221,7 @@ export default function Contact() {
             </div>
 
             <div>
-              <h3 className="mb-3 text-sm font-medium text-steel">Location</h3>
+              <h3 className={`mb-3 ${DETAIL}`}>Location</h3>
               <p className="text-ink">
                 {SITE.location} <span className="text-muted">({SITE.timezone})</span>
               </p>
@@ -228,7 +230,7 @@ export default function Contact() {
 
             {SOCIALS.length > 0 && (
               <div>
-                <h3 className="mb-1 text-sm font-medium text-steel">Elsewhere</h3>
+                <h3 className={`mb-1 ${DETAIL}`}>Elsewhere</h3>
                 <ul className="divide-y divide-line border-b border-line">
                   {SOCIALS.map(({ label, handle, url }) => (
                     <li key={label}>
@@ -238,14 +240,14 @@ export default function Contact() {
                         rel="noopener noreferrer"
                         className="group flex min-h-14 items-center justify-between gap-4 py-3"
                       >
-                        <span>
-                          <span className="font-medium text-ink transition-colors group-hover:text-brass">{label}</span>
-                          <span className="ml-3 text-sm text-muted">{handle}</span>
+                        <span className="min-w-0">
+                          <span className="font-medium text-ink transition-colors group-hover:text-copper">{label}</span>
+                          <span className="ml-3 text-sm text-muted [overflow-wrap:anywhere]">{handle}</span>
                           <span className="sr-only"> (opens in a new tab)</span>
                         </span>
                         <ArrowUpRight
                           size={18}
-                          className="text-muted transition-[color,transform] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brass"
+                          className="shrink-0 text-muted transition-[color,transform] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-copper"
                         />
                       </a>
                     </li>
@@ -255,12 +257,9 @@ export default function Contact() {
             )}
 
             {SITE.availability.open && (
-              <div className="rounded-2xl border border-line bg-surface p-6">
-                <p className="mb-2 flex items-center gap-2.5 font-medium text-brass">
-                  <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brass opacity-50" />
-                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-brass" />
-                  </span>
+              <div className="rounded-sm border border-line bg-surface p-6">
+                <p className="mb-2 flex items-start gap-2.5 font-medium text-copper">
+                  <span className="mt-[0.45em] h-2.5 w-2.5 shrink-0 rounded-full bg-copper" aria-hidden="true" />
                   {SITE.availability.headline}
                 </p>
                 <p className="leading-relaxed text-muted">{SITE.availability.detail}</p>
