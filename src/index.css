@@ -135,3 +135,9 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Slim scrollbar for the desktop project cards, which scroll inside */
+@utility thin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line-strong) transparent;
+}

@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react'
 import type { Project } from '../content'
-import { asset } from '../lib/utils'
 import { ChevronLeft, ChevronRight, Close } from './Icons'
-import { ExternalLink } from './ui'
+import { Media, ProjectWriteup } from './ProjectWriteup'
 
 interface Props {
   project: Project
@@ -13,7 +12,8 @@ interface Props {
 }
 
 /**
- * Project details in a native <dialog>. showModal() gives focus trapping,
+ * Full project write-up in a native <dialog>, opened from View more on the
+ * mobile cards: full screen on phones, a centred panel on larger screens. showModal() gives focus trapping,
  * Escape handling and an inert page behind it without extra libraries.
  */
 export default function ProjectDialog({ project, index, total, onClose, onNavigate }: Props) {
@@ -51,8 +51,6 @@ export default function ProjectDialog({ project, index, total, onClose, onNaviga
     bodyRef.current?.scrollTo({ top: 0 })
   }, [project])
 
-  const [cover, ...rest] = project.gallery
-
   return (
     <dialog
       ref={dialogRef}
@@ -64,7 +62,7 @@ export default function ProjectDialog({ project, index, total, onClose, onNaviga
         if (pressedBackdrop.current && e.target === e.currentTarget) onClose()
         pressedBackdrop.current = false
       }}
-      className="m-auto h-[calc(100svh-1.5rem)] max-h-none w-[calc(100%-1.5rem)] max-w-3xl flex-col overflow-hidden rounded-2xl border border-line bg-surface p-0 text-ink shadow-2xl shadow-black/60 open:flex sm:h-auto sm:max-h-[calc(100svh-3rem)]"
+      className="m-0 h-[100dvh] max-h-none w-full max-w-none flex-col overflow-hidden bg-surface p-0 text-ink shadow-2xl shadow-black/60 open:flex sm:m-auto sm:h-auto sm:max-h-[calc(100svh-3rem)] sm:w-[calc(100%-3rem)] sm:max-w-3xl sm:rounded-2xl sm:border sm:border-line"
     >
       {/* Header */}
       <div className="flex shrink-0 items-start justify-between gap-6 border-b border-line px-6 py-5">
@@ -76,7 +74,8 @@ export default function ProjectDialog({ project, index, total, onClose, onNaviga
           <h2 id="project-dialog-title" className="font-semiwide text-2xl font-black leading-tight sm:text-3xl">
             {project.title}
           </h2>
-          <p className="mt-1 text-muted">{project.subtitle}</p>
+          {project.subtitle && <p className="mt-1 text-steel">{project.subtitle}</p>}
+          <p className="mt-1.5 text-sm text-muted">{project.context}</p>
         </div>
         <button
           type="button"
@@ -90,62 +89,9 @@ export default function ProjectDialog({ project, index, total, onClose, onNaviga
 
       {/* Scrollable body */}
       <div ref={bodyRef} className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
-        {cover && (
-          <img
-            src={asset(cover)}
-            alt={`${project.title}, photo 1`}
-            className="aspect-video w-full bg-canvas object-cover"
-          />
-        )}
-
-        <div className="space-y-8 px-6 py-7">
-          <p className="max-w-[68ch] leading-relaxed text-ink/90">{project.details}</p>
-
-          {project.outcomes.length > 0 && (
-            <div>
-              <h3 className="mb-3 font-semiwide text-lg font-bold">Key outcomes</h3>
-              <ul className="space-y-2.5">
-                {project.outcomes.map((item) => (
-                  <li key={item} className="flex gap-3 leading-relaxed text-muted">
-                    <span
-                      className="mt-[0.7em] h-px w-3 shrink-0"
-                      style={{ backgroundColor: project.accent }}
-                      aria-hidden="true"
-                    />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {rest.map((src, i) => (
-            <img
-              key={src}
-              src={asset(src)}
-              alt={`${project.title}, photo ${i + 2}`}
-              loading="lazy"
-              className="aspect-video w-full rounded-xl bg-canvas object-cover"
-            />
-          ))}
-
-          <div>
-            <h3 className="mb-3 font-semiwide text-lg font-bold">Tools and processes</h3>
-            <ul className="flex flex-wrap gap-2">
-              {project.stack.map((tech) => (
-                <li key={tech} className="rounded-md border border-line-strong px-2.5 py-1 text-sm text-ink/90">
-                  {tech}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {(project.link || project.repo) && (
-            <div className="flex flex-wrap gap-x-6 gap-y-3 border-t border-line pt-6">
-              {project.link && <ExternalLink href={project.link}>Full project write-up</ExternalLink>}
-              {project.repo && <ExternalLink href={project.repo}>Source files</ExternalLink>}
-            </div>
-          )}
+        <Media src={project.cover} alt="" label="Cover photo" className="aspect-video w-full border-0" />
+        <div className="px-5 pb-10 pt-8 sm:px-6">
+          <ProjectWriteup project={project} wide={false} level={3} />
         </div>
       </div>
 
