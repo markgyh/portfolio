@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { NAV_ITEMS } from '../content'
+import { NAV_ITEMS } from '../data'
 import { FULL_NAME, INITIALS, useActiveSection, useMediaQuery, useResumeUrl, useScrolled } from '../lib/utils'
 import { Close, Menu } from './Icons'
+import { PRESS } from './ui'
 
 export default function Navbar() {
   const active = useActiveSection()
@@ -46,17 +47,18 @@ export default function Navbar() {
     <>
       {/* Desktop and tablet: centred floating pill */}
       <header
-        className={`fixed left-1/2 z-50 hidden -translate-x-1/2 transition-[top] duration-300 sm:block ${
-          scrolled ? 'top-3' : 'top-5'
+        className={`fixed left-1/2 top-5 z-50 hidden -translate-x-1/2 transition-[translate] duration-300 ease-out sm:block ${
+          scrolled ? '-translate-y-2' : ''
         }`}
       >
+        {/* Translucent so the page reads through it; a border, not a shadow, sets it apart */}
         <nav
           aria-label="Primary"
-          className="flex items-center gap-1 rounded-full border border-line bg-surface/85 p-1.5 shadow-lg shadow-black/30 backdrop-blur-xl"
+          className="chrome flex items-center gap-1 rounded-sm border border-line bg-surface/85 p-1.5 backdrop-blur-xl"
         >
           <a
             href="#top"
-            className="flex h-9 items-center rounded-full px-3.5 font-wide text-sm font-extrabold tracking-wide text-brass transition-colors hover:text-ink"
+            className="flex h-9 items-center rounded-sm px-3.5 font-display text-sm font-bold tracking-wide text-copper transition-colors hover:text-ink"
           >
             {INITIALS}
             <span className="sr-only">{FULL_NAME}, back to top</span>
@@ -66,8 +68,8 @@ export default function Navbar() {
               key={id}
               href={`#${id}`}
               aria-current={active === id ? 'location' : undefined}
-              className={`flex h-9 items-center whitespace-nowrap rounded-full px-4 text-[0.9rem] font-medium transition-colors ${
-                active === id ? 'bg-brass text-canvas' : 'text-muted hover:bg-surface-2 hover:text-ink'
+              className={`flex h-9 items-center whitespace-nowrap rounded-sm px-3 font-display text-[0.95rem] font-medium md:px-4 ${PRESS} ${
+                active === id ? 'bg-copper text-canvas' : 'text-muted hover:bg-surface-2 hover:text-ink'
               }`}
             >
               {label}
@@ -78,7 +80,7 @@ export default function Navbar() {
               href={resume}
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-1 flex h-9 items-center rounded-full border border-line-strong px-4 text-[0.9rem] font-medium text-ink transition-colors hover:border-brass hover:text-brass"
+              className={`ml-1 hidden h-9 items-center rounded-sm border border-line-strong px-4 font-display text-[0.95rem] font-medium text-ink hover:border-copper hover:text-copper md:flex ${PRESS}`}
             >
               Résumé
               <span className="sr-only"> (PDF, opens in a new tab)</span>
@@ -89,13 +91,13 @@ export default function Navbar() {
 
       {/* Phones: top bar with a labelled menu button */}
       <header
-        className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 sm:hidden ${
+        className={`chrome fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 sm:hidden ${
           scrolled || open ? 'border-line bg-canvas/90 backdrop-blur-xl' : 'border-transparent'
         }`}
         style={{ paddingTop: 'env(safe-area-inset-top)' }}
       >
         <div className="flex h-16 items-center justify-between px-5">
-          <a href="#top" className="font-wide text-base font-extrabold tracking-wide text-brass">
+          <a href="#top" className="flex h-11 items-center font-display text-base font-bold tracking-wide text-copper">
             {INITIALS}
             <span className="sr-only">{FULL_NAME}, back to top</span>
           </a>
@@ -105,7 +107,7 @@ export default function Navbar() {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            className="flex h-11 items-center gap-2 rounded-full border border-line-strong bg-surface/80 px-4 text-sm font-medium text-ink"
+            className={`flex h-11 items-center gap-2 rounded-sm border border-line-strong bg-surface px-4 font-display text-sm font-medium text-ink ${PRESS}`}
           >
             {open ? <Close size={18} /> : <Menu size={18} />}
             {open ? 'Close' : 'Menu'}
@@ -116,7 +118,8 @@ export default function Navbar() {
           id="mobile-menu"
           ref={panelRef}
           hidden={!open}
-          className="border-t border-line bg-canvas/95 px-5 pb-6 pt-2 backdrop-blur-xl"
+          // Drops down from the bar as it opens. Solid, so it never stacks a second blur on the bar's.
+          className="border-t border-line bg-canvas px-5 pb-6 pt-2 transition-[opacity,translate] duration-200 ease-out starting:-translate-y-2 starting:opacity-0"
         >
           <nav aria-label="Primary">
             <ul>
@@ -126,8 +129,8 @@ export default function Navbar() {
                     href={`#${id}`}
                     onClick={() => setOpen(false)}
                     aria-current={active === id ? 'location' : undefined}
-                    className={`flex min-h-14 items-center font-semiwide text-xl font-bold ${
-                      active === id ? 'text-brass' : 'text-ink'
+                    className={`flex min-h-14 items-center font-display text-xl font-bold ${
+                      active === id ? 'text-copper' : 'text-ink'
                     }`}
                   >
                     {label}
@@ -141,7 +144,7 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
-                className="mt-5 flex min-h-12 items-center justify-center rounded-full border border-line-strong font-medium text-ink"
+                className={`mt-5 flex min-h-12 items-center justify-center rounded-sm border border-line-strong font-display font-medium text-ink ${PRESS}`}
               >
                 View résumé (PDF)
               </a>

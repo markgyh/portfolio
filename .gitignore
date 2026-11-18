@@ -17,3 +17,6 @@ logs/
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# Packaged copies of the site
+*.zip

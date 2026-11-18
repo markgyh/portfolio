@@ -22,12 +22,12 @@ export default function Footer() {
               className={`border-b border-r border-line-strong px-4 py-3 ${i === 0 ? 'col-span-2 sm:col-span-1' : ''}`}
             >
               <p className="text-xs text-faint">{label}</p>
-              <p className="mt-0.5 font-semiwide font-semibold text-ink">{value}</p>
+              <p className="mt-0.5 font-display font-semibold text-ink [overflow-wrap:anywhere]">{value}</p>
             </div>
           ))}
           <a
             href="#top"
-            className="group col-span-2 flex items-center justify-center gap-2 border-b border-r border-line-strong px-6 py-3 font-medium text-muted transition-colors hover:bg-surface hover:text-brass sm:col-span-1"
+            className="group col-span-2 flex items-center justify-center gap-2 border-b border-r border-line-strong px-6 py-3 font-medium text-muted transition-colors hover:bg-surface hover:text-copper sm:col-span-1"
           >
             <ArrowUp size={16} className="transition-transform group-hover:-translate-y-0.5" />
             Back to top

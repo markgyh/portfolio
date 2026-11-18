@@ -1,5 +1,5 @@
-import { useEffect, useState, useSyncExternalStore } from 'react'
-import { NAV_ITEMS, SITE } from '../content'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
+import { NAV_ITEMS, SITE } from '../data'
 
 export const FULL_NAME = `${SITE.firstName} ${SITE.lastName}`
 export const INITIALS = `${SITE.firstName[0] ?? ''}${SITE.lastName[0] ?? ''}`.toUpperCase()
@@ -44,6 +44,15 @@ export function useResumeUrl(): string {
   return url && exists ? url : ''
 }
 
+/**
+ * Removes an image or video whose file is missing, so its frame's ground colour shows instead
+ * of a broken-image icon or an empty player, and a missing photo beside text leaves no gap for
+ * the text to wrap around.
+ */
+export const hideIfMissing = (e: { currentTarget: HTMLElement }) => {
+  e.currentTarget.style.display = 'none'
+}
+
 /** Shared layout container so every section lines up on the same edges. */
 export const CONTAINER = 'mx-auto w-full max-w-[88rem] px-5 sm:px-8 lg:px-16'
 
@@ -58,6 +67,33 @@ export function useMediaQuery(query: string): boolean {
     () => false,
   )
 }
+
+/**
+ * True once the element's top has come about 85% of the way up the viewport.
+ * Fires once and stays true, so scroll-triggered reveals never replay.
+ */
+export function useInView<T extends Element>() {
+  const ref = useRef<T>(null)
+  const [inView, setInView] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el || inView) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '0px 0px -15% 0px' },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [inView])
+  return [ref, inView] as const
+}
+
+export const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 /** True once the page has scrolled past `offset` pixels. */
 export function useScrolled(offset = 40): boolean {

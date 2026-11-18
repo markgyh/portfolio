@@ -26,7 +26,7 @@ If you rename the repo, update `BASE` in `vite.config.ts` to `'/<new-name>/'`, a
 
 ## Editing content
 
-Everything on the page lives in **`src/content.ts`**. Search it for `TODO` to find every placeholder.
+Everything on the page lives in **`src/content.ts`**. Search it for `TODO` to find every placeholder. A section with an empty list (`[]`) is hidden along with its nav link.
 
 | What | Where |
 | --- | --- |
@@ -35,6 +35,7 @@ Everything on the page lives in **`src/content.ts`**. Search it for `TODO` to fi
 | About paragraphs, tools | `ABOUT`, `SKILL_GROUPS` |
 | Jobs | `EXPERIENCES` (newest first) |
 | Projects and their pop-up details | `PROJECTS` (newest first) |
+| Testimonials | `TESTIMONIALS` |
 | GitHub, LinkedIn | `SOCIALS` |
 
 The browser tab icon is generated from your initials automatically.
@@ -52,7 +53,31 @@ public/
 
 The résumé links stay hidden until `public/files/resume.pdf` exists, so there is never a broken link.
 
-Tips: export photos as `.jpg` or `.webp` around 1600 px wide and under 400 KB each. Project card images look best at 16:9 or wider.
+Tips: export photos as `.jpg` or `.webp` around 1600 px wide and under 400 KB each. Project card images look best at 16:10.
+
+### Project write-ups
+
+Each card opens a window with the full write-up: a cover photo across the top (a third of the window's height), the **executive summary** with the project's facts and tools, then each section the write-up covers, in order, and finally a video. In `PROJECTS`:
+
+```ts
+summary: 'Executive summary text.',
+summaryImage: 'images/projects/tape-measure/summary.jpg',
+sections: [
+  {
+    heading: 'The Challenge & Context',
+    image: 'images/projects/tape-measure/challenge.jpg',
+    blocks: [
+      { type: 'p', lead: 'Optional bold run-in.', text: 'Paragraph text.' },
+      { type: 'subheading', text: 'A smaller heading' },
+      { type: 'list', items: ['First point', 'Second point'] },
+      { type: 'table', head: ['Option', 'Cost'], rows: [['A', 'S$4.18']] },
+    ],
+  },
+],
+video: 'videos/tape-measure.mp4', // or a YouTube/Vimeo embed URL
+```
+
+`summaryImage` and each section's `image` sit on the right with the text wrapping around them, at most a third of the window's width and height (a little wider on phones, so the text beside it stays readable). Tables always run full width below the photo. Any photo or video left as `''` shows a labelled placeholder frame until you add it. `cover` is also the card's photo.
 
 ### Contact form (Web3Forms)
 
@@ -68,6 +93,8 @@ The key is meant to be public, so it is safe to commit. Until it is set, the for
 public/                        Your images and résumé (copied as-is)
 src/
   content.ts                   All site content (edit this)
+  data.ts                      Hands content to the page; hides empty sections
+  dev/                         Stress-test data and toggle (dev server only, never shipped)
   App.tsx                      Page layout
   main.tsx                     React entry point
   index.css                    Colours, fonts, global styles
@@ -79,6 +106,11 @@ vite.config.ts                 Build config and GitHub Pages base path
 
 ## Design notes
 
-- Palette: slate `#12181D`, surface `#1A2228`, aluminium text `#DCE2E6`, brass accent `#D4AE62`, steel blue `#7FB4CC` for drawing annotations. Tokens live in `src/index.css`. All text meets WCAG AA contrast.
-- Type: Archivo (variable weight and width). Headings use the expanded width.
-- On wide screens with motion enabled, Projects is a scroll-stacking card deck. Phones, tablets, short windows and visitors with reduced motion on get a plain card grid instead.
+- Palette: blueprint blue `#0B2545`, surface `#0F3060`, white ink `#F4F8FC`, copper accent `#E08A4F`, light cyan `#9DD4F5` for dimension lines and annotations. Tokens live in `src/index.css`. All text meets WCAG AA contrast.
+- Type: Chakra Petch for headings and controls, IBM Plex Sans for everything else. Both bundled locally.
+- Projects: three cards per row on desktop, two on tablets, one on phones. Long titles and summaries are trimmed on the cards and shown in full in the project window.
+- Motion: one drafting sequence on load (the name rises, then its dimension line is drawn), leader lines drawn as sections arrive, press feedback on controls, and a sideways slide when stepping between projects. Curves and timings are tokens in `src/index.css`. With reduced motion on, everything is shown in its finished state with short fades.
+
+## Stress-testing the layout
+
+With `pnpm dev` running, a small switch at the bottom of the page has two parts. **Desktop / Mobile** shows the page normally or inside a 390 × 844 phone frame. **Demo data / Worst case / Empty / One** swaps in test content: long names and emails, missing and oddly shaped photos, empty sections, non-Latin text, or one of everything. Both also work by URL, e.g. `/portfolio/?view=mobile&data=worst`. The switch and its data only exist on the dev server; they are not part of the published site.

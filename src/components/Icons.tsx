@@ -70,7 +70,7 @@ export const Copy = (p: IconProps) => (
 )
 export const Check = (p: IconProps) => (
   <Svg {...p}>
-    <path d="m5 12 5 5 9-10" />
+    <path d="m5 12 5 5 9-10" pathLength={1} />
   </Svg>
 )
 export const FileText = (p: IconProps) => (

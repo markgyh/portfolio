@@ -9,13 +9,13 @@
      so "images/hero.jpg" means public/images/hero.jpg.
    ============================================================================= */
 
-// Accent colours used for each project card. Chosen to sit on the dark theme
-// and stay readable with dark text on top (used for buttons in the dialog).
+// Accent colours used for each project card. Chosen to sit on the blueprint
+// blue and stay readable with dark text on top (used for buttons in the dialog).
 export const ACCENTS = {
-  brass: '#D4AE62',
-  steel: '#7FB4CC',
-  copper: '#D99167',
-  sage: '#A3C494',
+  copper: '#E08A4F',
+  cyan: '#9DD4F5',
+  white: '#F4F8FC',
+  amber: '#F0B86E',
 } as const
 
 // ─── Site & profile ──────────────────────────────────────────────────────────
@@ -60,7 +60,7 @@ export const SITE = {
 
   // Contact form. Get a free access key at https://web3forms.com and paste it
   // here. Until it is set, the form opens the visitor's email app instead.
-  web3formsAccessKey: '', // TODO
+  web3formsAccessKey: '28431cb0-7922-4fe9-832d-3a1d5f0e82e7',
 }
 
 export const SOCIALS: { label: string; handle: string; url: string }[] = [
@@ -68,29 +68,24 @@ export const SOCIALS: { label: string; handle: string; url: string }[] = [
   { label: 'LinkedIn', handle: 'linkedin', url: 'https://linkedin.com/in/' }, // TODO
 ]
 
-export const NAV_ITEMS = [
-  { label: 'About', id: 'about' },
-  { label: 'Experience', id: 'experience' },
-  { label: 'Projects', id: 'projects' },
-  { label: 'Contact', id: 'contact' },
-] as const
-
 // ─── About ───────────────────────────────────────────────────────────────────
 
 export const ABOUT: string[] = [
-  "I'm a mechanical design and robotics engineer with a passion for creating with my hands. I care about the intersection of engineering rigour and design craft, and I want to build things that are functional, beautiful and resilient.",
+  "Hi, I'm a Mechanical Design and Robotics engineer with a passion for creating with my hands. I care about the intersection of engineering rigour and design craft, and I want to build things that are functional, aesthetic and resilient.",
   // TODO: the first draft had unrelated filler here (Vercel, Linear, Shopify). Replace with your own summary.
-  'Most recently I retrofitted a manual sweeper for autonomous operation at Kärcher Robotics, and built sea and aerial drones at The Kinetic Option. My work runs from CAD and tolerancing through fabrication to field testing.',
+  'Most recently I retrofitted a manual sweeper for autonomous operation at Kärcher Robotics, and built sea and aerial drones at The Kinetic Option. My experience ranges from CAD and tolerancing through to prototyping, fabrication and field testing.',
   'Outside of work, I like to acquire knowledge. I enjoy watching geopolitical videos and learning new languages. I am also into calisthenics, travelling and cooking. I firmly believe insects and arachnids are underrated and deserve more attention.',
 ]
 
 export const SKILL_GROUPS: { label: string; items: string[] }[] = [
-  { label: 'Software', items: ['SolidWorks', 'Fusion360', 'ANSYS Mechanical', 'Adobe Illustrator', 'Python'] },
+  { label: 'Software', 
+    items: ['SolidWorks', 'Fusion360', 'ANSYS Mechanical', 'ANSYS Fluent', 'Adobe Illustrator', 'Python', 'ROS2'] },
   {
-    label: 'Fabrication',
-    items: ['FDM 3D printing', 'Laser & waterjet cutting', 'Sheet metal', 'Handheld power tools', 'Electronics & soldering'],
+    label: 'Hardware',
+    items: ['FDM 3D Printing', 'Laser & Waterjet cutting', 'Sheet Metal Fabrication', 'Handheld Power Tools', 'Electronics & Soldering'],
   },
-  { label: 'Standards', items: ['ISO 2768', 'DFMA', 'Technical drawings'] },
+  { label: 'Others', 
+    items: ['ISO 2768', 'DFMA', 'Technical Drawings'] },
 ]
 
 // ─── Experience (newest first) ───────────────────────────────────────────────
@@ -150,9 +145,12 @@ export const EXPERIENCES: Experience[] = [
 // ─── Projects (newest first) ─────────────────────────────────────────────────
 // Text comes word for word from "portfolio content - project write-ups.docx".
 // Images and videos: '' shows a labelled placeholder frame until you add a path.
-//   cover          wide photo at the top of the card (16:9 or wider looks best)
+//   cover          photo on the card, and across the top of the project window at a
+//                  third of its height (16:9 or wider looks best)
 //   summaryImage   photo beside the executive summary
 //   sections[].image  photo beside each section
+//                  These two sit on the right with the text wrapping around them,
+//                  at most a third of the window's width and height.
 //   video          a YouTube/Vimeo embed URL, or a file such as 'videos/drone.mp4'
 
 /** A paragraph may open with a bold run-in heading (`lead`). */
@@ -195,7 +193,7 @@ export const PROJECTS: Project[] = [
       { label: "Timeline", value: "12 weeks" },
     ],
     tags: ["CAD", "FDM printing", "Laser cutting", "Injection moulding (Actionbox INJEKTO 3)", "Zünd cutting"],
-    accent: ACCENTS.brass,
+    accent: ACCENTS.copper,
     cover: '',
     summary: "SUTD's open house needed a door gift: a pocket tape measure that extends to 100 cm, locks at least every 5 cm and retracts at the press of a button. It had to come in under S$10 a unit for a 1,000-unit run, using at least three manufacturing processes. I designed the shell and the locking mechanism, and spent about six iterations tuning the ratchet until it locks and releases with a crisp, satisfying click. The design uses five processes and nine parts. Our preliminary cost model puts it at S$4.18 a unit. The project is still running, and the cost analysis is now pushing the shell from injection moulding to 3D printing.",
     summaryImage: '',
@@ -292,7 +290,7 @@ export const PROJECTS: Project[] = [
       { label: "Timeline", value: "1 month" },
     ],
     tags: ["React 18", "Vite", "Tailwind", "FastAPI", "MySQL", "pytest", "Vitest", "React Testing Library", "AI-assisted (Claude)"],
-    accent: ACCENTS.steel,
+    accent: ACCENTS.cyan,
     cover: '',
     summary: "LyfeGo is a Singapore platform for booking sports classes with credits. We built it two connected web portals over one backend. On the creator portal, KOLs (social media creators) browse brand collaborations and apply for a session. On the admin portal, staff publish opportunities and review applications. I owned testing, quality checks and documentation, and was the team's single point of contact with LyfeGo's mentor. The team demonstrated a working end-to-end flow, from finding an opportunity to a stored, reviewable application, with the capacity rules backed by about 470 automated tests. I wrote most of them with a teammate's help, using AI to generate the code. I took this on outside my coursework to work on a software product, well outside my mechanical background.",
     summaryImage: '',
@@ -377,7 +375,7 @@ export const PROJECTS: Project[] = [
       { label: "Budget modelled", value: "US$8M of US$10M over 5 years" },
     ],
     tags: ["Driver analysis", "Competitor and price benchmarking", "Bottom-up cost modelling"],
-    accent: ACCENTS.copper,
+    accent: ACCENTS.amber,
     cover: '',
     summary: "TalentGeist's Work Simulation Program sets students real brand-manager problems, taught by industry practitioners, and companies use the results to scout candidates for internships. My brief: grow Coca-Cola's healthy-beverage share in Indonesia, its biggest Southeast Asian market, with up to US$10M over five years. I treated it the way I'd treat an engineering problem. I listed every plausible barrier, used evidence to rule out the ones that weren't actually limiting growth, and put money only against the two that were: sugar content and a weak digital presence. The result was a US$8M, five-year plan across reformulation R&D, a relaunch campaign for the weakest brand, and always-on social media teams for the four brands. I left US$2M unspent because nothing in the plan needed it.",
     summaryImage: '',
@@ -467,7 +465,7 @@ export const PROJECTS: Project[] = [
       { label: "", value: "Weekly design reviews" },
     ],
     tags: ["SolidWorks (sheet metal)", "Technical drawings to ISO 2768", "DFMA", "PETG 3D printing", "Outsourced sheet-metal fabrication"],
-    accent: ACCENTS.sage,
+    accent: ACCENTS.white,
     cover: '',
     summary: "I redesigned the perception hardware of Kärcher's autonomous sweeper. It now uses one fewer lidar, the top lidar's view is clear, and the mounts match the machine's design language. The new layout uses two Robosense Airy hemispherical lidars on opposite corners and a Robosense Helios on a new top mast, with the IMUs, rain sensor and a 360° camera mounted on the same stack. The fabricated parts came back from the supplier needing no changes, and are being assembled for the December 2026 showcase at Punggol Digital District.",
     summaryImage: '',
@@ -555,7 +553,7 @@ export const PROJECTS: Project[] = [
       { label: "", value: "Weekly design reviews" },
     ],
     tags: ["SolidWorks (surface modelling, sheet metal)", "Technical drawings to ISO 2768", "DFMA", "PETG 3D printing", "Outsourced sheet-metal fabrication"],
-    accent: ACCENTS.brass,
+    accent: ACCENTS.copper,
     cover: '',
     summary: "I redesigned the front panel of Kärcher's autonomous road sweeper, which is the operator's main interface and the developers' terminal. The new panel is a hybrid of 5 mm mild-steel sheet metal and sectioned PETG prints. It widens the leg-entry channel by 50%, from 20 cm to 30 cm, shades and protects the screen from sun and rain, and adds gasket sealing. It is now fitted to the machine, with wiring in progress. The sweeper is scheduled to be shown at Punggol Digital District's product showcase in December 2026, in front of Singapore ministers and Kärcher senior management.",
     summaryImage: '',
@@ -647,7 +645,7 @@ export const PROJECTS: Project[] = [
       { label: "Timeline", value: "4 weeks, with weekly design reviews" },
     ],
     tags: ["Fusion 360", "3D printing", "Supplied drone avionics"],
-    accent: ACCENTS.steel,
+    accent: ACCENTS.cyan,
     cover: '',
     summary: "With no existing specifications or prior work in the company, I designed and built the first physical prototype of a dual-mode drone with a 300 km/h top-speed target, in four weeks. It goes through three design iterations. The 3D-printed V2.1 airframe was shown to clients, who were impressed. The design was then handed to the in-house mechanical designer, and it is still in development.",
     summaryImage: '',
@@ -731,7 +729,7 @@ export const PROJECTS: Project[] = [
       { label: "Timeline", value: "3 weeks, with weekly design reviews" },
     ],
     tags: ["Fusion 360", "PETG 3D printing", "Raspberry Pi", "Python"],
-    accent: ACCENTS.copper,
+    accent: ACCENTS.amber,
     cover: '',
     summary: "In three weeks, I took a wireless emergency stop for the company's seadrone fleet from a blank page to a sea-tested unit. It replaced a kill switch tethered by a 10 m cable. In a range test, it worked across the entire support yacht. It served as the fleet's live emergency stop for the three months of my internship and, as far as I know, is still in use. Its hardware and code already support eight drones, ready for the fleet's growth from five to eight.",
     summaryImage: '',
@@ -806,7 +804,7 @@ export const PROJECTS: Project[] = [
       { label: "Budget", value: "S$1,800 spent of S$2,500" },
     ],
     tags: ["Fusion 360", "Laser cutting", "Drill press", "ESP32-based electronics"],
-    accent: ACCENTS.sage,
+    accent: ACCENTS.white,
     cover: '',
     summary: "Caresino tackles a common problem: elderly patients skip medication doses. It pairs a pharmacist-loaded pill cartridge with a full-size slot machine. Pulling the lever during a dose window hits the \"jackpot\" and releases the pills. I designed and built the slot machine: the enclosure, the lever, and the motorised reel system and its power and signal schematic. I also laid out the dispenser's internal components and the path pills take through it. The integrated prototype impressed the teaching team and earned the team a nomination for the Baby Shark award, an internal venture fund. We declined it because most of the team were leaving for exchange or internships.",
     summaryImage: '',
@@ -881,7 +879,7 @@ export const PROJECTS: Project[] = [
       { label: "Timeline", value: "10 weeks" },
     ],
     tags: ["Fusion 360", "ANSYS", "SLA printing"],
-    accent: ACCENTS.brass,
+    accent: ACCENTS.copper,
     cover: '',
     summary: "Flairbrush is an airbrush attachment that mixes colours on demand from a set of base colours, so a miniature painter doesn't have to stop, clean and refill to change shade. I came up with the concept, designed the inline baffle mixer and laid out the five-line feed system. At the final exhibition, the prototype produced more than 12 distinct shades from five reservoirs. We couldn't make the ratios repeatable. Tracing why showed me that flow control matters more than mixer geometry.",
     summaryImage: '',
@@ -964,7 +962,7 @@ export const PROJECTS: Project[] = [
       { label: "Timeline", value: "14 weeks" },
     ],
     tags: ["CAD", "Laser cutting", "BJT H-bridge motor control"],
-    accent: ACCENTS.steel,
+    accent: ACCENTS.cyan,
     cover: '',
     summary: "Solagami is an electric truck that unfolds its own solar array, using the same motors that drive its wheels. I came up with the deployment concept, designed the scissor-trellis mechanism, ran the team's schedule and task allocation, and fabricated the prototype. The motorised prototype extends from 30 cm to 60 cm and retracts again, deploying and stowing reliably on demand. At full scale, a 40 ft container truck would deploy a 100 m array of 100 panels: 50 kW, or about 200 kWh/day. The school acquired the prototype, and it is on display in the design studio.",
     summaryImage: '',
@@ -1031,7 +1029,7 @@ export const PROJECTS: Project[] = [
       { label: "Component cost", value: "S$50.90" },
     ],
     tags: ["Solar PV sizing", "Battery and charge controller sizing", "Energy analysis", "FDM 3D printing"],
-    accent: ACCENTS.copper,
+    accent: ACCENTS.amber,
     cover: '',
     summary: "I designed the power system that converted a battery-powered bubble gun to solar charging. The battery outlasts a full bottle of bubble solution by about 25%, so a parent only has to refill the bottle. In testing, the panels charged the battery from empty to full in 3 hours. I also designed a 3D-printed mount that slides the panels onto the gun's existing rails, with no permanent changes to the toy. The project also showed that solar is a poor fit for a product this small and cheap.",
     summaryImage: '',
@@ -1116,7 +1114,7 @@ export const PROJECTS: Project[] = [
       { label: "Budget", value: "S$100" },
     ],
     tags: ["Laser cutting", "Solar PV sizing", "DC power electronics"],
-    accent: ACCENTS.sage,
+    accent: ACCENTS.white,
     cover: '',
     summary: "I set the specifications for a battery-free solar food dehydrator designed for Singapore's humid climate, and laser-cut and built its double-walled acrylic chamber. In a 2-hour assessed trial, it removed 27 g of water from a sponge holding 50 g, compared with 17 g for an unheated control sponge. Looking back, the limit wasn't heat. The chamber made heat well but couldn't get rid of moist air. The fans were starved because the inlet vents had about one-twentieth of the fans' area.",
     summaryImage: '',
@@ -1202,7 +1200,7 @@ export const PROJECTS: Project[] = [
       { label: "Budget", value: "S$200" },
     ],
     tags: ["Handheld power tools", "Adobe Illustrator", "Laser cutting"],
-    accent: ACCENTS.brass,
+    accent: ACCENTS.copper,
     cover: '',
     summary: "For the orientation committee, our team of five built a 2 m monolith to commemorate the incoming freshman batch. It has a motor-driven crown that opens, and lighting that reacts to the crowd's cheering. It was the centrepiece of the orientation finale in front of 600 freshmen, and then stood in the fabrication lab for a month. We bought only the timber for the frame, within a S$200 budget, and salvaged everything else. I designed and built the frame, came up with the crown mechanism and built its first version, and designed and laser-cut the five house panels.",
     summaryImage: '',
@@ -1275,7 +1273,7 @@ export const PROJECTS: Project[] = [
       { label: "Budget", value: "S$500" },
     ],
     tags: ["ESP32", "WS2812B LEDs", "GrandMA2", "MA3D", "Laser cutting"],
-    accent: ACCENTS.steel,
+    accent: ACCENTS.cyan,
     cover: '',
     summary: "Galleria is a 40 m sensory walkway that gives SUTD hostel residents the commute they don't have. It uses light, fog and scent to mark the switch between rest and work. I led the concept, designed the 2.5 m full-scale entrance arch and its fog distribution, built a 1:50 site model, and rendered the full walkway in lighting software. We built the demonstration for S$500, mostly from salvaged materials. It was named best project in class (a tie), and the school administration wanted to keep it for display but couldn't house a 2.5 m structure.",
     summaryImage: '',
@@ -1351,7 +1349,7 @@ export const PROJECTS: Project[] = [
       { label: "Budget", value: "S$50" },
     ],
     tags: ["Energy and force analysis", "Power transmission", "FDM 3D printing", "Rapid prototyping"],
-    accent: ACCENTS.copper,
+    accent: ACCENTS.amber,
     cover: '',
     summary: "I led the concept work and designed the power transmission for a mousetrap-powered car. The car had to carry 200 to 400 g across a 2.5 m obstacle course in under 10 s. Without a load, it cleared the steps and about 80% of the course before it stalled on the bouncy section. With the 200 g load, it got up the ramp and stalled right after. Looking back, the cause is clear. We designed the drivetrain for speed and step clearance, but the course needed pulling force.",
     summaryImage: '',
@@ -1424,4 +1422,51 @@ export const PROJECTS: Project[] = [
     ],
     video: '',
   },
+]
+
+// ─── Testimonials ────────────────────────────────────────────────────────────
+
+export interface Testimonial {
+  quote: string[] // one string per paragraph
+  name: string
+  role: string // e.g. 'Senior Engineer, Kärcher Robotics'
+}
+
+// TODO: these are placeholders. Replace them with real quotes from supervisors or
+// colleagues (and ask their permission first). Leave the list empty, [], to hide
+// the section and its nav link (the same goes for EXPERIENCES and PROJECTS).
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    quote: [
+      'Placeholder quote. Describe what it was like to work together, for example how the parts were designed, documented and handed over to manufacturing.',
+      'A second paragraph is optional. Keep each quote to around 40 to 80 words so the cards stay a similar height.',
+    ],
+    name: 'Supervisor Name',
+    role: 'Job title, Company',
+  },
+  {
+    quote: [
+      'Placeholder quote. A colleague or manager describing a project you delivered, the problem you solved and the result.',
+    ],
+    name: 'Colleague Name',
+    role: 'Job title, Company',
+  },
+  {
+    quote: [
+      'Placeholder quote. Someone from a teaching or lab role describing how you ran workshops or supported other students.',
+    ],
+    name: 'Reference Name',
+    role: 'Job title, Organisation',
+  },
+]
+
+// ─── Navigation ──────────────────────────────────────────────────────────────
+
+// Links for sections with nothing in them are hidden automatically.
+export const NAV_ITEMS: { label: string; id: string }[] = [
+  { label: 'About', id: 'about' },
+  { label: 'Experience', id: 'experience' },
+  { label: 'Projects', id: 'projects' },
+  { label: 'Testimonials', id: 'testimonials' },
+  { label: 'Contact', id: 'contact' },
 ]
