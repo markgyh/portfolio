@@ -29,7 +29,7 @@ function siteMeta(): Plugin {
   const favicon =
     'data:image/svg+xml,' +
     encodeURIComponent(
-      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#12181D"/><text x="32" y="42" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="800" font-size="28" fill="#D4AE62">${initials}</text></svg>`,
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0B2545"/><text x="32" y="42" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="800" font-size="28" fill="#E08A4F">${initials}</text></svg>`,
     )
 
   const absolute = (path: string) => (/^https?:\/\//.test(path) ? path : new URL(path, SITE.url).href)
