@@ -144,7 +144,9 @@ export const EXPERIENCES: Experience[] = [
 
 // ─── Projects (newest first) ─────────────────────────────────────────────────
 // Text comes word for word from "portfolio content - project write-ups.docx".
-// Images and videos: '' shows a labelled placeholder frame until you add a path.
+// Photos and videos are optional except the cover: leave one as '' and its spot is
+// removed, so the text takes the full width (like the résumé button, which only
+// appears once the file exists). A cover left as '' shows a labelled frame.
 //   cover          photo on the card, and across the top of the project window at a
 //                  third of its height (16:9 or wider looks best)
 //   summaryImage   photo beside the executive summary

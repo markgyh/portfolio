@@ -77,7 +77,7 @@ sections: [
 video: 'videos/tape-measure.mp4', // or a YouTube/Vimeo embed URL
 ```
 
-`summaryImage` and each section's `image` sit on the right with the text wrapping around them, at most a third of the window's width and height (a little wider on phones, so the text beside it stays readable). Tables always run full width below the photo. Any photo or video left as `''` shows a labelled placeholder frame until you add it. `cover` is also the card's photo.
+`summaryImage` and each section's `image` sit on the right with the text wrapping around them, at most a third of the window's width and height (a little wider on phones, so the text beside it stays readable). Tables always run full width below the photo. A section photo or video is optional: leave it as `''` (or point it at a file that isn't there yet) and its spot disappears, with the text taking the full width. `cover` is also the card's photo; until it's set, the card and window show a labelled frame where it goes.
 
 ### Contact form (Web3Forms)
 

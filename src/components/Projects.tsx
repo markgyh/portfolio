@@ -12,10 +12,10 @@ import { SectionHeading } from './ui'
  */
 function ProjectCard({ project, onOpen }: { project: Project; onOpen: () => void }) {
   return (
-    <article className="group relative flex flex-col overflow-clip rounded-sm border border-line bg-surface transition-colors hover:border-copper/60 has-[button:focus-visible]:border-copper has-[button:focus-visible]:ring-2 has-[button:focus-visible]:ring-copper">
+    <article className="group relative flex flex-col overflow-clip rounded-xl border border-line bg-surface transition-colors hover:border-copper/60 has-[button:focus-visible]:border-copper has-[button:focus-visible]:ring-2 has-[button:focus-visible]:ring-copper">
       <div className="relative aspect-[16/10] shrink-0 overflow-hidden bg-canvas">
         <Media src={project.cover} alt="" label="Cover photo" className="h-full w-full" />
-        <span className="absolute left-3 top-3 rounded-sm bg-canvas px-2 py-0.5 text-sm tabular-nums text-ink">
+        <span className="absolute left-3 top-3 rounded-md bg-canvas px-2 py-0.5 text-sm tabular-nums text-ink">
           {project.date}
         </span>
       </div>
