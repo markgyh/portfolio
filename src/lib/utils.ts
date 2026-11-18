@@ -45,10 +45,11 @@ export function useResumeUrl(): string {
 }
 
 /**
- * Removes an image whose file is missing, so its frame's ground colour shows instead of a
- * broken-image icon, and a missing photo beside text leaves no gap for the text to wrap around.
+ * Removes an image or video whose file is missing, so its frame's ground colour shows instead
+ * of a broken-image icon or an empty player, and a missing photo beside text leaves no gap for
+ * the text to wrap around.
  */
-export const hideIfMissing = (e: { currentTarget: HTMLImageElement }) => {
+export const hideIfMissing = (e: { currentTarget: HTMLElement }) => {
   e.currentTarget.style.display = 'none'
 }
 

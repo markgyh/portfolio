@@ -79,3 +79,15 @@ export const FileText = (p: IconProps) => (
     <path d="M14 3v5h5M9 13h6M9 17h6" />
   </Svg>
 )
+export const ImageIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="3" y="4" width="18" height="16" rx="2" />
+    <circle cx="9" cy="10" r="1.75" />
+    <path d="m21 16-5-5-9 9" />
+  </Svg>
+)
+export const Play = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M7 4.5v15l12-7.5-12-7.5Z" />
+  </Svg>
+)

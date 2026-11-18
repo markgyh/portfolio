@@ -103,10 +103,16 @@ const worst: Fixture = {
     {
       title: 'Autonomous Hull-Cleaning Robot for Offshore Aquaculture Net Pens',
       subtitle: 'Crawler that clears biofouling from fish-farm nets without divers, rated for 40 m depth and North Sea currents',
+      context: 'Industry project, Northwind Industries Holdings with the Norwegian Seafood Research Fund',
       date: 'Sep 2026',
-      summary:
-        'Designed the pressure housing, magnetic track modules and the brush head for a robot that crawls along submerged nets, cleaning biofouling in currents up to 1.5 m/s while streaming video to the surface vessel over a 120 m tether.',
-      stack: [
+      facts: [
+        { label: 'Role', value: 'Lead mechanical designer for the pressure housing, track modules and brush head, plus all production drawings' },
+        { label: 'Team', value: '14 (4 mechanical, 6 software, 2 electrical, 2 operations)' },
+        { label: 'Timeline', value: '2 years' },
+        { label: 'Budget', value: '€1,284,000' },
+        { label: '', value: 'Pilot fleet of 12 units across three farm sites' },
+      ],
+      tags: [
         'SolidWorks',
         'Computational fluid dynamics (ANSYS Fluent)',
         'Finite element analysis',
@@ -118,117 +124,137 @@ const worst: Fixture = {
         'Technical drawings',
       ],
       accent: ACCENTS.copper,
-      image: img('photo-1518770660439-4636190af475'),
       cover: img('photo-1485827404703-89b55fcc595e'),
-      executiveSummary: {
-        text: [
-          'A two-year programme with an aquaculture operator. I owned the mechanical design: a 40 m-rated pressure housing, track modules that grip both nylon and steel mesh, and a counter-rotating brush head that leaves the net coating intact.',
-          'The housing passed hydrostatic testing at 6 bar on the first attempt, and the pilot fleet of 12 units has now logged more than 3,000 hours in the water across three farm sites in Norway and Scotland.',
-        ],
-        // A very tall photo: must stay within a third of the window's height
-        image: { src: 'https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=600&h=1400&fit=crop&auto=format', alt: 'Housing on the test rig' },
-      },
-      challenge: {
-        text: [
-          'Divers were cleaning each net by hand every two weeks, which was slow, expensive and dangerous in winter. The robot had to cling to a flexible net that moves with the current, survive 40 m of water and be launched from a small workboat by two people.',
-        ],
-        // A photo path that was never uploaded
-        image: { src: 'images/projects/hull-robot/net-close-up.jpg', alt: 'Net close-up' },
-      },
-      // Left empty on purpose: the section should disappear
-      considerations: { text: [] },
-      solution: {
-        text: [
-          'Magnetic track modules clamp to the net from both sides, so the robot drives on mesh the way a tank drives on ground. The pressure housing is machined 6061-T6 with double O-ring seals on every penetration.',
-          'Track modules swap in under four minutes on deck without tools, and the brush head is a separate cartridge so the crew can change it between dives.',
-          'Every part has a full drawing to ISO 2768-mK, with GD&T on the sealing faces.',
-        ],
-        // A very wide photo: must stay within a third of the window's width
-        image: { src: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1800&h=400&fit=crop&auto=format', alt: 'Track modules laid out' },
-      },
-      impact: {
-        text: ['Cleaning time fell by three quarters and divers no longer go in the water for routine cleaning.'],
-        points: [
-          'Pressure housing rated to 40 m, hydrostatically tested at 6 bar (1.5× safety factor)',
-          'Cleans 1,250 m² of net per 8-hour shift, against 300 m² for a two-diver team',
-          'Bill of materials held at €18,400 per unit for the 12-unit pilot run',
-          'Passed DNV-ST-0378 lifting-appliance review for launch and recovery',
-          'Learned to involve the boat crew in design reviews from the first week, not the last',
-        ],
-        image: { src: img('photo-1597852074816-d933c7d2b988'), alt: 'Robot on deck' },
-      },
-      link: 'https://example.com/projects/autonomous-hull-cleaning-robot-for-offshore-aquaculture-net-pens',
-      repo: 'https://github.com/',
+      summary:
+        'A two-year programme with an aquaculture operator. I owned the mechanical design: a 40 m-rated pressure housing, track modules that grip both nylon and steel mesh, and a counter-rotating brush head that leaves the net coating intact. The housing passed hydrostatic testing at 6 bar on the first attempt, and the pilot fleet of 12 units has now logged more than 3,000 hours in the water across three farm sites in Norway and Scotland.',
+      // A very tall photo: must stay within a third of the window's height
+      summaryImage: 'https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=600&h=1400&fit=crop&auto=format',
+      sections: [
+        {
+          heading: 'The Challenge & Context',
+          // A photo path that was never uploaded
+          image: 'images/projects/hull-robot/net-close-up.jpg',
+          blocks: [
+            {
+              type: 'p',
+              text: 'Divers were cleaning each net by hand every two weeks, which was slow, expensive and dangerous in winter. The robot had to cling to a flexible net that moves with the current, survive 40 m of water and be launched from a small workboat by two people.',
+            },
+          ],
+        },
+        {
+          heading: 'Exploration & Design Decisions',
+          // Not added yet: shows the placeholder frame
+          image: '',
+          blocks: [
+            { type: 'p', lead: 'Tracks over propellers.', text: 'Propellers fought the current; tracks clamped to the mesh did not.' },
+            { type: 'subheading', text: 'Housing material' },
+            {
+              type: 'table',
+              head: ['Option', 'Mass', 'Cost per unit', 'Corrosion'],
+              rows: [
+                ['6061-T6 aluminium, hard anodised', '4.2 kg', '€1,840', 'Good with sacrificial anodes'],
+                ['316L stainless steel', '11.8 kg', '€2,310', 'Excellent'],
+                ['Glass-filled nylon (injection moulded)', '2.9 kg', '€640 at 500+ units', 'Excellent, but creeps under sustained pressure'],
+              ],
+            },
+          ],
+        },
+        {
+          heading: 'The Final Solution & Key Features',
+          // A very wide photo: must stay within a third of the window's width
+          image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1800&h=400&fit=crop&auto=format',
+          blocks: [
+            {
+              type: 'p',
+              text: 'Magnetic track modules clamp to the net from both sides, so the robot drives on mesh the way a tank drives on ground. The pressure housing is machined 6061-T6 with double O-ring seals on every penetration.',
+            },
+            {
+              type: 'list',
+              items: [
+                'Track modules swap in under four minutes on deck without tools',
+                'The brush head is a separate cartridge so the crew can change it between dives',
+                'Every part has a full drawing to ISO 2768-mK, with GD&T on the sealing faces',
+              ],
+            },
+          ],
+        },
+        {
+          heading: 'Measurable Impact & Key Learnings',
+          image: img('photo-1597852074816-d933c7d2b988'),
+          blocks: [
+            { type: 'p', text: 'Cleaning time fell by three quarters and divers no longer go in the water for routine cleaning.' },
+            {
+              type: 'list',
+              items: [
+                'Cleans 1,250 m² of net per 8-hour shift, against 300 m² for a two-diver team',
+                'Learned to involve the boat crew in design reviews from the first week, not the last',
+              ],
+            },
+          ],
+        },
+      ],
+      video: 'videos/hull-robot-trial.mp4', // a file that was never uploaded
     },
     {
       title: 'Jig',
       subtitle: '',
+      context: '',
       date: '2025',
-      summary: 'A drilling jig.',
-      stack: [],
+      facts: [],
+      tags: [],
       accent: ACCENTS.cyan,
       // Never uploaded
-      image: 'images/projects/jig.jpg',
-      cover: '',
-      executiveSummary: { text: ['A drilling jig for the lab.'] },
-      challenge: { text: [] },
-      considerations: { text: [] },
-      solution: { text: [] },
-      impact: { text: [] },
-      link: '',
-      repo: '',
+      cover: 'images/projects/jig.jpg',
+      summary: 'A drilling jig for the lab.',
+      summaryImage: '',
+      sections: [],
+      video: '',
     },
     {
       title: 'KX-3000/Rev-B_FinalAssembly',
       subtitle: 'Knee actuator, third revision',
+      context: 'Research project',
       date: 'Q4 2025',
-      summary: 'Harmonic-drive knee actuator for the exoskeleton, with an integrated torque sensor and absolute encoder.',
-      stack: ['Siemens NX', 'Harmonic drives', 'Strain gauges'],
+      facts: [{ label: 'Role', value: 'Designer' }],
+      tags: ['Siemens NX', 'Harmonic drives', 'Strain gauges'],
       accent: ACCENTS.white,
-      image: img('photo-1558655146-d09347e92766'),
       cover: img('photo-1504384764586-bb4cdc1707b0'),
-      executiveSummary: { text: ['Third revision of the knee actuator. The part number above is the one used on every drawing.'] },
-      challenge: { text: ['Short.'], image: { src: img('photo-1565043666747-69f6646db940'), alt: 'Actuator' } },
-      considerations: { text: [], points: ['Peak torque 120 N·m', 'Backlash under 0.1°'] },
-      solution: { text: ['Harmonic drive with a strain-gauge torque sensor bonded to the flexspline.'] },
-      impact: { text: [], points: ['Passed 1,000,000 cycles on the endurance rig'] },
-      link: '',
-      repo: 'https://github.com/',
+      summary: 'Third revision of the knee actuator. The part number above is the one used on every drawing.',
+      summaryImage: img('photo-1565043666747-69f6646db940'),
+      sections: [{ heading: 'The Challenge & Context', image: '', blocks: [{ type: 'p', text: 'Short.' }] }],
+      video: '',
     },
     {
       title: 'Đồ án tốt nghiệp: Cánh tay robot 6 bậc tự do',
       subtitle: 'Thiết kế và chế tạo cánh tay robot cho phòng thí nghiệm',
+      context: 'Đồ án tốt nghiệp đại học',
       date: 'Jun 2022',
-      summary: 'Cánh tay robot sáu bậc tự do in 3D, điều khiển bằng ROS, tải trọng 1,5 kg.',
-      stack: ['SolidWorks', 'FDM 3D printing', 'ROS'],
+      facts: [{ label: 'Vai trò', value: 'Thiết kế cơ khí' }],
+      tags: ['SolidWorks', 'FDM 3D printing', 'ROS'],
       accent: ACCENTS.amber,
-      image: img('photo-1555949963-aa79dcee981c'),
-      cover: '',
-      executiveSummary: { text: ['Đồ án tốt nghiệp đại học.'] },
-      challenge: { text: ['Thiết kế cánh tay robot giá rẻ cho phòng thí nghiệm.'] },
-      considerations: { text: ['Cân bằng giữa độ cứng vững, khối lượng và chi phí in 3D.'] },
-      solution: { text: ['Cánh tay sáu bậc tự do dùng động cơ bước và hộp số in 3D.'] },
-      impact: { text: [], points: ['Độ lặp lại ±0,5 mm'] },
-      link: '',
-      repo: '',
+      cover: img('photo-1555949963-aa79dcee981c'),
+      summary: 'Cánh tay robot sáu bậc tự do in 3D, điều khiển bằng ROS, tải trọng 1,5 kg.',
+      summaryImage: '',
+      sections: [
+        { heading: 'Thách thức', image: '', blocks: [{ type: 'p', text: 'Thiết kế cánh tay robot giá rẻ cho phòng thí nghiệm.' }] },
+        { heading: 'Kết quả', image: '', blocks: [{ type: 'list', items: ['Độ lặp lại ±0,5 mm'] }] },
+      ],
+      video: '',
     },
     ...['Bench Vice', 'Soft Gripper', 'Wind Tunnel Balance', 'Bike Frame Jig', 'Rover Suspension'].map(
       (title, i): Content.Project => ({
         title,
         subtitle: 'Short subtitle',
+        context: 'Coursework',
         date: `${2021 - i}`,
-        summary: 'One-line summary.',
-        stack: ['Fusion360'],
+        facts: [],
+        tags: ['Fusion360'],
         accent: ACCENTS.cyan,
-        image: img(['photo-1565043666747-69f6646db940', 'photo-1473968512647-3e447244af8f', 'photo-1581092160562-40aa08e78837', 'photo-1537462715879-360eeb61a0ad', 'photo-1563770660941-20978e870e26'][i]),
-        cover: '',
-        executiveSummary: { text: ['Summary.'] },
-        challenge: { text: ['Challenge.'] },
-        considerations: { text: ['Considerations.'] },
-        solution: { text: ['Solution.'] },
-        impact: { text: ['Impact.'] },
-        link: '',
-        repo: '',
+        cover: img(['photo-1565043666747-69f6646db940', 'photo-1473968512647-3e447244af8f', 'photo-1581092160562-40aa08e78837', 'photo-1537462715879-360eeb61a0ad', 'photo-1563770660941-20978e870e26'][i]),
+        summary: 'One-line summary.',
+        summaryImage: '',
+        sections: [{ heading: 'The Challenge & Context', image: '', blocks: [{ type: 'p', text: 'Challenge.' }] }],
+        video: '',
       }),
     ),
   ],
@@ -275,7 +301,12 @@ const one = (content: typeof Content): Fixture => ({
   ABOUT: content.ABOUT.slice(0, 1),
   SKILL_GROUPS: content.SKILL_GROUPS.slice(0, 1).map((g) => ({ ...g, items: g.items.slice(0, 1) })),
   EXPERIENCES: content.EXPERIENCES.slice(0, 1).map((e) => ({ ...e, highlights: e.highlights.slice(0, 1) })),
-  PROJECTS: content.PROJECTS.slice(0, 1).map((p) => ({ ...p, stack: p.stack.slice(0, 1), impact: { text: [], points: (p.impact.points ?? []).slice(0, 1) } })),
+  PROJECTS: content.PROJECTS.slice(0, 1).map((p) => ({
+    ...p,
+    facts: p.facts.slice(0, 1),
+    tags: p.tags.slice(0, 1),
+    sections: p.sections.slice(0, 1).map((section) => ({ ...section, blocks: section.blocks.slice(0, 1) })),
+  })),
   TESTIMONIALS: content.TESTIMONIALS.slice(0, 1),
 })
 

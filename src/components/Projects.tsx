@@ -1,28 +1,10 @@
 import { useCallback, useState } from 'react'
 import { PROJECTS, type Project } from '../data'
-import { asset, CONTAINER, hideIfMissing } from '../lib/utils'
+import { CONTAINER } from '../lib/utils'
 import { ArrowUpRight } from './Icons'
 import ProjectDialog from './ProjectDialog'
+import { Media, Tags } from './ProjectWriteup'
 import { SectionHeading } from './ui'
-
-const TAG = 'rounded-sm bg-surface-2 px-2.5 py-1 text-[0.8rem] text-muted'
-
-/** Tools list. Past the limit the rest collapse into a count; the project window always shows them all. */
-function Tags({ items, limit = 3 }: { items: string[]; limit?: number }) {
-  if (items.length === 0) return null
-  const shown = items.length > limit ? items.slice(0, limit - 1) : items
-  const hidden = items.length - shown.length
-  return (
-    <ul className="flex flex-wrap gap-2" aria-label="Tools and processes">
-      {shown.map((tech) => (
-        <li key={tech} className={TAG}>
-          {tech}
-        </li>
-      ))}
-      {hidden > 0 && <li className={TAG}>+{hidden} more</li>}
-    </ul>
-  )
-}
 
 /**
  * Card whose title button is stretched over the whole card, so the full card is clickable.
@@ -32,13 +14,7 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: () => void
   return (
     <article className="group relative flex flex-col overflow-clip rounded-sm border border-line bg-surface transition-colors hover:border-copper/60 has-[button:focus-visible]:border-copper has-[button:focus-visible]:ring-2 has-[button:focus-visible]:ring-copper">
       <div className="relative aspect-[16/10] shrink-0 overflow-hidden bg-canvas">
-        <img
-          src={asset(project.image)}
-          alt=""
-          loading="lazy"
-          onError={hideIfMissing}
-          className="h-full w-full object-cover"
-        />
+        <Media src={project.cover} alt="" label="Cover photo" className="h-full w-full" />
         <span className="absolute left-3 top-3 rounded-sm bg-canvas px-2 py-0.5 text-sm tabular-nums text-ink">
           {project.date}
         </span>
@@ -59,12 +35,13 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: () => void
             </button>
           </h3>
           {project.subtitle && <p className="mt-1.5 line-clamp-2 text-[0.95rem] text-cyan">{project.subtitle}</p>}
+          {project.context && <p className="mt-1 line-clamp-1 text-sm text-faint">{project.context}</p>}
           <p className="mt-3 line-clamp-3 text-[0.95rem] leading-relaxed text-muted">{project.summary}</p>
         </div>
 
         {/* Pinned to the bottom so the links line up across a row */}
         <div className="mt-auto space-y-5">
-          <Tags items={project.stack} />
+          <Tags items={project.tags} limit={3} />
           <span
             aria-hidden="true"
             className="inline-flex items-center gap-1.5 font-medium text-copper underline decoration-copper/40 underline-offset-[5px] transition-colors group-hover:decoration-copper"

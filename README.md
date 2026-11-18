@@ -57,16 +57,27 @@ Tips: export photos as `.jpg` or `.webp` around 1600 px wide and under 400 KB ea
 
 ### Project write-ups
 
-Each project opens a window with a cover photo (a third of the window's height) and five sections in a fixed order: **executive summary**, **the challenge**, **design considerations**, **final solution** and **impact and learning points**. In `PROJECTS`, each section has `text` (one string per paragraph), optional `points` (a bullet list) and an optional `image`:
+Each card opens a window with the full write-up: a cover photo across the top (a third of the window's height), the **executive summary** with the project's facts and tools, then each section the write-up covers, in order, and finally a video. In `PROJECTS`:
 
 ```ts
-solution: {
-  text: ['First paragraph.', 'Second paragraph.'],
-  image: { src: 'images/projects/sensor-suite-mount.jpg', alt: 'Mount on the vehicle' },
-},
+summary: 'Executive summary text.',
+summaryImage: 'images/projects/tape-measure/summary.jpg',
+sections: [
+  {
+    heading: 'The Challenge & Context',
+    image: 'images/projects/tape-measure/challenge.jpg',
+    blocks: [
+      { type: 'p', lead: 'Optional bold run-in.', text: 'Paragraph text.' },
+      { type: 'subheading', text: 'A smaller heading' },
+      { type: 'list', items: ['First point', 'Second point'] },
+      { type: 'table', head: ['Option', 'Cost'], rows: [['A', 'S$4.18']] },
+    ],
+  },
+],
+video: 'videos/tape-measure.mp4', // or a YouTube/Vimeo embed URL
 ```
 
-A section image sits on the right with the text wrapping around it, at most a third of the window's width and height (a little wider on phones, so the text beside it stays readable). A section left empty is skipped. `cover` sets the window's top photo; leave it '' to reuse the card photo.
+`summaryImage` and each section's `image` sit on the right with the text wrapping around them, at most a third of the window's width and height (a little wider on phones, so the text beside it stays readable). Tables always run full width below the photo. Any photo or video left as `''` shows a labelled placeholder frame until you add it. `cover` is also the card's photo.
 
 ### Contact form (Web3Forms)
 

@@ -8,7 +8,7 @@ const fixture = import.meta.env.DEV
   ? (await import('./dev/fixtures')).pickFixture(new URLSearchParams(window.location.search).get('data'), content)
   : {}
 
-export type { Experience, Project, ProjectSection, Testimonial } from './content'
+export type { Experience, Project, ProjectBlock, ProjectSection, Testimonial } from './content'
 export const ACCENTS = content.ACCENTS
 export const SITE = { ...content.SITE, ...fixture.SITE }
 export const SOCIALS = fixture.SOCIALS ?? content.SOCIALS

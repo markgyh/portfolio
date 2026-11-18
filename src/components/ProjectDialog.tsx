@@ -1,8 +1,8 @@
 import { useEffect, useRef, type CSSProperties } from 'react'
-import type { Project, ProjectSection } from '../data'
-import { asset, hideIfMissing } from '../lib/utils'
+import type { Project } from '../data'
 import { ChevronLeft, ChevronRight, Close } from './Icons'
-import { ExternalLink, PRESS } from './ui'
+import { Media, ProjectWriteup } from './ProjectWriteup'
+import { PRESS } from './ui'
 
 interface Props {
   project: Project
@@ -12,57 +12,8 @@ interface Props {
   onNavigate: (direction: -1 | 1) => void
 }
 
-/** Every project window shows these sections, in this order. */
-const SECTIONS: { key: keyof Pick<Project, 'executiveSummary' | 'challenge' | 'considerations' | 'solution' | 'impact'>; title: string }[] = [
-  { key: 'executiveSummary', title: 'Executive summary' },
-  { key: 'challenge', title: 'The challenge' },
-  { key: 'considerations', title: 'Design considerations' },
-  { key: 'solution', title: 'Final solution' },
-  { key: 'impact', title: 'Impact and learning points' },
-]
-
 /**
- * One section of the write-up. The optional photo floats right, at most a third of the
- * window's width and height (`--dialog-h`), and the text wraps around it. `flow-root`
- * keeps a tall photo from spilling into the next section.
- */
-function WriteUpSection({ title, section, accent }: { title: string; section: ProjectSection; accent: string }) {
-  const points = section.points ?? []
-  if (section.text.length === 0 && points.length === 0 && !section.image) return null
-  return (
-    <section className="flow-root">
-      <h3 className="mb-3 font-display text-lg font-bold text-ink sm:text-xl">{title}</h3>
-      {section.image && (
-        <img
-          src={asset(section.image.src)}
-          alt={section.image.alt}
-          loading="lazy"
-          onError={hideIfMissing}
-          // Phones get a little more than a third, or the text beside it is only a word or two wide
-          className="float-right mb-3 ml-5 mt-1 max-h-[calc(var(--dialog-h)/3)] max-w-[45%] rounded-sm bg-canvas object-cover sm:max-w-[33.333%]"
-        />
-      )}
-      <div className="space-y-4 leading-relaxed text-ink/90">
-        {section.text.map((paragraph, i) => (
-          <p key={i}>{paragraph}</p>
-        ))}
-      </div>
-      {points.length > 0 && (
-        <ul className={`space-y-2.5 ${section.text.length > 0 ? 'mt-4' : ''}`}>
-          {points.map((item, i) => (
-            <li key={i} className="flex gap-3 leading-relaxed text-muted">
-              <span className="mt-[0.7em] h-px w-3 shrink-0" style={{ backgroundColor: accent }} aria-hidden="true" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-    </section>
-  )
-}
-
-/**
- * Project details in a native <dialog>. showModal() gives focus trapping,
+ * Full project write-up in a native <dialog>. showModal() gives focus trapping,
  * Escape handling and an inert page behind it without extra libraries.
  */
 export default function ProjectDialog({ project, index, total, onClose, onNavigate }: Props) {
@@ -110,8 +61,6 @@ export default function ProjectDialog({ project, index, total, onClose, onNaviga
     dialogRef.current?.scrollTo({ top: 0 })
   }, [project])
 
-  const cover = project.cover || project.image
-
   return (
     <dialog
       ref={dialogRef}
@@ -136,7 +85,8 @@ export default function ProjectDialog({ project, index, total, onClose, onNaviga
           <h2 id="project-dialog-title" className="font-display text-2xl font-bold leading-tight [overflow-wrap:anywhere] sm:text-3xl">
             {project.title}
           </h2>
-          {project.subtitle && <p className="mt-1 text-muted">{project.subtitle}</p>}
+          {project.subtitle && <p className="mt-1 text-cyan">{project.subtitle}</p>}
+          {project.context && <p className="mt-1 text-sm text-muted">{project.context}</p>}
         </div>
         <button
           type="button"
@@ -156,39 +106,15 @@ export default function ProjectDialog({ project, index, total, onClose, onNaviga
       >
         <div key={index} className="dialog-step" {...step}>
           {/* Cover photo, held to a third of the window's height */}
-          {cover && (
-            <img
-              src={asset(cover)}
-              alt={`${project.title}, cover photo`}
-              onError={hideIfMissing}
-              className="h-[calc(var(--dialog-h)/3)] w-full bg-canvas object-cover"
-            />
-          )}
+          <Media
+            src={project.cover}
+            alt={`${project.title}, cover photo`}
+            label="Cover photo"
+            className="h-[calc(var(--dialog-h)/3)] w-full"
+          />
 
-          <div className="space-y-10 px-6 py-8 sm:px-8">
-            {SECTIONS.map(({ key, title }) => (
-              <WriteUpSection key={key} title={title} section={project[key]} accent={project.accent} />
-            ))}
-
-            {project.stack.length > 0 && (
-              <section>
-                <h3 className="mb-3 font-display text-lg font-bold text-ink sm:text-xl">Tools and processes</h3>
-                <ul className="flex flex-wrap gap-2">
-                  {project.stack.map((tech) => (
-                    <li key={tech} className="rounded-sm bg-surface-2 px-2.5 py-1 text-sm text-ink/90">
-                      {tech}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-
-            {(project.link || project.repo) && (
-              <div className="flex flex-wrap gap-x-6 gap-y-3 border-t border-line pt-6">
-                {project.link && <ExternalLink href={project.link}>Full project write-up</ExternalLink>}
-                {project.repo && <ExternalLink href={project.repo}>Source files</ExternalLink>}
-              </div>
-            )}
+          <div className="px-6 py-8 sm:px-8">
+            <ProjectWriteup project={project} level={3} />
           </div>
         </div>
       </div>
