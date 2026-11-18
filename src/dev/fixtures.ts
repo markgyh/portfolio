@@ -143,7 +143,7 @@ const worst: Fixture = {
         },
         {
           heading: 'Exploration & Design Decisions',
-          // Not added yet: shows the placeholder frame
+          // No photo: the section text should take the full width
           image: '',
           blocks: [
             { type: 'p', lead: 'Tracks over propellers.', text: 'Propellers fought the current; tracks clamped to the mesh did not.' },

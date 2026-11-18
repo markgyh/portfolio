@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import type { Project, ProjectBlock } from '../data'
 import { asset, hideIfMissing } from '../lib/utils'
-import { ImageIcon, Play } from './Icons'
+import { ImageIcon } from './Icons'
 
 type Level = 2 | 3 | 4 | 5 | 6
 
@@ -10,10 +10,7 @@ function Heading({ level, className, children }: { level: Level; className: stri
   return <Tag className={className}>{children}</Tag>
 }
 
-// Dashed outline for placeholders that sit within the text, rather than filling a frame
-const FRAME = 'rounded-sm border border-dashed border-line-strong/70'
-
-/** Labelled panel shown where a photo or video goes while its path in content.ts is still ''. */
+/** Labelled panel shown where a cover photo goes while its path in content.ts is still ''. */
 function Placeholder({ label, icon, className }: { label: string; icon: ReactNode; className: string }) {
   return (
     <div
@@ -36,51 +33,49 @@ export function Media({ src, alt, label = 'Photo', className = '' }: { src: stri
  * Photo beside a section: floats right, at most a third of the window's width and
  * height (`--dialog-h`), and the text wraps around it. Phones get a little more than a
  * third, or the text beside it is only a word or two wide.
+ * With no photo ('' in content.ts, or a file that fails to load) nothing is drawn and
+ * the text takes the full width.
  */
 function SidePhoto({ src, alt }: { src: string; alt: string }) {
-  const place = 'float-right mb-3 ml-5 mt-1 max-h-[calc(var(--dialog-h)/3)]'
-  if (!src) {
-    return (
-      <Placeholder label="Photo" icon={<ImageIcon size={20} />} className={`${place} ${FRAME} aspect-[4/3] w-[45%] sm:w-1/3`} />
-    )
-  }
+  if (!src) return null
   return (
     <img
       src={asset(src)}
       alt={alt}
       loading="lazy"
       onError={hideIfMissing}
-      className={`${place} max-w-[45%] rounded-sm bg-canvas object-cover sm:max-w-[33.333%]`}
+      className="float-right mb-3 ml-5 mt-1 max-h-[calc(var(--dialog-h)/3)] max-w-[45%] rounded-sm bg-canvas object-cover sm:max-w-[33.333%]"
     />
   )
 }
 
+/**
+ * The project video, under its own divider. With no video ('' in content.ts) nothing is
+ * drawn; a video file that fails to load removes the divider along with it.
+ */
 function Video({ src, title }: { src: string; title: string }) {
-  if (!src) {
-    return (
-      <Placeholder
-        label="Project video"
-        icon={
-          <span className="flex h-12 w-12 items-center justify-center rounded-full border border-line-strong/70">
-            <Play size={18} />
-          </span>
-        }
-        className={`${FRAME} aspect-video w-full gap-3`}
-      />
-    )
-  }
-  if (/\.(mp4|webm|mov)$/i.test(src)) {
-    return <video src={asset(src)} controls preload="metadata" onError={hideIfMissing} className="aspect-video w-full rounded-sm bg-canvas" />
-  }
+  if (!src) return null
   return (
-    <iframe
-      src={src}
-      title={`${title}: project video`}
-      loading="lazy"
-      allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-      allowFullScreen
-      className="aspect-video w-full rounded-sm border-0 bg-canvas"
-    />
+    <div className="border-t border-line pt-10">
+      {/\.(mp4|webm|mov)$/i.test(src) ? (
+        <video
+          src={asset(src)}
+          controls
+          preload="metadata"
+          onError={(e) => hideIfMissing({ currentTarget: e.currentTarget.parentElement ?? e.currentTarget })}
+          className="aspect-video w-full rounded-sm bg-canvas"
+        />
+      ) : (
+        <iframe
+          src={src}
+          title={`${title}: project video`}
+          loading="lazy"
+          allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+          allowFullScreen
+          className="aspect-video w-full rounded-sm border-0 bg-canvas"
+        />
+      )}
+    </div>
   )
 }
 
@@ -222,9 +217,7 @@ export function ProjectWriteup({ project, level }: { project: Project; level: Le
         </section>
       ))}
 
-      <div className="border-t border-line pt-10">
-        <Video src={project.video} title={project.title} />
-      </div>
+      <Video src={project.video} title={project.title} />
     </div>
   )
 }
