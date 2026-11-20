@@ -27,7 +27,7 @@ export default function Footer() {
           ))}
           <a
             href="#top"
-            className="group col-span-2 flex items-center justify-center gap-2 border-b border-r border-line-strong px-6 py-3 font-medium text-muted transition-colors hover:bg-surface hover:text-copper sm:col-span-1"
+            className="group col-span-2 flex items-center justify-center gap-2 border-b border-r border-line-strong px-6 py-3 font-medium text-muted transition-colors duration-150 ease-out hover:bg-surface hover:text-copper sm:col-span-1"
           >
             <ArrowUp size={16} className="transition-transform group-hover:-translate-y-0.5" />
             Back to top

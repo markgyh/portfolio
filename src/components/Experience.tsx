@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { EXPERIENCES } from '../data'
-import { CONTAINER, useInView } from '../lib/utils'
+import { CONTAINER, SECTION, useInView } from '../lib/utils'
 import { Plus } from './Icons'
-import { ExternalLink, SectionHeading } from './ui'
+import { ExternalLink, SectionHeading, TEXT_LINK } from './ui'
 
 export default function Experience() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
@@ -11,7 +11,7 @@ export default function Experience() {
   if (EXPERIENCES.length === 0) return null
 
   return (
-    <section id="experience" aria-labelledby="experience-heading" className="border-t border-line py-24 lg:py-32">
+    <section id="experience" aria-labelledby="experience-heading" className={SECTION}>
       <div className={CONTAINER}>
         <SectionHeading id="experience-heading">Experience</SectionHeading>
 
@@ -94,7 +94,7 @@ export default function Experience() {
                             </li>
                           ))}
                         </ul>
-                        {exp.url && <ExternalLink href={exp.url}>Visit {exp.company}</ExternalLink>}
+                        {exp.url && <ExternalLink href={exp.url} className={`${TEXT_LINK} min-h-11`}>Visit {exp.company}</ExternalLink>}
                       </div>
                     </div>
                   </div>

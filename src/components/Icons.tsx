@@ -10,7 +10,9 @@ function Svg({ size = 16, children, ...props }: IconProps) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.75}
+      // One line weight at every size, like a drawing: index.css stops the stroke scaling with the icon.
+      strokeWidth={1.5}
+      data-icon=""
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
@@ -27,9 +29,9 @@ export const ArrowUpRight = (p: IconProps) => (
     <path d="M7 17 17 7M8 7h9v9" />
   </Svg>
 )
-export const ArrowDown = (p: IconProps) => (
+export const ArrowRight = (p: IconProps) => (
   <Svg {...p}>
-    <path d="M12 5v14M6 13l6 6 6-6" />
+    <path d="M5 12h14M13 6l6 6-6 6" />
   </Svg>
 )
 export const ArrowUp = (p: IconProps) => (
@@ -73,21 +75,10 @@ export const Check = (p: IconProps) => (
     <path d="m5 12 5 5 9-10" pathLength={1} />
   </Svg>
 )
-export const FileText = (p: IconProps) => (
-  <Svg {...p}>
-    <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
-    <path d="M14 3v5h5M9 13h6M9 17h6" />
-  </Svg>
-)
 export const ImageIcon = (p: IconProps) => (
   <Svg {...p}>
     <rect x="3" y="4" width="18" height="16" rx="2" />
     <circle cx="9" cy="10" r="1.75" />
     <path d="m21 16-5-5-9 9" />
-  </Svg>
-)
-export const Play = (p: IconProps) => (
-  <Svg {...p}>
-    <path d="M7 4.5v15l12-7.5-12-7.5Z" />
   </Svg>
 )

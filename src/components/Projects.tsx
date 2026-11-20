@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react'
 import { PROJECTS, type Project } from '../data'
-import { CONTAINER } from '../lib/utils'
-import { ArrowUpRight } from './Icons'
+import { CONTAINER, SECTION } from '../lib/utils'
+import { ArrowRight } from './Icons'
 import ProjectDialog from './ProjectDialog'
-import { Media, Tags } from './ProjectWriteup'
-import { SectionHeading } from './ui'
+import { Media } from './ProjectWriteup'
+import { SectionHeading, Tags, TEXT_LINK_BASE } from './ui'
 
 /**
  * Card whose title button is stretched over the whole card, so the full card is clickable.
@@ -41,13 +41,11 @@ function ProjectCard({ project, onOpen }: { project: Project; onOpen: () => void
 
         {/* Pinned to the bottom so the links line up across a row */}
         <div className="mt-auto space-y-5">
-          <Tags items={project.tags} limit={3} />
-          <span
-            aria-hidden="true"
-            className="inline-flex items-center gap-1.5 font-medium text-copper underline decoration-copper/40 underline-offset-[5px] transition-colors group-hover:decoration-copper"
-          >
+          <Tags items={project.tags} limit={3} label={`Tools used on ${project.title}`} />
+          {/* Opens in-page, so it gets a forward arrow: the outbound arrow is kept for links that leave the site */}
+          <span aria-hidden="true" className={`${TEXT_LINK_BASE} group-hover:decoration-copper`}>
             View details
-            <ArrowUpRight size={15} />
+            <ArrowRight size={16} className="transition-transform duration-150 ease-out group-hover:translate-x-0.5" />
           </span>
         </div>
       </div>
@@ -68,7 +66,7 @@ export default function Projects() {
   if (total === 0) return null
 
   return (
-    <section id="projects" aria-labelledby="projects-heading" className="border-t border-line py-24 lg:py-32">
+    <section id="projects" aria-labelledby="projects-heading" className={SECTION}>
       <div className={CONTAINER}>
         <SectionHeading id="projects-heading">Projects</SectionHeading>
         {/* One per row on phones, two on tablets, three on desktop */}
