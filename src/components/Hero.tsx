@@ -6,7 +6,7 @@ import { button, DimensionLine } from './ui'
 export default function Hero() {
   return (
     <section id="top" aria-label="Introduction" className="relative flex min-h-[100svh] flex-col overflow-hidden">
-      {/* Background photo, washed into the blueprint blue */}
+      {/* Background photo in full colour. Neutral (not blueprint-blue) scrims keep the name legible. */}
       <div className="absolute inset-0 bg-canvas" aria-hidden={SITE.heroImage.alt ? undefined : true}>
         <img
           src={asset(SITE.heroImage.src)}
@@ -14,12 +14,11 @@ export default function Hero() {
           fetchPriority="high"
           onError={hideIfMissing}
           decoding="async"
-          className="hero-photo h-full w-full object-cover object-top opacity-50 mix-blend-luminosity grayscale"
+          className="hero-photo h-full w-full object-cover object-top"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-canvas via-canvas/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-canvas/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-transparent to-transparent" />
       </div>
-      <div className="drafting-grid pointer-events-none absolute inset-0" aria-hidden="true" />
 
       <div className={`${CONTAINER} relative z-10 flex flex-1 flex-col justify-end pb-14 pt-28 sm:pb-16`}>
         <div className="inline-flex max-w-full flex-col self-start">
