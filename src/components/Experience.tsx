@@ -1,17 +1,100 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { EXPERIENCES } from '../data'
-import { CONTAINER, useInView } from '../lib/utils'
+import { CONTAINER, SECTION, useInView, useMediaQuery } from '../lib/utils'
 import { Plus } from './Icons'
-import { ExternalLink, SectionHeading } from './ui'
+import { ExternalLink, SectionHeading, TEXT_LINK } from './ui'
+
+/** A real pointer that can hover (desktop). Touch devices get scroll-driven reveals instead. */
+const CAN_HOVER = '(hover: hover) and (pointer: fine)'
+/** Brief pause before a hover opens an entry, so sweeping the cursor across the list doesn't flicker. */
+const HOVER_INTENT_MS = 120
+
+/**
+ * Keeps `el` at the same spot in the viewport while the layout above it animates
+ * (an entry above collapsing would otherwise drag the hovered entry up out from under the cursor).
+ */
+function holdInPlace(el: HTMLElement, duration = 450): () => void {
+  const start = el.getBoundingClientRect().top
+  const end = performance.now() + duration
+  let frame = 0
+  const stop = () => {
+    cancelAnimationFrame(frame)
+    window.removeEventListener('wheel', stop)
+    window.removeEventListener('keydown', stop)
+  }
+  const tick = () => {
+    const drift = el.getBoundingClientRect().top - start
+    if (Math.abs(drift) > 0.5) window.scrollBy({ top: drift, behavior: 'instant' })
+    if (performance.now() < end) frame = requestAnimationFrame(tick)
+    else stop()
+  }
+  // Hand control back the moment the visitor scrolls themselves.
+  window.addEventListener('wheel', stop, { passive: true })
+  window.addEventListener('keydown', stop)
+  frame = requestAnimationFrame(tick)
+  return stop
+}
 
 export default function Experience() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const canHover = useMediaQuery(CAN_HOVER)
+  // Desktop: one entry open at a time, starting with the latest. Mobile: entries open as they reach
+  // the middle of the screen and stay open, so nothing above the reader shifts while they scroll.
+  const [open, setOpen] = useState<ReadonlySet<number>>(() => new Set(window.matchMedia(CAN_HOVER).matches ? [0] : []))
   const [railRef, railDrawn] = useInView<HTMLSpanElement>()
+  const itemRefs = useRef<(HTMLLIElement | null)[]>([])
+  const hoverTimer = useRef<number | undefined>(undefined)
+  const stopHolding = useRef<(() => void) | undefined>(undefined)
+
+  // Mobile: open each entry once its top crosses the middle of the viewport.
+  useEffect(() => {
+    if (canHover) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const reached = entries.filter((e) => e.isIntersecting).map((e) => Number((e.target as HTMLElement).dataset.index))
+        if (reached.length === 0) return
+        setOpen((prev) => (reached.every((i) => prev.has(i)) ? prev : new Set([...prev, ...reached])))
+        entries.forEach((e) => e.isIntersecting && observer.unobserve(e.target))
+      },
+      { rootMargin: '-50% 0px -50% 0px' },
+    )
+    itemRefs.current.forEach((el) => el && observer.observe(el))
+    return () => observer.disconnect()
+  }, [canHover])
+
+  useEffect(
+    () => () => {
+      window.clearTimeout(hoverTimer.current)
+      stopHolding.current?.()
+    },
+    [],
+  )
+
+  /** Desktop: make `i` the single open entry. */
+  const openOnly = (i: number) => {
+    if (open.size === 1 && open.has(i)) return
+    const el = itemRefs.current[i]
+    if (el && [...open].some((j) => j < i)) {
+      stopHolding.current?.()
+      stopHolding.current = holdInPlace(el)
+    }
+    setOpen(new Set([i]))
+  }
+
+  const toggle = (i: number) => {
+    if (canHover) {
+      setOpen(open.has(i) ? new Set() : new Set([i]))
+    } else {
+      const next = new Set(open)
+      if (next.has(i)) next.delete(i)
+      else next.add(i)
+      setOpen(next)
+    }
+  }
 
   if (EXPERIENCES.length === 0) return null
 
   return (
-    <section id="experience" aria-labelledby="experience-heading" className="border-t border-line py-24 lg:py-32">
+    <section id="experience" aria-labelledby="experience-heading" className={SECTION}>
       <div className={CONTAINER}>
         <SectionHeading id="experience-heading">Experience</SectionHeading>
 
@@ -25,15 +108,31 @@ export default function Experience() {
           />
 
           {EXPERIENCES.map((exp, i) => {
-            const open = openIndex === i
+            const isOpen = open.has(i)
             const panelId = `experience-panel-${i}`
             const buttonId = `experience-button-${i}`
             return (
-              <li key={`${exp.company}-${exp.period}-${i}`} className="relative lg:pl-14">
+              <li
+                key={`${exp.company}-${exp.period}-${i}`}
+                ref={(el) => {
+                  itemRefs.current[i] = el
+                }}
+                data-index={i}
+                onMouseEnter={
+                  canHover
+                    ? () => {
+                        window.clearTimeout(hoverTimer.current)
+                        hoverTimer.current = window.setTimeout(() => openOnly(i), HOVER_INTENT_MS)
+                      }
+                    : undefined
+                }
+                onMouseLeave={canHover ? () => window.clearTimeout(hoverTimer.current) : undefined}
+                className="relative lg:pl-14"
+              >
                 <span
                   aria-hidden="true"
                   className={`absolute left-0 top-10 hidden h-2.5 w-2.5 -translate-x-1/2 rounded-full ring-4 ring-canvas transition-colors lg:block ${
-                    open ? 'bg-copper' : 'bg-line-strong'
+                    isOpen ? 'bg-copper' : 'bg-line-strong'
                   }`}
                 />
                 <div className="border-b border-line">
@@ -41,15 +140,15 @@ export default function Experience() {
                     <button
                       id={buttonId}
                       type="button"
-                      onClick={() => setOpenIndex(open ? null : i)}
-                      aria-expanded={open}
+                      onClick={() => toggle(i)}
+                      aria-expanded={isOpen}
                       aria-controls={panelId}
                       className="group flex w-full items-start justify-between gap-6 py-7 text-left"
                     >
                       <span className="min-w-0 flex-1">
                         <span
                           className={`block font-display text-2xl font-bold leading-tight transition-colors [overflow-wrap:anywhere] lg:text-3xl ${
-                            open ? 'text-copper' : 'text-ink group-hover:text-copper'
+                            isOpen ? 'text-copper' : 'text-ink group-hover:text-copper'
                           }`}
                         >
                           {exp.company}
@@ -62,7 +161,7 @@ export default function Experience() {
                       </span>
                       <span
                         className={`mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition-[rotate,border-color,color] duration-200 ease-out ${
-                          open
+                          isOpen
                             ? 'rotate-45 border-copper text-copper'
                             : 'border-line-strong text-muted group-hover:border-copper group-hover:text-copper'
                         }`}
@@ -78,12 +177,12 @@ export default function Experience() {
                     id={panelId}
                     role="region"
                     aria-labelledby={buttonId}
-                    inert={!open}
+                    inert={!isOpen}
                     className={`grid transition-[grid-template-rows] duration-300 ease-out ${
-                      open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                      isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
                     }`}
                   >
-                    <div className={`overflow-hidden transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0'}`}>
+                    <div className={`overflow-hidden transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
                       <div className="max-w-[68ch] pb-8">
                         {exp.description && <p className="mb-5 leading-relaxed text-ink/90">{exp.description}</p>}
                         <ul className="mb-6 space-y-3">
@@ -94,7 +193,7 @@ export default function Experience() {
                             </li>
                           ))}
                         </ul>
-                        {exp.url && <ExternalLink href={exp.url}>Visit {exp.company}</ExternalLink>}
+                        {exp.url && <ExternalLink href={exp.url} className={`${TEXT_LINK} min-h-11`}>Visit {exp.company}</ExternalLink>}
                       </div>
                     </div>
                   </div>

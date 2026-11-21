@@ -2,7 +2,7 @@ import { useEffect, useRef, type CSSProperties } from 'react'
 import type { Project } from '../data'
 import { ChevronLeft, ChevronRight, Close } from './Icons'
 import { Media, ProjectWriteup } from './ProjectWriteup'
-import { PRESS } from './ui'
+import { button } from './ui'
 
 interface Props {
   project: Project
@@ -92,7 +92,7 @@ export default function ProjectDialog({ project, index, total, onClose, onNaviga
           type="button"
           onClick={onClose}
           aria-label="Close project details"
-          className={`-mr-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-muted hover:bg-surface-2 hover:text-ink ${PRESS}`}
+          className={`-mr-2 ${button({ variant: 'ghost', size: 'icon' })}`}
         >
           <Close size={20} />
         </button>
@@ -125,7 +125,7 @@ export default function ProjectDialog({ project, index, total, onClose, onNaviga
           type="button"
           onClick={() => onNavigate(-1)}
           disabled={index === 0}
-          className={`flex h-11 items-center gap-1.5 rounded-sm px-3 font-display text-sm font-medium text-muted hover:text-ink disabled:invisible ${PRESS}`}
+          className={`${button({ variant: 'ghost' })} disabled:invisible`}
         >
           <ChevronLeft size={18} />
           Previous
@@ -137,7 +137,7 @@ export default function ProjectDialog({ project, index, total, onClose, onNaviga
           type="button"
           onClick={() => onNavigate(1)}
           disabled={index === total - 1}
-          className={`flex h-11 items-center gap-1.5 rounded-sm px-3 font-display text-sm font-medium text-muted hover:text-ink disabled:invisible ${PRESS}`}
+          className={`${button({ variant: 'ghost' })} disabled:invisible`}
         >
           Next
           <ChevronRight size={18} />

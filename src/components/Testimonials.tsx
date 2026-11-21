@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { TESTIMONIALS } from '../data'
-import { CONTAINER, prefersReducedMotion } from '../lib/utils'
+import { CONTAINER, prefersReducedMotion, SECTION } from '../lib/utils'
 import { ChevronLeft, ChevronRight } from './Icons'
-import { PRESS, SectionHeading } from './ui'
+import { button, SectionHeading } from './ui'
 
-const ARROW = `flex h-11 w-11 items-center justify-center rounded-full border border-line-strong text-ink hover:border-copper hover:text-copper disabled:pointer-events-none disabled:opacity-35 ${PRESS}`
+const ARROW = button({ variant: 'secondary', size: 'icon' })
 
 /** First letter as the reader sees it, so accents and emoji stay whole. */
 const initial = (name: string) => [...new Intl.Segmenter().segment(name.trim())][0]?.segment ?? ''
@@ -47,7 +47,7 @@ export default function Testimonials() {
   if (TESTIMONIALS.length === 0) return null
 
   return (
-    <section id="testimonials" aria-labelledby="testimonials-heading" className="border-t border-line py-24 lg:py-32">
+    <section id="testimonials" aria-labelledby="testimonials-heading" className={SECTION}>
       <div className={CONTAINER}>
         <SectionHeading
           id="testimonials-heading"

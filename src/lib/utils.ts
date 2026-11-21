@@ -56,6 +56,9 @@ export const hideIfMissing = (e: { currentTarget: HTMLElement }) => {
 /** Shared layout container so every section lines up on the same edges. */
 export const CONTAINER = 'mx-auto w-full max-w-[88rem] px-5 sm:px-8 lg:px-16'
 
+/** Shared frame for a page section below the hero: a rule on top and the section spacing tokens. */
+export const SECTION = 'border-t border-line py-section lg:py-section-lg'
+
 export function useMediaQuery(query: string): boolean {
   return useSyncExternalStore(
     (onChange) => {

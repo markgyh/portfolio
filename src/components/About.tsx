@@ -1,14 +1,13 @@
 import { ABOUT, SKILL_GROUPS } from '../data'
-import { CONTAINER, useResumeUrl } from '../lib/utils'
-import { FileText } from './Icons'
-import { BUTTON_SECONDARY, SectionHeading } from './ui'
+import { CONTAINER, SECTION, useResumeUrl } from '../lib/utils'
+import { ANNOTATION, button, ExternalLink, SectionHeading } from './ui'
 
 export default function About() {
   const resume = useResumeUrl()
   if (ABOUT.length === 0 && SKILL_GROUPS.length === 0) return null
 
   return (
-    <section id="about" aria-labelledby="about-heading" className="border-t border-line py-24 lg:py-32">
+    <section id="about" aria-labelledby="about-heading" className={SECTION}>
       <div className={CONTAINER}>
         <SectionHeading id="about-heading">About Me</SectionHeading>
 
@@ -22,11 +21,9 @@ export default function About() {
 
             {resume && (
               <div className="pt-4">
-                <a href={resume} target="_blank" rel="noopener noreferrer" className={BUTTON_SECONDARY}>
-                  <FileText size={18} />
+                <ExternalLink href={resume} pdf className={button({ variant: 'secondary' })}>
                   View résumé
-                  <span className="sr-only"> (PDF, opens in a new tab)</span>
-                </a>
+                </ExternalLink>
               </div>
             )}
           </div>
@@ -41,7 +38,7 @@ export default function About() {
                     key={label}
                     className="grid gap-2 border-b border-line py-5 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-6"
                   >
-                    <dt className="text-sm font-medium text-cyan">{label}</dt>
+                    <dt className={ANNOTATION}>{label}</dt>
                     <dd>
                       <ul className="flex flex-wrap gap-x-5 gap-y-1.5 text-ink">
                         {items.map((item) => (

@@ -1,8 +1,8 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { SITE, SOCIALS } from '../data'
-import { CONTAINER, FULL_NAME } from '../lib/utils'
+import { CONTAINER, FULL_NAME, SECTION } from '../lib/utils'
 import { ArrowUpRight, Check, Copy } from './Icons'
-import { BUTTON_PRIMARY, PRESS, SectionHeading, TEXT_LINK } from './ui'
+import { ANNOTATION, button, ExternalLink, SectionHeading, TEXT_LINK } from './ui'
 
 type Status = 'idle' | 'sending' | 'sent' | 'mailto' | 'error'
 const EMPTY = { name: '', email: '', subject: '', message: '' }
@@ -10,8 +10,6 @@ const EMPTY = { name: '', email: '', subject: '', message: '' }
 const INPUT =
   'w-full rounded-sm border border-line-strong bg-surface px-4 py-3.5 text-ink transition-colors placeholder:text-faint hover:border-muted focus:border-copper focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-copper'
 const LABEL = 'mb-2 block text-sm font-medium text-ink'
-// Small heading for each group of contact details
-const DETAIL = 'text-sm font-medium text-cyan'
 
 function CopyEmail() {
   const [copied, setCopied] = useState(false)
@@ -28,7 +26,7 @@ function CopyEmail() {
     <button
       type="button"
       onClick={copy}
-      className={`flex h-10 shrink-0 items-center gap-1.5 rounded-full border border-line-strong px-3.5 text-sm font-medium text-muted hover:border-copper hover:text-copper ${PRESS}`}
+      className={button({ variant: 'secondary' })}
     >
       {copied ? <Check size={16} /> : <Copy size={16} />}
       <span aria-live="polite">{copied ? 'Copied' : 'Copy'}</span>
@@ -81,7 +79,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" aria-labelledby="contact-heading" className="border-t border-line py-24 lg:py-32">
+    <section id="contact" aria-labelledby="contact-heading" className={SECTION}>
       <div className={CONTAINER}>
         <SectionHeading id="contact-heading">Contact</SectionHeading>
 
@@ -176,13 +174,13 @@ export default function Contact() {
                 <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
 
                 <div className="flex flex-wrap items-center gap-x-6 gap-y-4 pt-1">
-                  <button type="submit" disabled={status === 'sending'} className={`${BUTTON_PRIMARY} min-h-12 px-8`}>
+                  <button type="submit" disabled={status === 'sending'} className={button({ size: 'lg' })}>
                     {status === 'sending' ? 'Sending…' : 'Send message'}
                   </button>
 
                   <div aria-live="polite" className="text-sm">
                     {status === 'error' && (
-                      <p className="note-in text-[#ffb59e]">
+                      <p className="note-in text-danger">
                         Your message didn't send. Check your connection and try again, or email{' '}
                         <a href={`mailto:${SITE.email}`} className="underline underline-offset-4">
                           {SITE.email}
@@ -208,7 +206,7 @@ export default function Contact() {
           {/* Direct details */}
           <div className="space-y-10 lg:pt-2">
             <div>
-              <h3 className={`mb-3 ${DETAIL}`}>Email</h3>
+              <h3 className={`mb-3 ${ANNOTATION}`}>Email</h3>
               <div className="flex flex-wrap items-center gap-3">
                 <a
                   href={`mailto:${SITE.email}`}
@@ -221,7 +219,7 @@ export default function Contact() {
             </div>
 
             <div>
-              <h3 className={`mb-3 ${DETAIL}`}>Location</h3>
+              <h3 className={`mb-3 ${ANNOTATION}`}>Location</h3>
               <p className="text-ink">
                 {SITE.location} <span className="text-muted">({SITE.timezone})</span>
               </p>
@@ -230,26 +228,27 @@ export default function Contact() {
 
             {SOCIALS.length > 0 && (
               <div>
-                <h3 className={`mb-1 ${DETAIL}`}>Elsewhere</h3>
+                <h3 className={`mb-1 ${ANNOTATION}`}>Elsewhere</h3>
                 <ul className="divide-y divide-line border-b border-line">
                   {SOCIALS.map(({ label, handle, url }) => (
                     <li key={label}>
-                      <a
+                      <ExternalLink
                         href={url}
-                        target="_blank"
-                        rel="noopener noreferrer"
                         className="group flex min-h-14 items-center justify-between gap-4 py-3"
+                        icon={
+                          <ArrowUpRight
+                            size={18}
+                            className="shrink-0 text-muted transition-[color,translate] duration-150 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-copper"
+                          />
+                        }
                       >
                         <span className="min-w-0">
-                          <span className="font-medium text-ink transition-colors group-hover:text-copper">{label}</span>
+                          <span className="font-medium text-ink transition-colors duration-150 ease-out group-hover:text-copper">
+                            {label}
+                          </span>
                           <span className="ml-3 text-sm text-muted [overflow-wrap:anywhere]">{handle}</span>
-                          <span className="sr-only"> (opens in a new tab)</span>
                         </span>
-                        <ArrowUpRight
-                          size={18}
-                          className="shrink-0 text-muted transition-[color,transform] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-copper"
-                        />
-                      </a>
+                      </ExternalLink>
                     </li>
                   ))}
                 </ul>

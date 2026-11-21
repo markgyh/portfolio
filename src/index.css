@@ -21,6 +21,12 @@
   --color-copper: #e08a4f;
   --color-copper-strong: #f0a673;
   --color-cyan: #9dd4f5;
+  /* Feedback: a warm red-orange that stays readable on the blueprint blue */
+  --color-danger: #ffb59e;
+
+  /* Vertical padding of a page section, phone/tablet and desktop */
+  --spacing-section: 6rem;
+  --spacing-section-lg: 8rem;
 
   --font-sans: 'IBM Plex Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-display: 'Chakra Petch', 'IBM Plex Sans Variable', ui-sans-serif, system-ui, sans-serif;
@@ -86,6 +92,11 @@
   ::selection {
     background: var(--color-copper);
     color: var(--color-canvas);
+  }
+
+  /* Icons keep one drawn line weight whatever their size (vector-effect isn't inherited, so it goes on each shape) */
+  svg[data-icon] * {
+    vector-effect: non-scaling-stroke;
   }
 
   :focus-visible {

@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import type { Project, ProjectBlock } from '../data'
 import { asset, hideIfMissing } from '../lib/utils'
 import { ImageIcon } from './Icons'
+import { ANNOTATION, Tags } from './ui'
 
 type Level = 2 | 3 | 4 | 5 | 6
 
@@ -147,32 +148,13 @@ function Block({ block, accent, level }: { block: ProjectBlock; accent: string; 
   }
 }
 
-const TAG = 'rounded-sm bg-surface-2 px-2.5 py-1 text-[0.8rem] text-muted'
-
-/** Tools list. Past `limit` the rest collapse into a count; the project window shows them all. */
-export function Tags({ items, limit = Infinity }: { items: string[]; limit?: number }) {
-  if (items.length === 0) return null
-  const shown = items.length > limit ? items.slice(0, limit - 1) : items
-  const hidden = items.length - shown.length
-  return (
-    <ul className="flex flex-wrap gap-2" aria-label="Tools and processes">
-      {shown.map((tag) => (
-        <li key={tag} className={TAG}>
-          {tag}
-        </li>
-      ))}
-      {hidden > 0 && <li className={TAG}>+{hidden} more</li>}
-    </ul>
-  )
-}
-
 function Facts({ facts }: { facts: Project['facts'] }) {
   if (facts.length === 0) return null
   return (
     <dl className="grid gap-x-8 gap-y-3 text-[0.95rem] sm:grid-cols-2">
       {facts.map(({ label, value }) => (
         <div key={label + value} className={label === 'Role' ? 'sm:col-span-2' : ''}>
-          {label && <dt className="text-sm font-medium text-cyan">{label}</dt>}
+          {label && <dt className={ANNOTATION}>{label}</dt>}
           <dd className={label ? 'mt-0.5 text-ink/90' : 'text-muted'}>{value}</dd>
         </div>
       ))}
@@ -199,7 +181,7 @@ export function ProjectWriteup({ project, level }: { project: Project; level: Le
         <div className="space-y-6">
           <p className="text-[1.05rem] leading-relaxed text-ink/90">{project.summary}</p>
           <Facts facts={project.facts} />
-          <Tags items={project.tags} />
+          <Tags items={project.tags} label="Tools and processes" />
         </div>
       </section>
 

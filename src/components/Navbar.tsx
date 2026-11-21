@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { NAV_ITEMS } from '../data'
 import { FULL_NAME, INITIALS, useActiveSection, useMediaQuery, useResumeUrl, useScrolled } from '../lib/utils'
 import { Close, Menu } from './Icons'
-import { PRESS } from './ui'
+import { button, ExternalLink, PRESS } from './ui'
 
 export default function Navbar() {
   const active = useActiveSection()
@@ -52,14 +52,14 @@ export default function Navbar() {
         }`}
       >
         {/* Translucent so the page reads through it; a border, not a shadow, sets it apart.
-            Links inside take a 10px radius: the bar's 16px minus its 6px padding, so the curves run parallel. */}
+            Links inside take the shared 4px control radius; the bar's 10px is that plus its 6px padding, so the curves run parallel. */}
         <nav
           aria-label="Primary"
-          className="chrome flex items-center gap-1 rounded-2xl border border-line bg-surface/85 p-1.5 backdrop-blur-xl"
+          className="chrome flex items-center gap-1 rounded-[10px] border border-line bg-surface/85 p-1.5 backdrop-blur-xl"
         >
           <a
             href="#top"
-            className="flex h-9 items-center rounded-[10px] px-3.5 font-display text-sm font-bold tracking-wide text-copper transition-colors hover:text-ink"
+            className="flex h-9 items-center rounded-sm px-3.5 font-display text-sm font-bold tracking-wide text-copper transition-colors duration-150 ease-out hover:text-ink"
           >
             {INITIALS}
             <span className="sr-only">{FULL_NAME}, back to top</span>
@@ -69,7 +69,7 @@ export default function Navbar() {
               key={id}
               href={`#${id}`}
               aria-current={active === id ? 'location' : undefined}
-              className={`flex h-9 items-center whitespace-nowrap rounded-[10px] px-3 font-display text-[0.95rem] font-medium md:px-4 ${PRESS} ${
+              className={`flex h-9 items-center whitespace-nowrap rounded-sm px-3 font-display text-[0.95rem] font-medium md:px-4 ${PRESS} ${
                 active === id ? 'bg-copper text-canvas' : 'text-muted hover:bg-surface-2 hover:text-ink'
               }`}
             >
@@ -77,15 +77,11 @@ export default function Navbar() {
             </a>
           ))}
           {resume && (
-            <a
-              href={resume}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`ml-1 hidden h-9 items-center rounded-[10px] border border-line-strong px-4 font-display text-[0.95rem] font-medium text-ink hover:border-copper hover:text-copper md:flex ${PRESS}`}
-            >
-              Résumé
-              <span className="sr-only"> (PDF, opens in a new tab)</span>
-            </a>
+            <span className="ml-1 hidden md:flex">
+              <ExternalLink href={resume} pdf className={button({ variant: 'secondary', size: 'sm' })}>
+                Résumé
+              </ExternalLink>
+            </span>
           )}
         </nav>
       </header>
@@ -108,7 +104,7 @@ export default function Navbar() {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            className={`flex h-11 items-center gap-2 rounded-xl border border-line-strong bg-surface px-4 font-display text-sm font-medium text-ink ${PRESS}`}
+            className={`${button({ variant: 'secondary' })} bg-surface px-4`}
           >
             {open ? <Close size={18} /> : <Menu size={18} />}
             {open ? 'Close' : 'Menu'}
@@ -140,15 +136,13 @@ export default function Navbar() {
               ))}
             </ul>
             {resume && (
-              <a
+              <ExternalLink
                 href={resume}
-                target="_blank"
-                rel="noopener noreferrer"
                 onClick={() => setOpen(false)}
-                className={`mt-5 flex min-h-12 items-center justify-center rounded-xl border border-line-strong font-display font-medium text-ink ${PRESS}`}
+                className={`mt-5 w-full ${button({ variant: 'secondary', size: 'lg' })}`}
               >
                 View résumé (PDF)
-              </a>
+              </ExternalLink>
             )}
           </nav>
         </div>

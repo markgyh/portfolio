@@ -12,30 +12,30 @@
 // Accent colours used for each project card. Chosen to sit on the blueprint
 // blue and stay readable with dark text on top (used for buttons in the dialog).
 export const ACCENTS = {
-  copper: '#E08A4F',
-  cyan: '#9DD4F5',
-  white: '#F4F8FC',
-  amber: '#F0B86E',
+  sage: '#8ff094ba',
+  cyan: '#92dfeac8',
+  purple: '#c57defba',
+  amber: '#f4b474d5',
 } as const
 
 // ─── Site & profile ──────────────────────────────────────────────────────────
 
 export const SITE = {
-  firstName: 'FirstName', // TODO
-  lastName: 'LastName', // TODO
+  firstName: 'Mark', // TODO
+  lastName: 'Giam', // TODO
   role: 'Mechanical Design & Robotics Engineer',
 
   // Used for the browser tab, Google results and link previews.
   description:
-    'Mechanical design and robotics engineer. CAD, technical drawings, fabrication, prototyping and field-tested hardware for autonomous systems.',
+    'Mechanical design and robotics engineer. CAD, technical drawings, fabrication, prototyping and field deployment for autonomous systems.',
 
   // Full public URL of the site. Used for link previews. TODO: set your username.
   url: 'https://yourusername.github.io/portfolio/',
 
-  email: 'youremail@gmail.com', // TODO
+  email: 'markgiam02@gmail.com', // TODO
   location: 'Singapore',
   timezone: 'UTC+8',
-  workScope: 'Open to roles worldwide',
+  workScope: 'Open to roles worldwide.',
 
   availability: {
     open: true, // set to false to hide the availability card
@@ -50,7 +50,7 @@ export const SITE = {
   // TODO: replace with your own photo, e.g. 'images/hero/portrait.jpg'.
   // Leave alt as '' if the photo is purely decorative.
   heroImage: {
-    src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920&h=1080&fit=crop&crop=top&auto=format&q=80',
+    src: 'public/images/hero/portrait.jpg',
     alt: '',
   },
 
@@ -64,25 +64,24 @@ export const SITE = {
 }
 
 export const SOCIALS: { label: string; handle: string; url: string }[] = [
-  { label: 'GitHub', handle: '@github', url: 'https://github.com/' }, // TODO
-  { label: 'LinkedIn', handle: 'linkedin', url: 'https://linkedin.com/in/' }, // TODO
+  { label: 'GitHub', handle: '@markgyh', url: 'https://github.com/markgyh' }, // TODO
+  { label: 'LinkedIn', handle: 'markgiam', url: 'https://linkedin.com/in/markgiam' }, // TODO
 ]
 
 // ─── About ───────────────────────────────────────────────────────────────────
 
 export const ABOUT: string[] = [
   "Hi, I'm a Mechanical Design and Robotics engineer with a passion for creating with my hands. I care about the intersection of engineering rigour and design craft, and I want to build things that are functional, aesthetic and resilient.",
-  // TODO: the first draft had unrelated filler here (Vercel, Linear, Shopify). Replace with your own summary.
   'Most recently I retrofitted a manual sweeper for autonomous operation at Kärcher Robotics, and built sea and aerial drones at The Kinetic Option. My experience ranges from CAD and tolerancing through to prototyping, fabrication and field testing.',
-  'Outside of work, I like to acquire knowledge. I enjoy watching geopolitical videos and learning new languages. I am also into calisthenics, travelling and cooking. I firmly believe insects and arachnids are underrated and deserve more attention.',
+  'Outside of work, I enjoy watching videos on geopolitics and learning new languages. I am also into calisthenics, travelling and cooking. I firmly believe insects and arachnids are underrated and deserve more attention.',
 ]
 
 export const SKILL_GROUPS: { label: string; items: string[] }[] = [
   { label: 'Software', 
-    items: ['SolidWorks', 'Fusion360', 'ANSYS Mechanical', 'ANSYS Fluent', 'Adobe Illustrator', 'Python', 'ROS2'] },
+    items: ['SolidWorks', 'Fusion360', 'ANSYS Mechanical', 'ANSYS Fluent', 'Adobe Illustrator', 'Python', 'Arduino', 'ESP32', 'ROS2'] },
   {
     label: 'Hardware',
-    items: ['FDM 3D Printing', 'Laser & Waterjet cutting', 'Sheet Metal Fabrication', 'Handheld Power Tools', 'Electronics & Soldering'],
+    items: ['FDM & SLA 3D Printing', 'Laser & Waterjet Cutting', 'Sheet Metal Fabrication', 'Handheld Power Tools', 'Electronics & Soldering'],
   },
   { label: 'Others', 
     items: ['ISO 2768', 'DFMA', 'Technical Drawings'] },
@@ -185,19 +184,19 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
-    title: "Retractable Tape Measure",
-    subtitle: "Open House Door Gift",
+    title: "SUTD Open House Door Gift: Retractable Tape Measure",
+    subtitle: "",
     context: "School Project, 30.120 Design & Manufacturing",
-    date: "Oct 2026 (in progress)",
+    date: "Oct 2026 (In Progress)",
     facts: [
-      { label: "Role", value: "Shell and mechanism designer (carriage, button, ratchet)" },
+      { label: "Role", value: "Mechanical Designer (Shell, Carriage, Button Mechanism, Ratchet Mechanism)" },
       { label: "Team", value: "6" },
       { label: "Timeline", value: "12 weeks" },
     ],
-    tags: ["CAD", "FDM printing", "Laser cutting", "Injection moulding (Actionbox INJEKTO 3)", "Zünd cutting"],
-    accent: ACCENTS.copper,
+    tags: ["Fusion360", "FDM Printing", "Laser Cutting", "Injection Moulding", "Zünd Cutting"],
+    accent: ACCENTS.sage,
     cover: '',
-    summary: "SUTD's open house needed a door gift: a pocket tape measure that extends to 100 cm, locks at least every 5 cm and retracts at the press of a button. It had to come in under S$10 a unit for a 1,000-unit run, using at least three manufacturing processes. I designed the shell and the locking mechanism, and spent about six iterations tuning the ratchet until it locks and releases with a crisp, satisfying click. The design uses five processes and nine parts. Our preliminary cost model puts it at S$4.18 a unit. The project is still running, and the cost analysis is now pushing the shell from injection moulding to 3D printing.",
+    summary: "SUTD's Open House needed a door gift. We built a compact 1m tape measure, locks every 10 cm and retracts at the press of a button. It had to come in under S$10 a unit for a 1,000-unit run, using at least three manufacturing processes. I designed the shell and the internal mechanisms, and spent about six iterations tuning the ratchet until it locks and releases with a crisp, satisfying click. The design uses five processes and nine parts. Our preliminary cost model puts it at S$4.18 a unit. The project is still running, and the cost analysis is now pushing the shell from injection moulding to 3D printing.",
     summaryImage: '',
     sections: [
       {
@@ -223,7 +222,7 @@ export const PROJECTS: Project[] = [
         heading: "Exploration & Design Decisions",
         image: '',
         blocks: [
-          { type: 'p', lead: "A shell designed for moulding.", text: "I designed the shell as a 45 mm rounded square with a single cavity and a flat acrylic cover in place of a second moulded half. That halved the mould cavities and removed a snap fit. Its dimensions were driven by the process and the parts inside it:" },
+          { type: 'p', lead: "Design for Injection Moulding.", text: "I designed the shell as a 45 mm square with filleted corners and drafted walls. A flat acrylic cover removes the need for a second moulded half.:" },
           {
             type: 'list',
             items: [
@@ -234,8 +233,8 @@ export const PROJECTS: Project[] = [
             ],
           },
           { type: 'p', lead: "A ratchet built into the spool.", text: "I combined the tape spool and the ratchet into one carriage. Its 32 mm outer diameter leaves room inside the shell for 100 cm of rolled tape, and its 29 mm inner diameter leaves room for the spring to wind. Three ratchet teeth, 120° apart, give a lock at least every 5 cm of tape. The button carries three matching pawls. A 10 mm square stem stops the button rotating, and a compression spring around the arbor holds the pawls 0.85 mm into the ratchet. Pressing the button lifts the pawls clear, and the spiral spring rewinds the tape." },
-          { type: 'p', lead: "Tuning the feel.", text: "A door gift is judged in the first few seconds of handling. Over about six iterations, I adjusted the tooth spacing and the pawl overlap. More overlap locks more securely but feels stiff and gritty. Less overlap feels smooth but risks slipping under the spring's pull. The final setting locks firmly, clicks clearly as the tape extends, and releases cleanly." },
-          { type: 'p', lead: "Making versus buying springs.", text: "We wanted every part made in-house, so we 3D-printed both springs. Neither came close to the size, reliability and cost of a bought spring. We also considered laser-cutting 0.2 mm spring steel for the spiral spring, but bought both springs instead. They cost S$0.55 per unit, together with the screws." },
+          { type: 'p', lead: "Tuning the Feel.", text: "A door gift is judged in the first few seconds of handling. Over about six iterations, I adjusted the tooth spacing and the pawl overlap. More overlap locks more securely but feels stiff and gritty. Less overlap feels smooth but risks slipping under the spring's pull. The final setting locks firmly, clicks clearly as the tape extends, and releases cleanly." },
+          { type: 'p', lead: "Making versus Buying: Springs.", text: "We wanted every part made in-house, so we 3D-printed both springs. Neither came close to the size, reliability and cost of a bought spring. We also considered laser-cutting 0.2 mm spring steel for the spiral spring, but bought both springs instead. They cost S$0.55 per unit, together with the screws." },
         ],
       },
       {
@@ -282,12 +281,12 @@ export const PROJECTS: Project[] = [
     video: '',
   },
   {
-    title: "LyfeGo KOL Portal",
+    title: "Streamlining KOL Onboarding Processes for LyfeGo",
     subtitle: "",
-    context: "Self-initiated industry project with LyfeGo",
+    context: "Industry Project with LyfeGo",
     date: "Sep 2026",
     facts: [
-      { label: "Role", value: "QA and test lead, documentation, team–mentor liaison" },
+      { label: "Role", value: "QA and Test Lead, Documentation, Team–Mentor Liaison" },
       { label: "Team", value: "3" },
       { label: "Timeline", value: "1 month" },
     ],
@@ -368,16 +367,16 @@ export const PROJECTS: Project[] = [
     video: '',
   },
   {
-    title: "Growing Coca-Cola's Healthy Beverage Portfolio in Indonesia",
+    title: "Growing Coca-Cola's Healthy Beverage Portfolio",
     subtitle: "",
-    context: "TalentGeist Work Simulation Program (WSP), self-initiated",
+    context: "TalentGeist Work Simulation Program (WSP)",
     date: "Sep 2026",
     facts: [
-      { label: "Role", value: "Individual brand-manager case" },
-      { label: "Budget modelled", value: "US$8M of US$10M over 5 years" },
+      { label: "Role", value: "Individual Brand-Manager Case" },
+      { label: "Budget Modelled", value: "US$8M of US$10M over 5 years" },
     ],
-    tags: ["Driver analysis", "Competitor and price benchmarking", "Bottom-up cost modelling"],
-    accent: ACCENTS.amber,
+    tags: ["Driver Analysis", "Competitor and Price Benchmarking", "Bottom-up Cost Modelling"],
+    accent: ACCENTS.cyan,
     cover: '',
     summary: "TalentGeist's Work Simulation Program sets students real brand-manager problems, taught by industry practitioners, and companies use the results to scout candidates for internships. My brief: grow Coca-Cola's healthy-beverage share in Indonesia, its biggest Southeast Asian market, with up to US$10M over five years. I treated it the way I'd treat an engineering problem. I listed every plausible barrier, used evidence to rule out the ones that weren't actually limiting growth, and put money only against the two that were: sugar content and a weak digital presence. The result was a US$8M, five-year plan across reformulation R&D, a relaunch campaign for the weakest brand, and always-on social media teams for the four brands. I left US$2M unspent because nothing in the plan needed it.",
     summaryImage: '',
@@ -457,17 +456,16 @@ export const PROJECTS: Project[] = [
     video: '',
   },
   {
-    title: "Autonomous Sweeper Sensor Suite",
+    title: "Optimising Sensor Suite Locations for Sweeper Robot",
     subtitle: "",
     context: "Kärcher, Mechatronics & Embedded Software Intern",
     date: "Aug 2026",
     facts: [
-      { label: "Role", value: "Sole mechanical designer" },
-      { label: "Timeline", value: "6 weeks from design to outsourced manufacture" },
-      { label: "", value: "Weekly design reviews" },
+      { label: "Role", value: "Sole Mechanical Designer" },
+      { label: "Timeline", value: "6 weeks from Design to Outsourced Manufacture" },
     ],
-    tags: ["SolidWorks (sheet metal)", "Technical drawings to ISO 2768", "DFMA", "PETG 3D printing", "Outsourced sheet-metal fabrication"],
-    accent: ACCENTS.white,
+    tags: ["SolidWorks", "Technical Drawings (ISO 2768)", "DFMA", "PETG 3D Printing", "Sheet Metal Fabrication"],
+    accent: ACCENTS.amber,
     cover: '',
     summary: "I redesigned the perception hardware of Kärcher's autonomous sweeper. It now uses one fewer lidar, the top lidar's view is clear, and the mounts match the machine's design language. The new layout uses two Robosense Airy hemispherical lidars on opposite corners and a Robosense Helios on a new top mast, with the IMUs, rain sensor and a 360° camera mounted on the same stack. The fabricated parts came back from the supplier needing no changes, and are being assembled for the December 2026 showcase at Punggol Digital District.",
     summaryImage: '',
@@ -493,10 +491,10 @@ export const PROJECTS: Project[] = [
         heading: "Exploration & Design Decisions",
         image: '',
         blocks: [
-          { type: 'p', lead: "Two lidars instead of three.", text: "I moved to a diagonal layout: one Airy (96-beam) at the front corner, built into the front panel module, and one at the opposite rear corner. Hemispherical lidars on opposite corners cover each other's blind sides, so two units can see all the way around the machine." },
-          { type: 'p', lead: "Placing each lidar from its field of view.", text: "I checked sight lines in CAD against each lidar's vertical field of view. I placed each sensor's optical centre outboard of the sweeper body, so the body doesn't block the lower half of its view. That pushes the sensors out beyond the body, so I also checked that the side brushes still reach the ground beneath each mount. Otherwise, the machine would leave an uncleaned strip at every corner." },
-          { type: 'p', lead: "A swappable sensor interface.", text: "The front lidar connects to the front panel but is a separate module with its own sheet-metal bracket and printed housing. The team was evaluating other lidars, including a Pacecat unit and a safety-rated Airy. Separating the mount lets them switch sensors by replacing one bracket, not redesigning the front panel. This was my own call, not part of the brief." },
-          { type: 'p', lead: "A clean mast for the top stack.", text: "A 40 cm Schedule 40 steel pipe replaces the arch and lifts the Helios clear of any plate in its view. One assembly bolts to the machine with two M12 screws, and the cables run inside the pipe. Along the mast:" },
+          { type: 'p', lead: "Minimising LiDARs.", text: "I moved to a diagonal layout: one Airy (96-beam) at the front corner, built into the front panel module, and one at the opposite rear corner. Hemispherical lidars on opposite corners cover each other's blind sides, so two units can see all the way around the machine." },
+          { type: 'p', lead: "Maximising Field-of-View.", text: "I checked sight lines in CAD against each lidar's vertical field of view. I placed each sensor's optical centre outboard of the sweeper body, so the body doesn't block the lower half of its view. That pushes the sensors out beyond the body, so I also checked that the side brushes still reach the ground beneath each mount. Otherwise, the machine would leave an uncleaned strip at every corner." },
+          { type: 'p', lead: "Swappable Sensor Interface.", text: "The front lidar connects to the front panel but is a separate module with its own sheet-metal bracket and printed housing. The team was evaluating other lidars, including a Pacecat unit and a safety-rated Airy. Separating the mount lets them switch sensors by replacing one bracket, not redesigning the front panel. This was my own call, not part of the brief." },
+          { type: 'p', lead: "A Clean Mast for the Top Stack.", text: "A 40 cm Schedule 40 steel pipe replaces the arch and lifts the Helios clear of any plate in its view. One assembly bolts to the machine with two M12 screws, and the cables run inside the pipe. Along the mast:" },
           {
             type: 'list',
             items: [
@@ -545,17 +543,16 @@ export const PROJECTS: Project[] = [
     video: '',
   },
   {
-    title: "Autonomous Sweeper Front Panel",
+    title: "Revamped Human Interface Panel for Sweeper Robot",
     subtitle: "",
     context: "Kärcher, Mechatronics & Embedded Software Intern",
     date: "Jun 2026",
     facts: [
       { label: "Role", value: "Sole mechanical designer" },
       { label: "Timeline", value: "6 weeks design, 6 weeks manufacture and fit" },
-      { label: "", value: "Weekly design reviews" },
     ],
-    tags: ["SolidWorks (surface modelling, sheet metal)", "Technical drawings to ISO 2768", "DFMA", "PETG 3D printing", "Outsourced sheet-metal fabrication"],
-    accent: ACCENTS.copper,
+    tags: ["SolidWorks", "Surface Modelling", "Technical drawings to ISO 2768", "DFMA", "PETG 3D printing", "Outsourced sheet-metal fabrication"],
+    accent: ACCENTS.amber,
     cover: '',
     summary: "I redesigned the front panel of Kärcher's autonomous road sweeper, which is the operator's main interface and the developers' terminal. The new panel is a hybrid of 5 mm mild-steel sheet metal and sectioned PETG prints. It widens the leg-entry channel by 50%, from 20 cm to 30 cm, shades and protects the screen from sun and rain, and adds gasket sealing. It is now fitted to the machine, with wiring in progress. The sweeper is scheduled to be shown at Punggol Digital District's product showcase in December 2026, in front of Singapore ministers and Kärcher senior management.",
     summaryImage: '',
@@ -638,18 +635,18 @@ export const PROJECTS: Project[] = [
     video: '',
   },
   {
-    title: "High Speed Dual-Mode Drone",
+    title: "TKO DX-1A: High-Speed Dual-Mode Drone",
     subtitle: "",
     context: "TKO, Mechanical Design Intern",
     date: "Apr 2026",
     facts: [
-      { label: "Role", value: "Sole designer (research, airframe and fairing design, build)" },
+      { label: "Role", value: "Sole designer (Research, Airframe & Fairing design, Build)" },
       { label: "Timeline", value: "4 weeks, with weekly design reviews" },
     ],
-    tags: ["Fusion 360", "3D printing", "Supplied drone avionics"],
-    accent: ACCENTS.cyan,
+    tags: ["Fusion 360", "3D printing", "Supplied Drone Avionics"],
+    accent: ACCENTS.amber,
     cover: '',
-    summary: "With no existing specifications or prior work in the company, I designed and built the first physical prototype of a dual-mode drone with a 300 km/h top-speed target, in four weeks. It goes through three design iterations. The 3D-printed V2.1 airframe was shown to clients, who were impressed. The design was then handed to the in-house mechanical designer, and it is still in development.",
+    summary: "With no existing specifications or prior work within the company, I designed and built the first physical prototype of a dual-mode drone with a 300 km/h top-speed target, in four weeks. It went through three design iterations. The 3D-printed V2.1 airframe was shown to external clients, who were impressed with the resolution of the drone, though they were hoping it could already fly. The design was then handed to the in-house mechanical designer, and it is still in development.",
     summaryImage: '',
     sections: [
       {
@@ -664,8 +661,8 @@ export const PROJECTS: Project[] = [
         heading: "Exploration & Design Decisions",
         image: '',
         blocks: [
-          { type: 'p', lead: "Sizing with no specification.", text: "The only references were photos of comparable drones online. I estimated scale from objects of known size in the frames, such as an operator's hands and, in one photo, an adult cat. I then checked that estimate against the fixed dimensions of the avionics I had to fit. It wasn't precise, but it gave a defensible starting envelope within the first week." },
-          { type: 'p', lead: "Three iterations in four weeks.", text: "Each version came out of a weekly design review:" },
+          { type: 'p', lead: "Sizing without Specifications.", text: "The only references were photos of comparable drones online. I estimated scale from objects of known size in the frames, such as an operator's hands and, in one photo, an adult cat. I then checked that estimate against the fixed dimensions of the avionics I had to fit. It wasn't precise, but it gave a defensible starting envelope within the first week." },
+          { type: 'p', lead: "3 Iterations in 4 weeks.", text: "Each version came out of a weekly design review, with multiple changes to different aspects of the drone. The final week with designed to " },
           {
             type: 'list',
             items: [
@@ -722,7 +719,7 @@ export const PROJECTS: Project[] = [
     video: '',
   },
   {
-    title: "Wireless Emergency Kill Switch for a Seadrone Fleet",
+    title: "Wireless Emergency Kill Switch for Seadrone Fleet",
     subtitle: "",
     context: "TKO, Mechanical Design Intern",
     date: "Feb 2026",
@@ -748,9 +745,9 @@ export const PROJECTS: Project[] = [
         heading: "Exploration & Design Decisions",
         image: '',
         blocks: [
-          { type: 'p', lead: "Heat versus water.", text: "A sealed box suits a marine environment, but sealing in a Pi and a mesh radio traps heat. My first enclosure (90 × 125 × 75 mm) fit every component but left no space for air to move. I hadn't measured an overheating problem. Still, I treated cooling as cheap insurance for a safety-critical device. I enlarged the body to 198 × 83 × 86 mm, about two-thirds more volume, and added two 40 mm fans in a push-pull arrangement so air crosses every component. A tongue-and-groove joint at the mating seam keeps water out of the main gap without gaskets. With no formal ingress target, I designed for passive protection wherever possible." },
-          { type: 'p', lead: "Size versus buildability.", text: "Four printed iterations, first in PLA and then in PETG for the sea-going unit, refined tolerances, component fit and assembly order. I dropped several layouts that worked in CAD because they were awkward to assemble." },
-          { type: 'p', lead: "Preventing accidental stops.", text: "An accidental trigger halts the whole fleet, so I swapped the green button for a 60 mm domed red arcade button, the convention for an emergency stop. I surrounded it with a 70 × 70 mm guard against accidental presses. I wired the eight green status LEDs, one per drone, and the button, then updated the Python code from five drones to eight." },
+          { type: 'p', lead: "Heat vs Water.", text: "A sealed box suits a marine environment, but sealing in a Pi and a mesh radio traps heat. My first enclosure (90 × 125 × 75 mm) fit every component but left no space for air to move. I hadn't measured an overheating problem. Still, I treated cooling as cheap insurance for a safety-critical device. I enlarged the body to 198 × 83 × 86 mm, about two-thirds more volume, and added two 40 mm fans in a push-pull arrangement so air crosses every component. A tongue-and-groove joint at the mating seam keeps water out of the main gap without gaskets. With no formal ingress target, I designed for passive protection wherever possible." },
+          { type: 'p', lead: "Size vs Buildability.", text: "Four printed iterations, first in PLA and then in PETG for the sea-going unit, refined tolerances, component fit and assembly order. I dropped several layouts that worked in CAD because they were awkward to assemble." },
+          { type: 'p', lead: "Preventing Accidental Stops.", text: "An accidental trigger halts the whole fleet, so I swapped the green button for a 60 mm domed red arcade button, the convention for an emergency stop. I surrounded it with a 70 × 70 mm guard against accidental presses. I wired the eight green status LEDs, one per drone, and the button, then updated the Python code from five drones to eight." },
         ],
       },
       {
@@ -795,9 +792,9 @@ export const PROJECTS: Project[] = [
     video: '',
   },
   {
-    title: "Caresino",
-    subtitle: "A Slot Machine That Dispenses Medication",
-    context: "School Project, Engineering Design & Innovation",
+    title: "Caresino: A Slot Machine that Dispenses Medication",
+    subtitle: "",
+    context: "School Project, 30.007 Engineering Design & Innovation",
     date: "Aug 2025",
     facts: [
       { label: "Role", value: "Lead mechanical designer (slot machine), dispenser layout" },
@@ -806,7 +803,7 @@ export const PROJECTS: Project[] = [
       { label: "Budget", value: "S$1,800 spent of S$2,500" },
     ],
     tags: ["Fusion 360", "Laser cutting", "Drill press", "ESP32-based electronics"],
-    accent: ACCENTS.white,
+    accent: ACCENTS.sage,
     cover: '',
     summary: "Caresino tackles a common problem: elderly patients skip medication doses. It pairs a pharmacist-loaded pill cartridge with a full-size slot machine. Pulling the lever during a dose window hits the \"jackpot\" and releases the pills. I designed and built the slot machine: the enclosure, the lever, and the motorised reel system and its power and signal schematic. I also laid out the dispenser's internal components and the path pills take through it. The integrated prototype impressed the teaching team and earned the team a nomination for the Baby Shark award, an internal venture fund. We declined it because most of the team were leaving for exchange or internships.",
     summaryImage: '',
@@ -824,9 +821,9 @@ export const PROJECTS: Project[] = [
         heading: "Exploration & Design Decisions",
         image: '',
         blocks: [
-          { type: 'p', lead: "Reels: three iterations.", text: "I wanted a fully mechanical reel set, true to the classic machine. It took up internal volume we needed for the dispenser and electronics, and the schedule couldn't absorb building it. Next, I tried electromagnets to stop free-spinning reels. They were hard to control, and stopping on a chosen symbol, which the machine needs to show a jackpot at dose time, added a positioning problem on top. I settled on geared DC motors with encoders. They spin and stop at a commanded position in a compact package. I designed the system and its power and signal schematic, and teammates implemented the wiring and control code. The lever kept its mechanical feel: a spring-return arm the user pulls by hand." },
-          { type: 'p', lead: "The dispenser path.", text: "At mid-term, the team was weighing four mechanisms: a belt with an indexing hole, a telescopic lift, a linear-actuator lift and a trapdoor. The belt was unreliable for alignment, belt tension and hygiene. The telescopic lift compromised the airtight seal. The linear actuator doubled the height. We chose a trapdoor that opens beneath the indexed compartment and drops the dose by gravity. I laid out the dispenser's components and the path a pill takes from cartridge to hand, so that it falls without catching on an edge." },
-          { type: 'p', lead: "Matching the process to the part.", text: "I spent hours tuning laser-cut hole tolerances to fit off-the-shelf brackets to the acrylic panels. In the end, I marked the holes in pencil and drilled them on a drill press in minutes. Precision processes aren't always the right tool. Choosing a process for each subassembly is a design decision in itself." },
+          { type: 'p', lead: "Iterating the Reels.", text: "I wanted a fully mechanical reel set, true to the classic machine. It took up internal volume we needed for the dispenser and electronics, and the schedule couldn't absorb building it. Next, I tried electromagnets to stop free-spinning reels. They were hard to control, and stopping on a chosen symbol, which the machine needs to show a jackpot at dose time, added a positioning problem on top. I settled on geared DC motors with encoders. They spin and stop at a commanded position in a compact package. I designed the system and its power and signal schematic, and teammates implemented the wiring and control code. The lever kept its mechanical feel: a spring-return arm the user pulls by hand." },
+          { type: 'p', lead: "The Dispenser Path.", text: "At mid-term, the team was weighing four mechanisms: a belt with an indexing hole, a telescopic lift, a linear-actuator lift and a trapdoor. The belt was unreliable for alignment, belt tension and hygiene. The telescopic lift compromised the airtight seal. The linear actuator doubled the height. We chose a trapdoor that opens beneath the indexed compartment and drops the dose by gravity. I laid out the dispenser's components and the path a pill takes from cartridge to hand, so that it falls without catching on an edge." },
+          { type: 'p', lead: "Optimizing the Process.", text: "I spent hours tuning laser-cut hole tolerances to fit off-the-shelf brackets to the acrylic panels. In the end, I marked the holes in pencil and drilled them on a drill press in minutes. Precision processes aren't always the right tool. Choosing a process for each subassembly is a design decision in itself." },
         ],
       },
       {
@@ -871,35 +868,35 @@ export const PROJECTS: Project[] = [
     video: '',
   },
   {
-    title: "Flairbrush",
-    subtitle: "A Multi-Colour Airbrush for Miniature Painters",
+    title: "Flairbrush: A Multi-Colour Airbrush for Miniatures",
+    subtitle: "",
     context: "School Project, 30.103 Fluid Mechanics",
     date: "Aug 2025",
     facts: [
-      { label: "Role", value: "Ideation, mixer design, tubing layout" },
+      { label: "Role", value: "Ideation, Mixer Design, Tubing Layout" },
       { label: "Team", value: "6" },
-      { label: "Timeline", value: "10 weeks" },
+      { label: "Timeline", value: "6 weeks" },
     ],
-    tags: ["Fusion 360", "ANSYS", "SLA printing"],
-    accent: ACCENTS.copper,
+    tags: ["Fusion 360", "ANSYS", "SLA 3D Printing"],
+    accent: ACCENTS.sage,
     cover: '',
-    summary: "Flairbrush is an airbrush attachment that mixes colours on demand from a set of base colours, so a miniature painter doesn't have to stop, clean and refill to change shade. I came up with the concept, designed the inline baffle mixer and laid out the five-line feed system. At the final exhibition, the prototype produced more than 12 distinct shades from five reservoirs. We couldn't make the ratios repeatable. Tracing why showed me that flow control matters more than mixer geometry.",
+    summary: "Flairbrush is an airbrush attachment that mixes colours on demand from a set of base colours, so a miniature painter doesn't have to stop, clean and refill to change shade. I came up with the concept, designed the inline baffle mixer and laid out the five-line feed system. At the final exhibition, the prototype produced more than 12 distinct shades from five reservoirs.",
     summaryImage: '',
     sections: [
       {
         heading: "The Challenge & Context",
         image: '',
         blocks: [
-          { type: 'p', text: "The brief was to design and fabricate a fluid-handling component for an application of our choosing, and to validate it with CFD. A teammate paints D&D miniatures. For that work, every colour change means stopping, flushing the airbrush and loading a new pre-mixed paint. We asked whether one airbrush could deliver any shade without swapping." },
+          { type: 'p', text: "The brief was to design and fabricate a microfludic component for an application of our choosing, and to validate it with CFD. A teammate paints D&D miniatures. For that work, every colour change means stopping, flushing the airbrush and loading a new pre-mixed paint, so we decided to try doing something about it." },
         ],
       },
       {
         heading: "Exploration & Design Decisions",
         image: '',
         blocks: [
-          { type: 'p', lead: "Colour model.", text: "We used the subtractive model from printing: cyan, magenta, yellow and black, plus water to lighten shades and flush the line. In principle, varying the ratio of the inputs covers the full range of shades." },
-          { type: 'p', lead: "Mixer geometry.", text: "The streams had to be fully blended within the short distance between the feed lines and the airbrush cup. I considered a Tesla-valve channel, but chose a chain of overlapping circular chambers with a baffle at each junction. It was more compact, and it carries more flow. Each chamber turns the stream back on itself, and each baffle splits and folds it, repeatedly stretching the colour interfaces across the channel. A teammate's ANSYS simulation showed the highest turbulent kinetic energy at the baffle tips, which is where the mixing happens. The outlet cap fits directly over the airbrush's paint cup, so the mixed colour feeds straight in." },
-          { type: 'p', lead: "Ratio control.", text: "Each line ran through a roller pinch clamp on flexible tubing, and the clamp's position set that colour's share. Rubber bands on the syringe plungers supplied the pressure, a stopgap after we ran out of time to motorise them." },
+          { type: 'p', lead: "Colour Model.", text: "We used the subtractive model from printing: cyan, magenta, yellow and black, plus water to lighten shades and flush the line. In principle, varying the ratio of the inputs covers the full range of shades." },
+          { type: 'p', lead: "Mixer Geometry.", text: "The streams had to be fully blended within the short distance between the feed lines and the airbrush cup. I considered a Tesla-valve channel, but chose a chain of overlapping circular chambers with a baffle at each junction. It was more compact for higher volumetric flow. Each chamber turns the stream back on itself, and each baffle splits and folds it, repeatedly stretching the colour interfaces across the channel. A teammate's ANSYS simulation showed the highest turbulent kinetic energy at the baffle tips, which is where the mixing happens. The outlet cap fits directly over the airbrush's paint cup, so the mixed colour feeds straight in." },
+          { type: 'p', lead: "Ratio Control.", text: "Each line ran through a roller pinch clamp on flexible tubing, and the clamp's position set that colour's share. Rubber bands on the syringe plungers supplied the pressure, a stopgap after we ran out of time to motorise them." },
         ],
       },
       {
@@ -954,17 +951,17 @@ export const PROJECTS: Project[] = [
     video: '',
   },
   {
-    title: "Solagami",
-    subtitle: "A Self-Deploying Solar Truck",
-    context: "School Project, sponsored challenge by ST Engineering",
+    title: "Solagami: A Portable Self-Deploying Solar Accordion",
+    subtitle: "",
+    context: "School Project, Sponsored Challenge by ST Engineering",
     date: "Apr 2025",
     facts: [
-      { label: "Role", value: "Project manager, trellis mechanism designer, fabrication" },
+      { label: "Role", value: "Project Manager, Trellis Mechanism, Fabrication" },
       { label: "Team", value: "6" },
       { label: "Timeline", value: "14 weeks" },
     ],
-    tags: ["CAD", "Laser cutting", "BJT H-bridge motor control"],
-    accent: ACCENTS.cyan,
+    tags: ["CAD", "Laser Cutting", "BJT H-bridge Motor Control"],
+    accent: ACCENTS.sage,
     cover: '',
     summary: "Solagami is an electric truck that unfolds its own solar array, using the same motors that drive its wheels. I came up with the deployment concept, designed the scissor-trellis mechanism, ran the team's schedule and task allocation, and fabricated the prototype. The motorised prototype extends from 30 cm to 60 cm and retracts again, deploying and stowing reliably on demand. At full scale, a 40 ft container truck would deploy a 100 m array of 100 panels: 50 kW, or about 200 kWh/day. The school acquired the prototype, and it is on display in the design studio.",
     summaryImage: '',
@@ -1025,13 +1022,13 @@ export const PROJECTS: Project[] = [
     context: "School Project, 10.023 Designing Energy Systems",
     date: "Dec 2024",
     facts: [
-      { label: "Role", value: "Electronics lead (power sizing, sourcing, schematic, panel mount)" },
+      { label: "Role", value: "Electronics Lead" },
       { label: "Team", value: "3" },
       { label: "Timeline", value: "14 weeks" },
-      { label: "Component cost", value: "S$50.90" },
+      { label: "Budget", value: "S$100" },
     ],
-    tags: ["Solar PV sizing", "Battery and charge controller sizing", "Energy analysis", "FDM 3D printing"],
-    accent: ACCENTS.amber,
+    tags: ["Solar PV Sizing", "Battery & Charge Controller Sizing", "Energy Analysis", "Schematic"],
+    accent: ACCENTS.sage,
     cover: '',
     summary: "I designed the power system that converted a battery-powered bubble gun to solar charging. The battery outlasts a full bottle of bubble solution by about 25%, so a parent only has to refill the bottle. In testing, the panels charged the battery from empty to full in 3 hours. I also designed a 3D-printed mount that slides the panels onto the gun's existing rails, with no permanent changes to the toy. The project also showed that solar is a poor fit for a product this small and cheap.",
     summaryImage: '',
@@ -1105,18 +1102,18 @@ export const PROJECTS: Project[] = [
     video: '',
   },
   {
-    title: "Solar Dehydrator",
-    subtitle: "Heat-Rich, Airflow-Starved",
+    title: "Solar Dehydrator: A Supposedly Food Safe Oven",
+    subtitle: "",
     context: "School Project, 01.020 Design Thinking Project III",
     date: "Nov 2024",
     facts: [
-      { label: "Role", value: "Lead mechanical designer" },
+      { label: "Role", value: "Lead Mechanical Designer" },
       { label: "Team", value: "3" },
       { label: "Timeline", value: "14 weeks" },
       { label: "Budget", value: "S$100" },
     ],
-    tags: ["Laser cutting", "Solar PV sizing", "DC power electronics"],
-    accent: ACCENTS.white,
+    tags: ["Laser Cutting", "Solar PV Sizing", "DC power electronics"],
+    accent: ACCENTS.sage,
     cover: '',
     summary: "I set the specifications for a battery-free solar food dehydrator designed for Singapore's humid climate, and laser-cut and built its double-walled acrylic chamber. In a 2-hour assessed trial, it removed 27 g of water from a sponge holding 50 g, compared with 17 g for an unheated control sponge. Looking back, the limit wasn't heat. The chamber made heat well but couldn't get rid of moist air. The fans were starved because the inlet vents had about one-twentieth of the fans' area.",
     summaryImage: '',
@@ -1191,9 +1188,9 @@ export const PROJECTS: Project[] = [
     video: '',
   },
   {
-    title: "Mon-Ori-th",
-    subtitle: "A Monument Built from Scraps",
-    context: "Orientation Committee Commission",
+    title: "Mon-Ori-th: A Monument Built from Scraps",
+    subtitle: "",
+    context: "School Project, Orientation Committee Commission",
     date: "Sep 2024",
     facts: [
       { label: "Role", value: "Structure, crown mechanism concept, house panels" },
@@ -1202,25 +1199,25 @@ export const PROJECTS: Project[] = [
       { label: "Budget", value: "S$200" },
     ],
     tags: ["Handheld power tools", "Adobe Illustrator", "Laser cutting"],
-    accent: ACCENTS.copper,
+    accent: ACCENTS.purple,
     cover: '',
-    summary: "For the orientation committee, our team of five built a 2 m monolith to commemorate the incoming freshman batch. It has a motor-driven crown that opens, and lighting that reacts to the crowd's cheering. It was the centrepiece of the orientation finale in front of 600 freshmen, and then stood in the fabrication lab for a month. We bought only the timber for the frame, within a S$200 budget, and salvaged everything else. I designed and built the frame, came up with the crown mechanism and built its first version, and designed and laser-cut the five house panels.",
+    summary: "For the orientation committee, our team of five built a 2m monolith to commemorate the incoming freshman batch. It has a motor-driven crown that opens, and lighting that reacts to the crowd's cheering. It was the centrepiece of the orientation finale in front of 600 freshmen, and then stood in the fabrication lab for a month. We bought only the timber for the frame, within a S$200 budget, and salvaged everything else. I built the frame, came up with the crown mechanism and built its first version, and designed and laser-cut the five house panels.",
     summaryImage: '',
     sections: [
       {
         heading: "The Challenge & Context",
         image: '',
         blocks: [
-          { type: 'p', text: "The committee wanted a large, striking piece that captured SUTD's maker spirit. There was no size limit, and we had four months and S$200. Most of the team had never used a power tool. Moving it was the only practical constraint: it had to travel from the workshop to the auditorium in one piece." },
+          { type: 'p', text: "The orientation committee wanted a large, striking piece that captured SUTD's maker spirit. We were given 4 months, $200 and full creative freedom." },
         ],
       },
       {
         heading: "Exploration & Design Decisions",
         image: '',
         blocks: [
-          { type: 'p', lead: "A tall structure from salvaged material.", text: "I framed the monolith in timber with screwed joints. The footprint was 50 × 50 cm, low enough to roll on a trolley and handled by two students, with no disassembly. I learned power tools on the job, trimming cuts and joints until the frame was rigid and square enough to carry cladding at full height." },
-          { type: 'p', lead: "The crown.", text: "I came up with the reveal and built the first version: hinged petals tied to clear fishing line, pulled open by a DC motor winding the line in. The fishing line is invisible from the audience, so the petals appear to open by themselves, and the mechanism used almost no material. I then handed it to a teammate to refine." },
-          { type: 'p', lead: "Warped stock and laser engraving.", text: "I drew the five house emblems in Illustrator and planned to laser-engrave them onto 3 mm wood panels, 75 × 30 cm each. The salvaged sheets were warped, which threw the engraving out of focus and left the patterns faint. I kept the laser for cutting the panel outlines, which still came out clean, and the team painted the patterns by hand." },
+          { type: 'p', lead: "A Structure from Salvaged Material.", text: "I framed the monolith in timber with screwed joints. The footprint was 50 × 50 cm, low enough to roll on a trolley and handled by two students, with no disassembly. I learned power tools on the job, trimming cuts and joints until the frame was rigid and square enough to carry cladding at full height." },
+          { type: 'p', lead: "The Crown.", text: "I came up with the reveal and built the first version: hinged petals tied to clear fishing line, pulled open by a DC motor winding the line in. The fishing line is invisible from the audience, so the petals appear to open by themselves, and the mechanism used almost no material. I then handed it to a teammate to refine." },
+          { type: 'p', lead: "Warped Stock and Laser Engraving.", text: "I drew the five house emblems in Illustrator and planned to laser-engrave them onto 3 mm wood panels, 75 × 30 cm each. The salvaged sheets were warped, which threw the engraving out of focus and left the patterns faint. I kept the laser for cutting the panel outlines, which still came out clean, and the team painted the patterns by hand." },
         ],
       },
       {
@@ -1230,8 +1227,8 @@ export const PROJECTS: Project[] = [
           {
             type: 'list',
             items: [
-              "A 2 m timber monolith on a 50 × 50 cm footprint, with screwed joints, moved in one piece",
-              "A crown of hinged petals, opened by a DC motor pulling fishing line",
+              "A 2m timber monolith on a 50 × 50 cm footprint, with screwed joints, moved in one piece",
+              "A crown of hinged petals, opened by a DC motor pulling routed paracord.",
               "Five laser-cut house panels, each with its own colour, pattern and emblem",
               "LED light pillars and cheer-reactive lighting, built by teammates. The louder the crowd, the more LEDs lit up.",
             ],
@@ -1264,18 +1261,18 @@ export const PROJECTS: Project[] = [
     video: '',
   },
   {
-    title: "Galleria",
-    subtitle: "A Threshold for Hostel Life",
-    context: "School Project, Design Thinking & Innovation",
+    title: "Galleria: Revitalising the Hostel Commute",
+    subtitle: "",
+    context: "School Project, 03.007 Design Thinking & Innovation",
     date: "Apr 2024",
     facts: [
-      { label: "Role", value: "Team lead, lead designer" },
+      { label: "Role", value: "Team Lead, Lead Designer" },
       { label: "Team", value: "5" },
       { label: "Timeline", value: "14 weeks" },
       { label: "Budget", value: "S$500" },
     ],
-    tags: ["ESP32", "WS2812B LEDs", "GrandMA2", "MA3D", "Laser cutting"],
-    accent: ACCENTS.cyan,
+    tags: ["ESP32", "WS2812B LEDs", "GrandMA2", "MA3D", "Laser Cutting"],
+    accent: ACCENTS.sage,
     cover: '',
     summary: "Galleria is a 40 m sensory walkway that gives SUTD hostel residents the commute they don't have. It uses light, fog and scent to mark the switch between rest and work. I led the concept, designed the 2.5 m full-scale entrance arch and its fog distribution, built a 1:50 site model, and rendered the full walkway in lighting software. We built the demonstration for S$500, mostly from salvaged materials. It was named best project in class (a tie), and the school administration wanted to keep it for display but couldn't house a 2.5 m structure.",
     summaryImage: '',
@@ -1346,12 +1343,12 @@ export const PROJECTS: Project[] = [
     context: "School Project, 10.015 Physical World",
     date: "Nov 2023",
     facts: [
-      { label: "Role", value: "Concept lead, power transmission" },
+      { label: "Role", value: "Team Lead" },
       { label: "Team", value: "5" },
       { label: "Budget", value: "S$50" },
     ],
-    tags: ["Energy and force analysis", "Power transmission", "FDM 3D printing", "Rapid prototyping"],
-    accent: ACCENTS.amber,
+    tags: ["Energy and Force Analysis", "Power Transmission", "FDM 3D printing"],
+    accent: ACCENTS.sage,
     cover: '',
     summary: "I led the concept work and designed the power transmission for a mousetrap-powered car. The car had to carry 200 to 400 g across a 2.5 m obstacle course in under 10 s. Without a load, it cleared the steps and about 80% of the course before it stalled on the bouncy section. With the 200 g load, it got up the ramp and stalled right after. Looking back, the cause is clear. We designed the drivetrain for speed and step clearance, but the course needed pulling force.",
     summaryImage: '',
@@ -1440,27 +1437,12 @@ export interface Testimonial {
 export const TESTIMONIALS: Testimonial[] = [
   {
     quote: [
-      'Placeholder quote. Describe what it was like to work together, for example how the parts were designed, documented and handed over to manufacturing.',
-      'A second paragraph is optional. Keep each quote to around 40 to 80 words so the cards stay a similar height.',
+      'Throughout his internship, Mark has consistently demonstrated exceptional professional skills, dedication, and proved to be an exceptionally quick learner. He showcased immense resourcefulness by proactively leveraging AI tools to identify complex edge cases, adapting his existing programming knowledge to build robust tests. Mark’s willingness to tackle unfamiliar responsibilities with a highly adaptable, can-do attitude makes him a fantastic collaborative asset to any technical team.',
     ],
-    name: 'Supervisor Name',
-    role: 'Job title, Company',
+    name: 'Eugene Tan',
+    role: 'Co-Founder of Product & Partnerships, LyfeGo',
   },
-  {
-    quote: [
-      'Placeholder quote. A colleague or manager describing a project you delivered, the problem you solved and the result.',
-    ],
-    name: 'Colleague Name',
-    role: 'Job title, Company',
-  },
-  {
-    quote: [
-      'Placeholder quote. Someone from a teaching or lab role describing how you ran workshops or supported other students.',
-    ],
-    name: 'Reference Name',
-    role: 'Job title, Organisation',
-  },
-]
+  ]
 
 // ─── Navigation ──────────────────────────────────────────────────────────────
 
