@@ -30,7 +30,7 @@ export const SITE = {
     'Mechanical design and robotics engineer. CAD, technical drawings, fabrication, prototyping and field deployment for autonomous systems.',
 
   // Full public URL of the site. Used for link previews. TODO: set your username.
-  url: 'https://yourusername.github.io/portfolio/',
+  url: 'https://markgyh.github.io/portfolio/',
 
   email: 'markgiam02@gmail.com', // TODO
   location: 'Singapore',
@@ -496,7 +496,7 @@ export const PROJECTS: Project[] = [
     ],
     tags: ["SolidWorks", "Technical Drawings (ISO 2768)", "DFMA", "FDM 3D Printing", "Sheet Metal Fabrication"],
     accent: ACCENTS.amber,
-    cover: 'public/images/projects/karcher_origsweeper.jpg',
+    cover: 'public/images/projects/karcher_logo.jpg',
     teaser: "Cut the sweeper's lidars from three to two and cleared the top lidar's view, with sheet-metal parts right first time.",
     summary: "I redesigned the perception hardware of Kärcher's autonomous sweeper. It now uses one fewer lidar, the top lidar's view is clear, and the mounts match the machine's design language. The new layout uses two Robosense Airy hemispherical lidars on opposite corners and a Robosense Helios on a new top mast, with the IMUs, rain sensor and a 360° camera mounted on the same stack. The fabricated parts came back from the supplier needing no changes, and were being assembled as I completed my internship. The sweeper is scheduled to be shown at Punggol Digital District's product showcase in December 2026, in front of Singapore ministers and Kärcher senior management.",
     summaryImage: '',
@@ -587,7 +587,7 @@ export const PROJECTS: Project[] = [
     ],
     tags: ["SolidWorks", "Surface Modelling", "Technical drawings to ISO 2768", "DFMA", "FDM 3D printing", "Sheet Metal Fabrication"],
     accent: ACCENTS.amber,
-    cover: 'public/images/projects/karcher_origsweeper.jpg',
+    cover: 'public/images/projects/karcher_logo.jpg',
     teaser: "A steel-and-PETG front panel that widens the leg channel by 50% and shields the screen from sun and rain.",
     summary: "I redesigned the front panel of Kärcher's autonomous road sweeper, which is the operator's main interface and the developers' terminal. The new panel is a hybrid of 5 mm mild-steel sheet metal and sectioned PETG prints. It widens the leg-entry channel by 50%, from 20 cm to 30 cm, shades and protects the screen from sun and rain, and adds gasket sealing. It is now fitted to the machine, with wiring in progress. The sweeper is scheduled to be shown at Punggol Digital District's product showcase in December 2026, in front of Singapore ministers and Kärcher senior management.",
     summaryImage: '',
