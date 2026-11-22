@@ -4,11 +4,30 @@ import { NAV_ITEMS, SITE } from '../data'
 export const FULL_NAME = `${SITE.firstName} ${SITE.lastName}`
 export const INITIALS = `${SITE.firstName[0] ?? ''}${SITE.lastName[0] ?? ''}`.toUpperCase()
 
-/** Resolves a content path: full URLs pass through, plain paths point into /public. */
+/**
+ * Resolves a content path: full URLs pass through, plain paths point into /public.
+ * A leading "public/" is dropped, since the build serves that folder's files from the site root
+ * (dev tolerates the prefix, the deployed site would 404 on it).
+ */
 export function asset(path: string): string {
   if (!path) return ''
   if (/^(https?:|data:|\/\/)/.test(path)) return path
-  return import.meta.env.BASE_URL + path.replace(/^\//, '')
+  return import.meta.env.BASE_URL + path.replace(/^\.?\/+/, '').replace(/^public\//i, '')
+}
+
+/**
+ * A content-supplied link or embed address, or '' when its scheme isn't one a page should
+ * follow (a `javascript:` URL in content.ts would otherwise run script on click or in an iframe).
+ * Relative paths, http(s) and mailto pass.
+ */
+export function safeUrl(url: string | undefined): string {
+  if (!url) return ''
+  try {
+    const { protocol } = new URL(url, window.location.href)
+    return ['http:', 'https:', 'mailto:'].includes(protocol) ? url : ''
+  } catch {
+    return ''
+  }
 }
 
 const fileChecks = new Map<string, Promise<boolean>>()
@@ -58,6 +77,20 @@ export const CONTAINER = 'mx-auto w-full max-w-[88rem] px-5 sm:px-8 lg:px-16'
 
 /** Shared frame for a page section below the hero: a rule on top and the section spacing tokens. */
 export const SECTION = 'border-t border-line py-section lg:py-section-lg'
+/** The same frame with less air, for supporting sections (About, Testimonials), so the core ones read as the core. */
+export const SECTION_TIGHT = 'border-t border-line py-section-tight lg:py-section'
+
+/** URL-safe slug: "TKO DX-1A: High-Speed Drone" → "tko-dx-1a-high-speed-drone". */
+export const slugify = (text: string) =>
+  text
+    .normalize('NFKD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+
+/** Hash (without #) that opens a project's window: #project-<slug>. Shareable, and survives a reload. */
+export const projectHash = (title: string) => `project-${slugify(title)}`
 
 export function useMediaQuery(query: string): boolean {
   return useSyncExternalStore(
@@ -129,7 +162,7 @@ export function useActiveSection(): string {
       }
       // At the very bottom the last section may never reach the marker.
       if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
-        current = NAV_ITEMS[NAV_ITEMS.length - 1].id
+        current = NAV_ITEMS.at(-1)?.id ?? current
       }
       setActive(current)
     }

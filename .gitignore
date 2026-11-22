@@ -20,3 +20,6 @@ logs/
 
 # Packaged copies of the site
 *.zip
+
+# Media kept locally but not used by the site
+unused-media/

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { NAV_ITEMS } from '../data'
 import { FULL_NAME, INITIALS, useActiveSection, useMediaQuery, useResumeUrl, useScrolled } from '../lib/utils'
 import { Close, Menu } from './Icons'
-import { button, ExternalLink, PRESS } from './ui'
+import { button, ExternalLink, PRESS, SELECTED } from './ui'
 
 export default function Navbar() {
   const active = useActiveSection()
@@ -70,7 +70,7 @@ export default function Navbar() {
               href={`#${id}`}
               aria-current={active === id ? 'location' : undefined}
               className={`flex h-9 items-center whitespace-nowrap rounded-sm px-3 font-display text-[0.95rem] font-medium md:px-4 ${PRESS} ${
-                active === id ? 'bg-copper text-canvas' : 'text-muted hover:bg-surface-2 hover:text-ink'
+                active === id ? SELECTED : 'text-muted hover:bg-surface-2 hover:text-ink'
               }`}
             >
               {label}
@@ -94,7 +94,7 @@ export default function Navbar() {
         style={{ paddingTop: 'env(safe-area-inset-top)' }}
       >
         <div className="flex h-16 items-center justify-between px-5">
-          <a href="#top" className="flex h-11 items-center font-display text-base font-bold tracking-wide text-copper">
+          <a href="#top" className="-ml-3 flex h-11 min-w-11 items-center justify-center px-3 font-display text-base font-bold tracking-wide text-copper">
             {INITIALS}
             <span className="sr-only">{FULL_NAME}, back to top</span>
           </a>
@@ -126,10 +126,12 @@ export default function Navbar() {
                     href={`#${id}`}
                     onClick={() => setOpen(false)}
                     aria-current={active === id ? 'location' : undefined}
-                    className={`flex min-h-14 items-center font-display text-xl font-bold ${
-                      active === id ? 'text-copper' : 'text-ink'
+                    className={`flex min-h-14 items-center gap-3 font-display text-xl font-bold ${
+                      active === id ? 'text-ink' : 'text-muted'
                     }`}
                   >
+                    {/* "You are here": a copper tick, not a copper fill */}
+                    {active === id && <span className="h-0.5 w-4 bg-copper" aria-hidden="true" />}
                     {label}
                   </a>
                 </li>

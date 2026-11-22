@@ -1,5 +1,5 @@
 import { ABOUT, SKILL_GROUPS } from '../data'
-import { CONTAINER, SECTION, useResumeUrl } from '../lib/utils'
+import { CONTAINER, SECTION_TIGHT, useResumeUrl } from '../lib/utils'
 import { ANNOTATION, button, ExternalLink, SectionHeading } from './ui'
 
 export default function About() {
@@ -7,7 +7,7 @@ export default function About() {
   if (ABOUT.length === 0 && SKILL_GROUPS.length === 0) return null
 
   return (
-    <section id="about" aria-labelledby="about-heading" className={SECTION}>
+    <section id="about" aria-labelledby="about-heading" className={SECTION_TIGHT}>
       <div className={CONTAINER}>
         <SectionHeading id="about-heading">About Me</SectionHeading>
 
@@ -33,16 +33,17 @@ export default function About() {
             <div>
               <h3 className="mb-5 font-display text-xl font-bold text-ink">Tools and methods</h3>
               <dl className="border-t border-line-strong">
-                {SKILL_GROUPS.map(({ label, items }) => (
+                {SKILL_GROUPS.map(({ label, items }, g) => (
                   <div
-                    key={label}
+                    key={`${label}-${g}`}
                     className="grid gap-2 border-b border-line py-5 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-6"
                   >
                     <dt className={ANNOTATION}>{label}</dt>
                     <dd>
-                      <ul className="flex flex-wrap gap-x-5 gap-y-1.5 text-ink">
-                        {items.map((item) => (
-                          <li key={item}>{item}</li>
+                      {/* One item per line, like a parts list, so multi-word items never run together */}
+                      <ul className="grid grid-cols-1 gap-x-6 gap-y-1.5 text-ink sm:grid-cols-2">
+                        {items.map((item, i) => (
+                          <li key={`${item}-${i}`}>{item}</li>
                         ))}
                       </ul>
                     </dd>

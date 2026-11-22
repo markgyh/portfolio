@@ -123,7 +123,7 @@ const worst: Fixture = {
         'ROS 2',
         'Technical drawings',
       ],
-      accent: ACCENTS.copper,
+      accent: ACCENTS.sage,
       cover: img('photo-1485827404703-89b55fcc595e'),
       summary:
         'A two-year programme with an aquaculture operator. I owned the mechanical design: a 40 m-rated pressure housing, track modules that grip both nylon and steel mesh, and a counter-rotating brush head that leaves the net coating intact. The housing passed hydrostatic testing at 6 bar on the first attempt, and the pilot fleet of 12 units has now logged more than 3,000 hours in the water across three farm sites in Norway and Scotland.',
@@ -217,7 +217,7 @@ const worst: Fixture = {
       date: 'Q4 2025',
       facts: [{ label: 'Role', value: 'Designer' }],
       tags: ['Siemens NX', 'Harmonic drives', 'Strain gauges'],
-      accent: ACCENTS.white,
+      accent: ACCENTS.purple,
       cover: img('photo-1504384764586-bb4cdc1707b0'),
       summary: 'Third revision of the knee actuator. The part number above is the one used on every drawing.',
       summaryImage: img('photo-1565043666747-69f6646db940'),

@@ -41,6 +41,7 @@ export default function Testimonials() {
     const track = trackRef.current
     const item = track?.firstElementChild as HTMLElement | null
     if (!track || !item) return
+    if (direction === -1 ? edges.start : edges.end) return
     track.scrollBy({ left: direction * item.offsetWidth, behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
   }
 
@@ -53,12 +54,14 @@ export default function Testimonials() {
           id="testimonials-heading"
           aside={
             !(edges.start && edges.end) && (
+              // aria-disabled rather than disabled: a disabled button drops keyboard focus the moment the
+              // row reaches its end, so the arrow stays focusable and step() ignores it instead.
               <div className="flex shrink-0 gap-2">
-                <button type="button" onClick={() => step(-1)} disabled={edges.start} className={ARROW}>
+                <button type="button" onClick={() => step(-1)} aria-disabled={edges.start} className={ARROW}>
                   <ChevronLeft size={20} />
                   <span className="sr-only">Previous testimonial</span>
                 </button>
-                <button type="button" onClick={() => step(1)} disabled={edges.end} className={ARROW}>
+                <button type="button" onClick={() => step(1)} aria-disabled={edges.end} className={ARROW}>
                   <ChevronRight size={20} />
                   <span className="sr-only">Next testimonial</span>
                 </button>
