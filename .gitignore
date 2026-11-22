@@ -23,3 +23,9 @@ logs/
 
 # Media kept locally but not used by the site
 unused-media/
+
+# Personal notes and tool files (kept locally, not published in the repo)
+fullcritique.md
+DESIGN-CRITIQUE.md
+.impeccable/
+.claude/
