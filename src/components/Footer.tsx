@@ -1,3 +1,4 @@
+import { SITE } from '../data'
 import { CONTAINER, FULL_NAME } from '../lib/utils'
 import { ArrowUp } from './Icons'
 
@@ -6,8 +7,9 @@ export default function Footer() {
   const year = new Date().getFullYear()
   const cells = [
     { label: 'Drawn by', value: FULL_NAME },
-    { label: 'Title', value: 'Portfolio' },
-    { label: 'Revision', value: String(year) },
+    { label: 'Title', value: 'Mechanical Design Portfolio' },
+    // The date the content was last revised (SITE.revision in content.ts), not just the current year
+    { label: 'Revision', value: SITE.revision || String(year) },
     { label: 'Scale', value: '1:1' },
     { label: 'Sheet', value: '1 of 1' },
   ]
@@ -34,7 +36,7 @@ export default function Footer() {
           </a>
         </div>
         <p className="mt-5 text-sm text-faint">
-          © {year} {FULL_NAME}. Designed and built by me.
+          © {year} {FULL_NAME}. Designed and built by {SITE.firstName}.
         </p>
       </div>
     </footer>

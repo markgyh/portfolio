@@ -13,8 +13,9 @@ function Svg({ size = 16, children, ...props }: IconProps) {
       // One line weight at every size, like a drawing: index.css stops the stroke scaling with the icon.
       strokeWidth={1.5}
       data-icon=""
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      // Square ends and sharp corners, like a technical pen rather than a marker.
+      strokeLinecap="butt"
+      strokeLinejoin="miter"
       aria-hidden="true"
       focusable="false"
       {...props}
@@ -49,6 +50,12 @@ export const ChevronRight = (p: IconProps) => (
     <path d="m9 18 6-6-6-6" />
   </Svg>
 )
+/** Datum mark (a square turned 45°): the reference point on a drawing. Marks featured work and section leader lines. */
+export const Datum = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 4.5 19.5 12 12 19.5 4.5 12Z" />
+  </Svg>
+)
 export const Plus = (p: IconProps) => (
   <Svg {...p}>
     <path d="M12 5v14M5 12h14" />
@@ -66,8 +73,8 @@ export const Menu = (p: IconProps) => (
 )
 export const Copy = (p: IconProps) => (
   <Svg {...p}>
-    <rect x="9" y="9" width="11" height="11" rx="2" />
-    <path d="M5 15V6a2 2 0 0 1 2-2h8" />
+    <rect x="9" y="9" width="11" height="11" />
+    <path d="M5 15V4h10" />
   </Svg>
 )
 export const Check = (p: IconProps) => (
@@ -77,8 +84,27 @@ export const Check = (p: IconProps) => (
 )
 export const ImageIcon = (p: IconProps) => (
   <Svg {...p}>
-    <rect x="3" y="4" width="18" height="16" rx="2" />
+    <rect x="3" y="4" width="18" height="16" />
     <circle cx="9" cy="10" r="1.75" />
     <path d="m21 16-5-5-9 9" />
   </Svg>
 )
+
+/**
+ * Filled arrowhead for a dimension line, pointing outward. Solid rather than stroked,
+ * as dimension arrows are drawn on an engineering drawing.
+ */
+export function Arrowhead({ side, className = '' }: { side: 'left' | 'right'; className?: string }) {
+  return (
+    <svg
+      width="10"
+      height="8"
+      viewBox="0 0 10 8"
+      aria-hidden="true"
+      focusable="false"
+      className={`shrink-0 ${side === 'right' ? 'rotate-180' : ''} ${className}`}
+    >
+      <path d="M0 4 10 0v8z" />
+    </svg>
+  )
+}

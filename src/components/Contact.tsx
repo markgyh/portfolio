@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react'
 import { SITE, SOCIALS } from '../data'
 import { CONTAINER, FULL_NAME, SECTION } from '../lib/utils'
 import { ArrowUpRight, Check, Copy } from './Icons'
@@ -6,18 +6,27 @@ import { ANNOTATION, button, ExternalLink, SectionHeading, TEXT_LINK } from './u
 
 type Status = 'idle' | 'sending' | 'sent' | 'mailto' | 'error'
 const EMPTY = { name: '', email: '', subject: '', message: '' }
+const DEFAULT_SUBJECT = 'Portfolio enquiry'
 
 const INPUT =
   'w-full rounded-sm border border-line-strong bg-surface px-4 py-3.5 text-ink transition-colors placeholder:text-faint hover:border-muted focus:border-copper focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-copper'
 const LABEL = 'mb-2 block text-sm font-medium text-ink'
+// Caps on what one message can carry, so a pasted wall of text can't bloat the request.
+const MAX = { name: 100, email: 254, subject: 150, message: 5000 }
+// Give up on a stalled request rather than leaving the form stuck on "Sending…".
+const SEND_TIMEOUT_MS = 15000
 
 function CopyEmail() {
   const [copied, setCopied] = useState(false)
+  const timer = useRef<number | undefined>(undefined)
+  useEffect(() => () => window.clearTimeout(timer.current), [])
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(SITE.email)
       setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      // Restart the countdown on a repeat click, and never fire after unmount.
+      window.clearTimeout(timer.current)
+      timer.current = window.setTimeout(() => setCopied(false), 2000)
     } catch {
       /* Clipboard blocked: the mailto link beside it still works. */
     }
@@ -38,17 +47,30 @@ function CopyEmail() {
 export default function Contact() {
   const [form, setForm] = useState(EMPTY)
   const [status, setStatus] = useState<Status>('idle')
+  const successRef = useRef<HTMLDivElement>(null)
+  const nameRef = useRef<HTMLInputElement>(null)
+  // The form and the success panel replace each other, which would drop keyboard focus
+  // (it sat on the button that just went away). Move it to whatever took their place.
+  const swapped = useRef(false)
+  useEffect(() => {
+    if (!swapped.current) return
+    swapped.current = false
+    if (status === 'sent') successRef.current?.focus()
+    else if (status === 'idle') nameRef.current?.focus()
+  }, [status])
 
   const update = (key: keyof typeof EMPTY) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [key]: e.target.value }))
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    // Subject is optional, so an empty one gets a sensible default.
+    const subject = form.subject.trim() || DEFAULT_SUBJECT
 
     // No Web3Forms key yet: hand the message to the visitor's email app.
     if (!SITE.web3formsAccessKey) {
       const body = `${form.message}\n\n${form.name}\n${form.email}`
-      window.location.href = `mailto:${SITE.email}?subject=${encodeURIComponent(form.subject)}&body=${encodeURIComponent(body)}`
+      window.location.href = `mailto:${SITE.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
       setStatus('mailto')
       return
     }
@@ -59,21 +81,26 @@ export default function Contact() {
       const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        signal: AbortSignal.timeout(SEND_TIMEOUT_MS),
         body: JSON.stringify({
           access_key: SITE.web3formsAccessKey,
           from_name: `${FULL_NAME} portfolio`,
           botcheck,
           ...form,
+          subject,
         }),
       })
       const data = (await res.json()) as { success?: boolean }
-      setStatus(res.ok && data.success ? 'sent' : 'error')
+      const sent = res.ok && data.success === true
+      swapped.current = sent
+      setStatus(sent ? 'sent' : 'error')
     } catch {
       setStatus('error')
     }
   }
 
   const reset = () => {
+    swapped.current = true
     setForm(EMPTY)
     setStatus('idle')
   }
@@ -87,12 +114,17 @@ export default function Contact() {
           {/* Form */}
           <div>
             <p className="mb-10 max-w-[56ch] text-xl leading-relaxed text-ink">
-              Have a project in mind or want to talk shop? I'm always open to interesting conversations and new
-              challenges.
+              Hiring for mechanical design or robotics? I'm looking for full-time roles, and I'm happy to talk through any
+              of the projects above.
             </p>
 
             {status === 'sent' ? (
-              <div role="status" className="success-in rounded-sm border border-line bg-surface p-8">
+              <div
+                ref={successRef}
+                role="status"
+                tabIndex={-1}
+                className="success-in rounded-sm border border-line bg-surface p-8 focus:outline-none"
+              >
                 <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-copper text-canvas">
                   <Check size={24} className="check" />
                 </span>
@@ -112,8 +144,10 @@ export default function Contact() {
                       Name
                     </label>
                     <input
+                      ref={nameRef}
                       id="contact-name"
                       type="text"
+                      maxLength={MAX.name}
                       autoComplete="name"
                       value={form.name}
                       onChange={update('name')}
@@ -131,6 +165,7 @@ export default function Contact() {
                       type="email"
                       autoComplete="email"
                       inputMode="email"
+                      maxLength={MAX.email}
                       value={form.email}
                       onChange={update('email')}
                       required
@@ -142,15 +177,15 @@ export default function Contact() {
 
                 <div>
                   <label htmlFor="contact-subject" className={LABEL}>
-                    Subject
+                    Subject <span className="font-normal text-faint">(optional)</span>
                   </label>
                   <input
                     id="contact-subject"
                     type="text"
+                    maxLength={MAX.subject}
                     value={form.subject}
                     onChange={update('subject')}
-                    required
-                    placeholder="Project inquiry"
+                    placeholder="Role or project"
                     className={INPUT}
                   />
                 </div>
@@ -161,11 +196,12 @@ export default function Contact() {
                   </label>
                   <textarea
                     id="contact-message"
+                    maxLength={MAX.message}
                     value={form.message}
                     onChange={update('message')}
                     required
                     rows={6}
-                    placeholder="Tell me about your project, or just say hi"
+                    placeholder="Tell me about the role or project"
                     className={`${INPUT} resize-y`}
                   />
                 </div>
@@ -175,7 +211,7 @@ export default function Contact() {
 
                 <div className="flex flex-wrap items-center gap-x-6 gap-y-4 pt-1">
                   <button type="submit" disabled={status === 'sending'} className={button({ size: 'lg' })}>
-                    {status === 'sending' ? 'Sending…' : 'Send message'}
+                    {status === 'sending' ? 'Sending…' : 'Send Message'}
                   </button>
 
                   <div aria-live="polite" className="text-sm">
@@ -204,13 +240,13 @@ export default function Contact() {
           </div>
 
           {/* Direct details */}
-          <div className="space-y-10 lg:pt-2">
+          <div className="order-first space-y-10 lg:order-none lg:pt-2">
             <div>
               <h3 className={`mb-3 ${ANNOTATION}`}>Email</h3>
               <div className="flex flex-wrap items-center gap-3">
                 <a
                   href={`mailto:${SITE.email}`}
-                  className="break-all font-display text-xl font-semibold text-ink underline decoration-line-strong underline-offset-[6px] transition-colors hover:text-copper hover:decoration-copper sm:text-2xl"
+                  className="inline-flex min-h-11 items-center break-all font-display text-xl font-semibold text-ink underline decoration-line-strong underline-offset-[6px] transition-colors hover:text-copper hover:decoration-copper"
                 >
                   {SITE.email}
                 </a>
