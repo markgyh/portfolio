@@ -57,9 +57,10 @@ export default function Hero() {
         className={`${CONTAINER} relative z-10 grid flex-1 grid-cols-1 content-end gap-10 pb-14 pt-24 sm:pb-16 sm:pt-28 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)] lg:content-center lg:items-end lg:gap-16 xl:gap-24`}
       >
         <div className="order-2 min-w-0 lg:order-1">
-          {/* min-w lets the dimension line (and so the role) run wider than a short name */}
-          <div className="inline-flex min-w-[min(34rem,100%)] max-w-full flex-col">
-            <h1 className="font-display text-[clamp(3.25rem,min(11vw,15svh),8.5rem)] font-bold uppercase leading-[0.92] tracking-[-0.01em] text-ink [overflow-wrap:anywhere]">
+          {/* Phones: name on the left, role on the right, tops level. From sm up, the role is a
+              dimension line under the name; min-w lets it (and so the role) run wider than a short name. */}
+          <div className="flex items-start justify-between gap-3 sm:inline-flex sm:min-w-[min(34rem,100%)] sm:max-w-full sm:flex-col sm:justify-start sm:gap-0">
+            <h1 className="shrink-0 font-display text-[clamp(3.25rem,min(11vw,15svh),8.5rem)] font-bold uppercase leading-[0.92] tracking-[-0.01em] text-ink [overflow-wrap:anywhere]">
               {/* Each line rises from behind its own baseline. The mask's extra room above
                   and below keeps accents (Ś, Ê) and descenders from being clipped. */}
               {[SITE.firstName, SITE.lastName].map((line, i) => (
@@ -70,7 +71,11 @@ export default function Hero() {
                 </span>
               ))}
             </h1>
-            <DimensionLine label={SITE.role} drafted className="mt-5 sm:mt-7" />
+            {/* Held to the width of the word "Mechatronics" (8.1em at this size), so it stacks as a narrow block */}
+            <p className="hero-value mt-[0.2rem] w-[8.1em] min-w-0 text-right font-display text-base font-medium uppercase leading-tight tracking-[0.06em] text-cyan sm:hidden">
+              {SITE.role}
+            </p>
+            <DimensionLine label={SITE.role} drafted className="hidden sm:mt-7 sm:block" />
           </div>
 
           <div className="hero-actions mt-10 flex flex-wrap gap-3">

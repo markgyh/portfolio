@@ -80,12 +80,12 @@ export const ABOUT: string[] = [
 
 export const SKILL_GROUPS: { label: string; items: string[] }[] = [
   { label: 'Software', 
-    items: ['SolidWorks', 'Fusion 360', 'ANSYS Mechanical', 'ANSYS Fluent', 'Adobe Illustrator', 'Python', 'Arduino', 'ESP32', 'ROS2'] },
+    items: ['SolidWorks', 'Fusion 360', 'Bambu Studio', 'ANSYS Mechanical', 'ANSYS Fluent', 'Adobe Illustrator', 'Python', 'Arduino', 'ESP32', 'ROS2'] },
   {
     label: 'Hardware',
-    items: ['FDM & SLA 3D Printing', 'Laser & Waterjet Cutting', 'Sheet Metal Fabrication', 'Handheld Power Tools', 'Electronics & Soldering'],
+    items: ['FDM 3D Printing', 'SLA 3D Printing', 'Laser Cutting', 'Waterjet Cutting', 'Electronics', 'Soldering', 'Handheld Power Tools', 'Sheet Metal Fabrication'],
   },
-  { label: 'Standards & methods', 
+  { label: 'Standards & Methods', 
     items: ['ISO 2768', 'DFMA', 'Technical Drawings'] },
 ]
 
@@ -167,6 +167,8 @@ export const EXPERIENCES: Experience[] = [
 //                  a caption under that photo
 //   pinned         true moves the project to the front of the list, ahead of newer ones.
 //                  Up to 3 (in the order they appear here); any more stay in date order.
+//   github         link to the project's repository, e.g. 'https://github.com/markgyh/killswitch'.
+//                  Shows a "See Github Repo" button at the end of the write-up.
 
 /** A paragraph may open with a bold run-in heading (`lead`). */
 export type ProjectBlock =
@@ -201,11 +203,12 @@ export interface Project {
   summaryCaption?: string
   sections: ProjectSection[] // only the sections the write-up covers
   video: string
+  github?: string // repository link; '' or left out hides the button
 }
 
 export const PROJECTS: Project[] = [
   {
-    title: "SUTD Open House Door Gift: Retractable Tape Measure",
+    title: "Open House Door Gift: Retractable Tape Measure",
     pinned: true,
     subtitle: "",
     context: "School Project, 30.120 Design & Manufacturing",
@@ -486,7 +489,7 @@ export const PROJECTS: Project[] = [
     video: '',
   },
   {
-    title: "Optimising Sensor Suite Locations for Sweeper Robot",
+    title: "Optimising Sensor Suite for Sweeper Robot",
     pinned: true,
     context: "Kärcher Robotics, Mechatronics Engineer Intern",
     date: "Aug 2026",
@@ -1512,6 +1515,9 @@ export interface Testimonial {
   quote: string[] // one string per paragraph
   name: string
   role: string // e.g. 'Senior Engineer, Kärcher Robotics'
+  // Optional photo of the person, cropped to a circle beside their name, e.g.
+  // 'public/images/testimonials/eugene.jpg'. Leave it out or '' to show their initial instead.
+  photo?: string
 }
 
 // TODO: these are placeholders. Replace them with real quotes from supervisors or

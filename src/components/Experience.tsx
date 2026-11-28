@@ -1,8 +1,8 @@
 import { useState, type CSSProperties } from 'react'
 import { EXPERIENCES, PROJECTS } from '../data'
-import { CONTAINER, projectHash, SECTION, useInView } from '../lib/utils'
+import { CONTAINER, projectHash, SECTION, useInView, useResumeUrl } from '../lib/utils'
 import { ArrowRight, Plus } from './Icons'
-import { ExternalLink, SectionHeading, TEXT_LINK } from './ui'
+import { button, ExternalLink, SectionHeading, TEXT_LINK } from './ui'
 
 /** Projects named in an entry that actually exist, so a renamed or removed project never leaves a dead link. */
 const relatedProjects = (titles: string[] = []) => titles.filter((t) => PROJECTS.some((p) => p.title === t))
@@ -12,6 +12,7 @@ export default function Experience() {
   // Each one can still be folded away with its button.
   const [open, setOpen] = useState<ReadonlySet<number>>(() => new Set(EXPERIENCES.map((_, i) => i)))
   const [railRef, railDrawn] = useInView<HTMLSpanElement>()
+  const resume = useResumeUrl()
 
   const toggle = (i: number) => {
     const next = new Set(open)
@@ -25,7 +26,21 @@ export default function Experience() {
   return (
     <section id="experience" aria-labelledby="experience-heading" className={SECTION}>
       <div className={CONTAINER}>
-        <SectionHeading id="experience-heading">Experience</SectionHeading>
+        <SectionHeading
+          id="experience-heading"
+          asideBeside
+          aside={
+            resume && (
+              <ExternalLink href={resume} pdf className={`shrink-0 ${button({ variant: 'secondary', size: 'compact' })}`}>
+                {/* Short on phones so it fits beside the heading */}
+                <span className="sm:hidden">Résumé</span>
+                <span className="hidden sm:inline">View résumé</span>
+              </ExternalLink>
+            )
+          }
+        >
+          Experience
+        </SectionHeading>
 
         <ol className="relative lg:ml-2">
           {/* Timeline rail (the list is chronological, newest first), drawn downwards as it arrives */}

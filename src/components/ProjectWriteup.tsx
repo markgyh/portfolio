@@ -2,7 +2,7 @@ import { Fragment, useState, type CSSProperties, type ReactNode } from 'react'
 import type { Project, ProjectBlock } from '../data'
 import { asset, hideIfMissing, safeUrl } from '../lib/utils'
 import { ImageIcon } from './Icons'
-import { isVideoFile, Tags, Visual } from './ui'
+import { button, ExternalLink, isVideoFile, Tags, Visual } from './ui'
 
 type Level = 2 | 3 | 4 | 5 | 6
 
@@ -332,6 +332,14 @@ export function ProjectWriteup({ project, level }: { project: Project; level: Le
           </section>
         )
       })}
+
+      {project.github && (
+        <div className="border-t border-line pt-10">
+          <ExternalLink href={project.github} className={button({ variant: 'secondary' })}>
+            See Github Repo
+          </ExternalLink>
+        </div>
+      )}
     </div>
   )
 }

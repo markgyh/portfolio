@@ -41,7 +41,7 @@ export default function About() {
                     <dt className={ANNOTATION}>{label}</dt>
                     <dd>
                       {/* One item per line, like a parts list, so multi-word items never run together */}
-                      <ul className="grid grid-cols-1 gap-x-6 gap-y-1.5 text-ink sm:grid-cols-2">
+                      <ul className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-ink">
                         {items.map((item, i) => (
                           <li key={`${item}-${i}`}>{item}</li>
                         ))}

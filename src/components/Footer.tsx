@@ -7,7 +7,7 @@ export default function Footer() {
   const year = new Date().getFullYear()
   const cells = [
     { label: 'Drawn by', value: FULL_NAME },
-    { label: 'Title', value: 'Mechanical Design Portfolio' },
+    { label: 'Title', value: 'Mech. Design Portfolio' },
     // The date the content was last revised (SITE.revision in content.ts), not just the current year
     { label: 'Revision', value: SITE.revision || String(year) },
     { label: 'Scale', value: '1:1' },
