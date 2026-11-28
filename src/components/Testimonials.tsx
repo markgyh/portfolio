@@ -2,12 +2,33 @@ import { useEffect, useRef, useState } from 'react'
 import { TESTIMONIALS } from '../data'
 import { CONTAINER, prefersReducedMotion, SECTION } from '../lib/utils'
 import { ChevronLeft, ChevronRight } from './Icons'
-import { button, SectionHeading } from './ui'
+import { button, SectionHeading, Visual } from './ui'
 
 const ARROW = button({ variant: 'secondary', size: 'icon' })
 
 /** First letter as the reader sees it, so accents and emoji stay whole. */
 const initial = (name: string) => [...new Intl.Segmenter().segment(name.trim())][0]?.segment ?? ''
+
+/** The person's photo cropped to a circle, or their initial when there's no photo (or it fails to load). */
+function Avatar({ name, photo = '' }: { name: string; photo?: string }) {
+  const [failed, setFailed] = useState('')
+  const ring = 'h-12 w-12 shrink-0 rounded-full border border-copper'
+  if (photo && failed !== photo) {
+    return (
+      <Visual
+        src={photo}
+        alt=""
+        onMissing={() => setFailed(photo)}
+        className={`${ring} bg-canvas object-cover`}
+      />
+    )
+  }
+  return (
+    <span aria-hidden="true" className={`${ring} flex items-center justify-center font-display text-xl font-bold text-copper`}>
+      {initial(name)}
+    </span>
+  )
+}
 
 /**
  * Quotes in a horizontal row, divided by vertical rules. The row scrolls
@@ -78,7 +99,7 @@ export default function Testimonials() {
           aria-label="Testimonials, scrolls sideways"
           className="-mx-5 flex snap-x snap-mandatory scroll-px-5 overflow-x-auto overscroll-x-contain px-5 pb-2 sm:scroll-px-0 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
         >
-          {TESTIMONIALS.map(({ quote, name, role }, i) => (
+          {TESTIMONIALS.map(({ quote, name, role, photo }, i) => (
             <li
               key={`${name}-${i}`}
               className={`flex w-[85%] shrink-0 snap-start flex-col justify-between gap-10 border-line-strong pr-8 sm:w-1/2 lg:w-1/3 lg:pr-12 ${
@@ -98,12 +119,7 @@ export default function Testimonials() {
               {/* Attribution, with the initial in a drawing-style callout balloon.
                   Top-aligned, so the balloon stays beside the name when a long role wraps. */}
               <div className="flex items-start gap-4">
-                <span
-                  aria-hidden="true"
-                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-copper font-display text-xl font-bold text-copper"
-                >
-                  {initial(name)}
-                </span>
+                <Avatar name={name} photo={photo} />
                 <p className="min-w-0 pt-1 text-sm leading-snug">
                   <span className="block font-medium text-ink">{name}</span>
                   <span className="text-muted">{role}</span>

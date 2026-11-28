@@ -17,7 +17,7 @@ import { Arrowhead, ArrowUpRight, Datum } from './Icons'
 export const PRESS = 'transition-[color,background-color,border-color,scale] duration-150 ease-out active:scale-[0.97]'
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost'
-type ButtonSize = 'sm' | 'md' | 'lg' | 'icon'
+type ButtonSize = 'sm' | 'compact' | 'md' | 'lg' | 'icon'
 
 const VARIANTS: Record<ButtonVariant, string> = {
   primary: 'bg-copper text-canvas hover:bg-copper-strong',
@@ -28,6 +28,7 @@ const VARIANTS: Record<ButtonVariant, string> = {
 // Heights: sm is for dense pointer chrome only (the desktop nav pill); everything a thumb can reach is 44px or more.
 const SIZES: Record<ButtonSize, string> = {
   sm: 'min-h-9 px-3.5 text-[0.95rem]',
+  compact: 'min-h-11 px-3 text-[0.95rem]', // full touch height, tight sides: a button beside a heading on phones
   md: 'min-h-11 px-6 text-[0.95rem]',
   lg: 'min-h-12 px-8 text-base',
   icon: 'h-11 w-11 shrink-0',
@@ -54,11 +55,22 @@ export const SELECTED =
 /** Small cyan label that annotates a value, like a callout on a drawing. */
 export const ANNOTATION = 'text-sm font-medium text-cyan'
 
-export function SectionHeading({ id, children, aside }: { id: string; children: ReactNode; aside?: ReactNode }) {
+export function SectionHeading({
+  id,
+  children,
+  aside,
+  asideBeside = false,
+}: {
+  id: string
+  children: ReactNode
+  aside?: ReactNode
+  /** On phones, keep `aside` on the heading's row (above the leader line) when it fits. */
+  asideBeside?: boolean
+}) {
   const [ref, inView] = useInView<HTMLDivElement>()
   return (
     // Wraps so that controls passed as `aside` drop below the heading on narrow screens instead of squeezing it
-    <div className="mb-12 flex flex-wrap items-end gap-x-6 gap-y-4 lg:mb-16">
+    <div className="mb-12 flex flex-wrap items-end gap-x-3 gap-y-4 md:gap-x-6 lg:mb-16">
       <h2
         id={id}
         className="font-display text-[clamp(2.25rem,6vw,4.5rem)] font-bold uppercase leading-[0.95] tracking-[-0.01em] text-ink"
@@ -70,7 +82,7 @@ export function SectionHeading({ id, children, aside }: { id: string; children: 
       <div
         ref={ref}
         data-inview={inView || undefined}
-        className="leader flex basis-full items-center md:mb-3 md:basis-0 md:flex-1"
+        className={`leader flex basis-full items-center md:mb-3 md:basis-0 md:flex-1 ${asideBeside ? 'order-last md:order-none' : ''}`}
         aria-hidden="true"
       >
         <span className="h-px flex-1 bg-line-strong" />

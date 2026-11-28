@@ -123,6 +123,13 @@
     background: rgb(5 18 36 / 0.82);
     backdrop-filter: blur(6px);
   }
+  /* Phones: the window is inset further, so a clearly blurred page frames it */
+  @media (width < 40rem) {
+    dialog::backdrop {
+      background: rgb(5 18 36 / 0.6);
+      backdrop-filter: blur(14px);
+    }
+  }
 }
 
 /* Experience entries: the body's lines are hidden while the entry is closed and fade (and, with

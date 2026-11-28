@@ -87,7 +87,7 @@ export default function ProjectDialog({ project, index, total, onClose, onNaviga
         pressedBackdrop.current = false
       }}
       // A fixed height (--dialog-h) so the cover and section photos can be sized as a share of it
-      className="m-auto h-(--dialog-h) max-h-none w-[calc(100%-1.5rem)] max-w-4xl flex-col overflow-hidden rounded-panel border border-line-strong bg-surface p-0 text-ink [--dialog-h:calc(100svh-1.5rem)] open:flex sm:[--dialog-h:calc(100svh-3rem)] [@media(max-height:37.5em)]:overflow-y-auto [@media(max-height:37.5em)]:open:block"
+      className="m-auto h-(--dialog-h) max-h-none w-[calc(100%-2.5rem)] max-w-4xl flex-col overflow-hidden rounded-panel border border-line-strong bg-surface p-0 text-ink [--dialog-h:calc(100svh-4rem)] open:flex sm:w-[calc(100%-1.5rem)] sm:[--dialog-h:calc(100svh-3rem)] [@media(max-height:37.5em)]:overflow-y-auto [@media(max-height:37.5em)]:open:block"
     >
       {/* Header */}
       <div className="flex shrink-0 items-start justify-between gap-4 border-b border-line px-5 py-3.5 sm:gap-6 sm:px-6 sm:py-5">
@@ -150,8 +150,10 @@ export default function ProjectDialog({ project, index, total, onClose, onNaviga
           <ChevronLeft size={18} />
           Previous
         </button>
-        <span className="text-sm tabular-nums text-muted" aria-live="polite">
-          Project {index + 1} of {total}
+        <span className="whitespace-nowrap text-sm tabular-nums text-muted" aria-live="polite">
+          {/* "Project" drops on phones, where the inset window is too narrow for it */}
+          <span className="max-sm:sr-only">Project </span>
+          {index + 1} of {total}
         </span>
         <button
           ref={nextRef}
